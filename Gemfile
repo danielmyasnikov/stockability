@@ -13,3 +13,14 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'devise'
+gem 'cancancan'
+gem 'kaminari'
+gem 'versionist'
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+
+  gem 'capybara'
+end

@@ -1,0 +1,23 @@
+.page-header
+  = link_to 'New Product', new_admin_product_path, :class => 'btn btn-default pull-right'
+  %h2= 'Products'
+
+= paginate @products, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Name
+    %th Barcode
+    %th Quantity
+    %th
+  - @products.each do |product|
+    %tr
+      %td.main= product.name
+      %td= product.barcode
+      %td= product.quantity
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_product_path(product), :class => 'btn btn-default'
+          = link_to 'Delete', admin_product_path(product), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @products, :theme => 'comfy'

@@ -1,30 +1,12 @@
-<%
-  socket = [
-    ENV["BOXEN_MYSQL_SOCKET"],
-    "/var/run/mysql5/mysqld.sock",
-    "/tmp/mysql.sock"
-  ].detect { |f| f && File.exist?(f) }
-
-  port = ENV["BOXEN_MYSQL_PORT"] || "3306"
-%>
-
-defaults: &defaults
-  adapter: mysql2
-  username: root
-<% if socket %>
-  host: localhost
-  socket: <%= socket %>
-<% else %>
-  host: 127.0.0.1
-  port: <%= port %>
-<% end %>
-  password: rus9uGap
-
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
 
 development:
-  <<: *defaults
+  <<: *default
   database: warehouse_cms_development
 
-test:
-  <<: *defaults
+uat:
+  <<: *default
   database: warehouse_cms_test

@@ -2,7 +2,7 @@ class V1::ProductsController < V1::BaseController
   before_filter :find_product
 
   def update
-    @product.update_attributes!(product_params)
+    @product.update_attributes!(product_params[:quantity].to_i)
     render json: { status: 'Ok', product: @product }
   rescue NoMethodError
     render json: { status: 'Product was not found' }, status: 404
@@ -17,6 +17,6 @@ private
   end
 
   def product_params
-    params.require(:product).permit(:barcode, :quantity)
+    params.require(:products).permit(:barcode, :quantity)
   end
 end

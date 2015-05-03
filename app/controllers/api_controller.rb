@@ -10,7 +10,7 @@ class ApiController < ApplicationController
 
   def missing_param(_error)
     render json: 
-      { error: _error.message, data: 'missing param' }, status: 403
+      { error: _error.message, data: 'missing param' }, status: 400
   end
 
   def show_errors(_error)

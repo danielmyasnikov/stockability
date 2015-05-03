@@ -1,0 +1,19 @@
+.page-header
+  = link_to 'New Session', new_admin_session_path, :class => 'btn btn-default pull-right'
+  %h2= 'Sessions'
+
+= paginate @sessions, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Name
+    %th
+  - @sessions.each do |session|
+    %tr
+      %td.main= session.name
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_session_path(session), :class => 'btn btn-default'
+          = link_to 'Delete', admin_session_path(session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @sessions, :theme => 'comfy'

@@ -1,5 +1,7 @@
 class Product < ActiveRecord::Base
 
+  belongs_to :sessions
+
   validate :validate_quantity
 
   # -- Relationships --------------------------------------------------------
@@ -26,7 +28,7 @@ class Product < ActiveRecord::Base
 private
 
   def validate_quantity
-    unless quantity > 0
+    unless quantity.to_i > 0
       errors.add(:invalid_quantity, "can't be less than 0")
     end
   end

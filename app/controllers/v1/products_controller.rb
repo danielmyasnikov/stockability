@@ -2,7 +2,7 @@ class V1::ProductsController < V1::BaseController
   before_filter :find_product
 
   def update
-    @product.update_attributes!(product_params[:quantity].to_i)
+    @product.update_attributes!(product_params)
     render json: { status: 'Ok', product: @product }
   rescue NoMethodError
     render json: { status: 'Product was not found' }, status: 404

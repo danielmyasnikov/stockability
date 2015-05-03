@@ -4,7 +4,7 @@ class V1::SessionsController < V1::BaseController
   def create
     @session.save!
     @session.create_or_update_products(session_products_params[:products])
-    render json: { status: 'Ok' }
+    render json: { status: 'Ok', session: @session }
   end
 
 protected

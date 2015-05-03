@@ -1,7 +1,8 @@
 WarehouseCms::Application.routes.draw do
 
   namespace :admin do
-    resources :sessions
+    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :sessions
+    resources :products
   end
 
   comfy_route :cms_admin, :path => '/admin'
@@ -11,10 +12,6 @@ WarehouseCms::Application.routes.draw do
   api_version(:module => "v1", :path => {:value => "api/v1"}, :defaults => {:format => "json"}) do
     put  'products/update'
     post 'sessions', :controller => 'sessions', :action => 'create'
-  end
-
-  namespace :admin do
-    resources :products
   end
 
   comfy_route :cms, :path => '/', :sitemap => false

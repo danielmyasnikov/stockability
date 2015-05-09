@@ -1,0 +1,9 @@
+= render 'comfy/admin/cms/partials/navigation_before'
+
+%ul.navigation
+
+  = cms_hook :navigation
+
+  = render 'comfy/admin/cms/partials/navigation_inner'
+
+= render 'comfy/admin/cms/partials/navigation_after'

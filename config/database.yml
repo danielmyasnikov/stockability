@@ -7,6 +7,10 @@ development:
   <<: *default
   database: warehouse_cms_development
 
+test:
+  <<: *default
+  database: warehouse_cms_test
+
 uat:
   <<: *default
   database: warehouse_cms_test

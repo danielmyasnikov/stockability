@@ -1,7 +1,7 @@
 WarehouseCms::Application.routes.draw do
 
   namespace :admin do
-    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :sessions
+    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :walkthrough_sessions
     resources :products
   end
 

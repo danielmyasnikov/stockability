@@ -27,4 +27,19 @@ WarehouseCms::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.eager_load = false
+
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 587,
+    user_name: 'daniel.g.myasnikov+warehouse@gmail.com',
+    password: 'XZY_HnN_dHWYPBtIUkPJ1w',
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :test
+
+  config.action_mailer.default_url_options = { :host => Settings.host }
 end

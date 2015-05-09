@@ -1,8 +1,11 @@
 WarehouseCms::Application.routes.draw do
 
   namespace :admin do
-    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :walkthrough_sessions
+    resources :admins, :except => :show
+    resources :bins
+    resources :companies
     resources :products
+    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :walkthrough_sessions
   end
 
   comfy_route :cms_admin, :path => '/admin'

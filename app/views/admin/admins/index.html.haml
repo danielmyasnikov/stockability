@@ -1,0 +1,23 @@
+.page-header
+  = link_to 'New Admin', new_admin_admins_path, :class => 'btn btn-default pull-right'
+  %h2= 'Admins'
+
+= paginate @admins, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Title
+    %th Location
+    %th Company
+    %th
+  - @admins.each do |admin|
+    %tr
+      %td.main= admin.title
+      %td= admin.location
+      %td= admin.company
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_admin_path(admin), :class => 'btn btn-default'
+          = link_to 'Delete', admin_admin_path(admin), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @admins, :theme => 'comfy'

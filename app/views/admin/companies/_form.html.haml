@@ -1,0 +1,12 @@
+= form.text_field :title
+= form.text_area  :description
+= form.text_field :address
+= form.text_field :suburb
+= form.text_field :postcode
+= form.select     :state, ['NSW', 'VIC', 'ACT', 'SA', 'WA', 'NT', 'TAS']
+= form.text_field :phone
+= form.text_field :abn
+= form.text_field :acn
+
+= form.form_group :class => 'form-actions' do
+  = form.submit :class => 'btn btn-primary'

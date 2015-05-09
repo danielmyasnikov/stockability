@@ -1,25 +1,9 @@
 class Product < ActiveRecord::Base
 
   belongs_to :sessions
+  belongs_to :company
 
   validate :validate_quantity
-
-  # -- Relationships --------------------------------------------------------
-
-
-  # -- Callbacks ------------------------------------------------------------
-
-
-  # -- Validations ----------------------------------------------------------
-
-
-  # -- Scopes ---------------------------------------------------------------
-
-
-  # -- Class Methods --------------------------------------------------------
-
-
-  # -- Instance Methods -----------------------------------------------------
 
   def to_s
     "Name: #{name}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"

@@ -1,0 +1,35 @@
+.page-header
+  = link_to 'New Company', new_admin_company_path, :class => 'btn btn-default pull-right'
+  %h2= 'Companies'
+
+= paginate @companies, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Title
+    %th Description
+    %th Address
+    %th Suburb
+    %th Postcode
+    %th State
+    %th Phone
+    %th Abn
+    %th Acn
+    %th
+  - @companies.each do |company|
+    %tr
+      %td.main= company.title
+      %td= company.description
+      %td= company.address
+      %td= company.suburb
+      %td= company.postcode
+      %td= company.state
+      %td= company.phone
+      %td= company.abn
+      %td= company.acn
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_company_path(company), :class => 'btn btn-default'
+          = link_to 'Delete', admin_company_path(company), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @companies, :theme => 'comfy'

@@ -1,0 +1,7 @@
+= form.text_field :email
+= form.select :role, Admin::ROLES
+- unless current_admin.super_admin?
+  = form.select :company, options_from_collection_for_select(@companies, 'id', 'title'), prompt: 'Select company'
+
+= form.form_group :class => 'form-actions' do
+  = form.submit :class => 'btn btn-primary'

@@ -5,7 +5,7 @@ WarehouseCms::Application.routes.draw do
     resources :bins
     resources :companies
     resources :products
-    resources :sessions, :only => [:index, :show, :edit, :destroy, :update], :as => :walkthrough_sessions
+    resources :sessions, :only => [:index, :show, :destroy], :as => :walkthrough_sessions
   end
 
   comfy_route :cms_admin, :path => '/admin'

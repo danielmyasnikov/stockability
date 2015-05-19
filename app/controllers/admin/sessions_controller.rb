@@ -4,38 +4,38 @@ class Admin::SessionsController < Comfy::Admin::Cms::BaseController
   before_action :load_session,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @sessions = Session.page(params[:page])
+    @sessions = Session.accessible_by(current_ability).page(params[:page])
   end
 
   def show
     render
   end
 
-  def new
-    render
-  end
+  # def new
+  #   render
+  # end
 
-  def edit
-    render
-  end
+  # def edit
+  #   render
+  # end
 
-  def create
-    @session.save!
-    flash[:success] = 'Session created'
-    redirect_to :action => :show, :id => @session
-  rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = 'Failed to create Session'
-    render :action => :new
-  end
+  # def create
+  #   @session.save!
+  #   flash[:success] = 'Session created'
+  #   redirect_to :action => :show, :id => @session
+  # rescue ActiveRecord::RecordInvalid
+  #   flash.now[:danger] = 'Failed to create Session'
+  #   render :action => :new
+  # end
 
-  def update
-    @session.update_attributes!(session_params)
-    flash[:success] = 'Session updated'
-    redirect_to :action => :show, :id => @session
-  rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = 'Failed to update Session'
-    render :action => :edit
-  end
+  # def update
+  #   @session.update_attributes!(session_params)
+  #   flash[:success] = 'Session updated'
+  #   redirect_to :action => :show, :id => @session
+  # rescue ActiveRecord::RecordInvalid
+  #   flash.now[:danger] = 'Failed to update Session'
+  #   render :action => :edit
+  # end
 
   def destroy
     @session.destroy

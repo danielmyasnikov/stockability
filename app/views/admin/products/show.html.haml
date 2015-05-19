@@ -1,4 +1,10 @@
 .page-header
   %h2 Product
-  
-= @product.to_s
+
+%dl.dl-horizontal
+  %dt Name
+  %dd= @product.name.presence || 'N/A'
+  %dt Barcode
+  %dd= @product.barcode.presence || 'N/A'
+  %dt Quantity
+  %dd= @product.quantity.presence || 'N/A'

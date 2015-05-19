@@ -2,9 +2,11 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_admin, :only => [:new, :create]
   before_action :load_admin,  :only => [:edit, :update, :destroy]
+  before_action :load_companies, :only => [:edit, :create, :new, :update]
+  load_and_authorize_resource :except => [:new, :create]
 
   def index
-    @admins = Admind.all
+    @admins = Admin.accessible_by(current_ability).page(params[:page])
   end
 
   def new
@@ -16,6 +18,8 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @admin.password_confirmation = admin_params[:password]
+    @admin.company = current_company if current_company
     @admin.save!
     flash[:success] = 'Admin created'
     redirect_to :action => :edit, :id => @admin
@@ -25,7 +29,7 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
   end
 
   def update
-    @admin.update_attributes(admin_params)
+    @admin.update_without_password(admin_params)
     flash[:success] = 'Admin updated'
     redirect_to :action => :edit, :id => @admin
   rescue ActiveRecord::RecordInvalid
@@ -34,13 +38,15 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
   end
 
   def destroy
+    @admin.destroy
+    flash[:success] = 'Admin user deleted'
+    redirect_to :action => :index
   end
 
 protected
 
   def build_admin
     @admin = Admin.new(admin_params)
-    @admin.company = current_company unless current_admin.super_admin?
   end
 
   def load_admin
@@ -51,7 +57,11 @@ protected
   end
 
   def admin_params
-    params.fetch(:admin, {}).permit(:email, :role, :company_id)
+    params.fetch(:admin, {}).permit(:email, :role, :company_id, :password)
+  end
+
+  def load_companies
+    @companies = Company.all.select(:id, :title)
   end
 
 end

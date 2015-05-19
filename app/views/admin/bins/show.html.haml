@@ -1,4 +1,10 @@
 .page-header
   %h2 Bin
-  
-= debug @bin
+
+%dl.dl-horizontal
+  %dt title
+  %dd= @bin.title.presence || 'N/A'
+  %dt location
+  %dd= @bin.location.presence || 'N/A'
+  %dt company_id
+  %dd= @bin.company_id.presence || 'N/A'

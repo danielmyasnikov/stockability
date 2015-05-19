@@ -1,14 +1,10 @@
 class Admin::BinsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_bin,  :only => [:new, :create]
-  before_action :load_bin,   :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :except => [:new, :create]
 
   def index
-    @bins = Bin.page(params[:page])
-  end
-
-  def show
-    render
+    @bins = Bin.accessible_by(current_ability).page(params[:page])
   end
 
   def new
@@ -20,6 +16,7 @@ class Admin::BinsController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @bin.company = current_company if current_company
     @bin.save!
     flash[:success] = 'Bin created'
     redirect_to :action => :show, :id => @bin
@@ -44,6 +41,10 @@ class Admin::BinsController < Comfy::Admin::Cms::BaseController
   end
 
 protected
+
+  def authorize_content
+    authorize! params[:action].to_sym, @bin
+  end
 
   def build_bin
     @bin = Bin.new(bin_params)

@@ -1,20 +1,18 @@
 .page-header
-  = link_to 'New Admin', new_admin_admins_path, :class => 'btn btn-default pull-right'
+  = link_to 'New Admin', new_admin_admin_path, :class => 'btn btn-default pull-right'
   %h2= 'Admins'
 
 = paginate @admins, :theme => 'comfy'
 
 %table.table.table-hover.table-bordered
   %tr
-    %th.main Title
-    %th Location
-    %th Company
+    %th.main Email
+    %th Role
     %th
   - @admins.each do |admin|
     %tr
-      %td.main= admin.title
-      %td= admin.location
-      %td= admin.company
+      %td.main= admin.email
+      %td= admin.role
       %td
         .btn-group.btn-group-sm
           = link_to 'Edit', edit_admin_admin_path(admin), :class => 'btn btn-default'

@@ -5,6 +5,8 @@ class Product < ActiveRecord::Base
 
   validate :validate_quantity
 
+  validates_presence_of :name, :barcode
+
   def to_s
     "Name: #{name}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"
   end

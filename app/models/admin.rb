@@ -4,7 +4,9 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  ROLES = [ :super_admin, :member ].freeze
+  AVAILABLE_ROLES = [ :member ].freeze
+  ROLES = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
+
 
   validates_presence_of :company, :unless => :super_admin?
 

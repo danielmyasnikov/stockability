@@ -1,10 +1,10 @@
 class Admin::ProductsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_product,  :only => [:new, :create]
-  before_action :load_product,   :only => [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :except => [:new, :create]
 
   def index
-    @products = Product.page(params[:page])
+    @products = Product.accessible_by(current_ability).page(params[:page])
   end
 
   def show
@@ -20,6 +20,7 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @product.company = current_company if current_company
     @product.save!
     flash[:success] = 'Product created'
     redirect_to :action => :show, :id => @product
@@ -49,12 +50,12 @@ protected
     @product = Product.new(product_params)
   end
 
-  def load_product
-    @product = Product.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:danger] = 'Product not found'
-    redirect_to :action => :index
-  end
+  # def load_product
+  #   @product = Product.find(params[:id])
+  # rescue ActiveRecord::RecordNotFound
+  #   flash[:danger] = 'Product not found'
+  #   redirect_to :action => :index
+  # end
 
   def product_params
     params.fetch(:product, {}).permit(:name, :barcode, :quantity)

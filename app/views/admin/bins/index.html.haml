@@ -2,22 +2,27 @@
   = link_to 'New Bin', new_admin_bin_path, :class => 'btn btn-default pull-right'
   %h2= 'Bins'
 
-= paginate @bins, :theme => 'comfy'
+- if @bins.present?
 
-%table.table.table-hover.table-bordered
-  %tr
-    %th.main Title
-    %th Location
-    %th Company
-    %th
-  - @bins.each do |bin|
+  = paginate @bins, :theme => 'comfy'
+
+  %table.table.table-hover.table-bordered
     %tr
-      %td.main= bin.title
-      %td= bin.location
-      %td= bin.company
-      %td
-        .btn-group.btn-group-sm
-          = link_to 'Edit', edit_admin_bin_path(bin), :class => 'btn btn-default'
-          = link_to 'Delete', admin_bin_path(bin), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+      %th.main Title
+      %th Location
+      %th Company
+      %th
+    - @bins.each do |bin|
+      %tr
+        %td.main= bin.title
+        %td= bin.location
+        %td= bin.company.title
+        %td
+          .btn-group.btn-group-sm
+            = link_to 'Edit', edit_admin_bin_path(bin), :class => 'btn btn-default'
+            = link_to 'Delete', admin_bin_path(bin), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
-= paginate @bins, :theme => 'comfy'
+  = paginate @bins, :theme => 'comfy'
+
+- else
+  %p No bins yet...

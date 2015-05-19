@@ -1,4 +1,22 @@
 .page-header
   %h2 Company
-  
-= debug @company
+
+%dl.dl-horizontal
+  %dt Title
+  %dd= @company.title.presence || 'N/A'
+  %dt Description
+  %dd= @company.description.presence || 'N/A'
+  %dt Address
+  %dd= @company.address.presence || 'N/A'
+  %dt Suburb
+  %dd= @company.suburb.presence || 'N/A'
+  %dt Postcode
+  %dd= @company.postcode.presence || 'N/A'
+  %dt State
+  %dd= @company.state.presence || 'N/A'
+  %dt Phone
+  %dd= @company.phone.presence || 'N/A'
+  %dt Abn
+  %dd= @company.abn.presence || 'N/A'
+  %dt Acn
+  %dd= @company.acn.presence || 'N/A'

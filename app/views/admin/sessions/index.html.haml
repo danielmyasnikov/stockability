@@ -1,23 +1,21 @@
 .page-header
-  = link_to 'New Session', new_admin_session_path, :class => 'btn btn-default pull-right'
-  %h2= 'Sessions'
+  %h2= 'Walkthrough Sessions'
 
--# = paginate @sessions, :theme => 'comfy'
+= paginate @sessions, :theme => 'comfy'
 
 %table.table.table-hover.table-bordered
   %tr
-    %th.main Name
+    %th Name
     %th Produts Barcodes
     %th Produts Quantity
     %th
-  - @sessions.each do |session|
+  - @sessions.each do |_session|
     %tr
-      %td.main= session.name
-      %td= session.products.map(&:barcode)
-      %td= session.products.map(&:quantity)
+      %td= _session.name
+      %td= _session.products.map(&:barcode)
+      %td= _session.products.map(&:quantity)
       %td
         .btn-group.btn-group-sm
-          = link_to 'Edit', edit_admin_walkthrough_session_path(session), :class => 'btn btn-default'
-          = link_to 'Delete', admin_walkthrough_session_path(session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+          = link_to 'Delete', admin_walkthrough_session_path(_session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
--# = paginate @sessions, :theme => 'comfy'
+= paginate @sessions, :theme => 'comfy'

@@ -5,16 +5,17 @@ WarehouseCms::Application.routes.draw do
     resources :bins
     resources :companies
     resources :products
-    resources :sessions, :only => [:index, :show, :destroy], :as => :walkthrough_sessions
+    resources :tours, :only => [:index, :show, :destroy]
   end
 
   comfy_route :cms_admin, :path => '/admin'
 
   devise_for :admins
 
-  api_version(:module => "v1", :path => {:value => "api/v1"}, :defaults => {:format => "json"}) do
+  api_version(:module => "v1", :path => { :value => "api/v1" }, :defaults => {:format => "json"}) do
     put  'products/update'
-    post 'sessions', :controller => 'sessions', :action => 'create'
+    post 'tours', :controller => 'tours', :action => 'create'
+    resources :tokens, :only => :create
   end
 
   comfy_route :cms, :path => '/', :sitemap => false

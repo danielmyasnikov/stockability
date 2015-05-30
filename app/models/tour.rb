@@ -1,5 +1,8 @@
-class Session < ActiveRecord::Base
-  has_many :products
+class Tour < ActiveRecord::Base
+
+  has_and_belongs_to_many :products
+  belongs_to :admin
+
   def create_or_update_products(products_attr)
     products_attr.each do |product_attr|
       product = Product.find_or_initialize_by(:barcode =>

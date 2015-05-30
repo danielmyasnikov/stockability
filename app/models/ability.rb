@@ -26,7 +26,7 @@ class Ability
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:view], Session, :products => { :company_id => user.company_id }
+    can [:view], Tour, :products => { :company_id => user.company_id }
 
     can [:view], Company, :id => user.company_id
   end

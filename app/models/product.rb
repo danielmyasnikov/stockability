@@ -1,14 +1,14 @@
 class Product < ActiveRecord::Base
 
-  belongs_to :sessions
+  has_and_belongs_to_many :tours
   belongs_to :company
 
   validate :validate_quantity
 
-  validates_presence_of :name, :barcode
+  validates_presence_of :barcode
 
   def to_s
-    "Name: #{name}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"
+    "Name: #{name || 'N/A'}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"
   end
 
 private

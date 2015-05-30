@@ -1,10 +1,10 @@
-class Admin::SessionsController < Comfy::Admin::Cms::BaseController
+class Admin::TourController < Comfy::Admin::Cms::BaseController
 
-  before_action :build_session,  :only => [:new, :create]
-  before_action :load_session,   :only => [:show, :edit, :update, :destroy]
+  before_action :build_tour,  :only => [:new, :create]
+  before_action :load_tour,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @sessions = Session.accessible_by(current_ability).page(params[:page])
+    @tours = Tour.accessible_by(current_ability).page(params[:page])
   end
 
   def show
@@ -38,25 +38,25 @@ class Admin::SessionsController < Comfy::Admin::Cms::BaseController
   # end
 
   def destroy
-    @session.destroy
-    flash[:success] = 'Session deleted'
+    @tour.destroy
+    flash[:success] = 'Tour item has been deleted'
     redirect_to :action => :index
   end
 
 protected
 
-  def build_session
-    @session = Session.new(session_params)
+  def build_tour
+    @tour = Tour.new(tour_params)
   end
 
-  def load_session
-    @session = Session.find(params[:id])
+  def load_tour
+    @tour = Tour.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:danger] = 'Session not found'
+    flash[:danger] = 'Tour not found'
     redirect_to :action => :index
   end
 
-  def session_params
-    params.fetch(:session, {}).permit(:name)
+  def tour_params
+    params.fetch(:tour, {}).permit(:name)
   end
 end

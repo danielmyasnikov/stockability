@@ -18,7 +18,8 @@ class Admin < ActiveRecord::Base
   end
 
   def save_with_token
-    write_attribute(:token, generate_token)
+    self.token = generate_token
+    save!
   end
 
 private

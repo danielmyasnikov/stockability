@@ -1,4 +1,4 @@
-class Admin::TourController < Comfy::Admin::Cms::BaseController
+class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   before_action :build_tour,  :only => [:new, :create]
   before_action :load_tour,   :only => [:show, :edit, :update, :destroy]

@@ -16,7 +16,7 @@
       %tr
         %td.main= bin.title
         %td= bin.location
-        %td= bin.company.title
+        %td= bin.company.try(:title)
         %td
           .btn-group.btn-group-sm
             = link_to 'Edit', edit_admin_bin_path(bin), :class => 'btn btn-default'

@@ -1,7 +1,7 @@
 .page-header
   %h2= 'Tours'
 
-= paginate @tour, :theme => 'comfy'
+= paginate @tours, :theme => 'comfy'
 
 %table.table.table-hover.table-bordered
   %tr
@@ -9,7 +9,7 @@
     %th Produts Barcodes
     %th Produts Quantity
     %th
-  - @tour.each do |_session|
+  - @tours.each do |_session|
     %tr
       %td= _session.name
       %td= _session.products.map(&:barcode)
@@ -18,4 +18,4 @@
         .btn-group.btn-group-sm
           = link_to 'Delete', admin_tour_path(_session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
-= paginate @tour, :theme => 'comfy'
+= paginate @tours, :theme => 'comfy'

@@ -20,6 +20,7 @@ gem 'kaminari'
 gem 'versionist'
 
 gem 'spring-commands-rspec'
+gem 'comma'
 
 group :test do
   gem 'rspec'

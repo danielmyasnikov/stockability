@@ -1,4 +1,5 @@
 .page-header
+  = link_to 'Download All As CSV', admin_tours_path(:format => :csv), :class => 'btn btn-success pull-right'
   %h2= 'Tours'
 
 = paginate @tours, :theme => 'comfy'
@@ -12,10 +13,19 @@
   - @tours.each do |_session|
     %tr
       %td= _session.name
-      %td= _session.products.map(&:barcode)
-      %td= _session.products.map(&:quantity)
+      %td
+        - _session.products.each do |product|
+          %span Barcode:
+          = link_to product.barcode, admin_product_path(product)
+          %br
+      %td
+        - _session.products.each do |product|
+          %span Quantity:
+          = product.quantity
+          %br
       %td
         .btn-group.btn-group-sm
+          = link_to 'Download CSV', admin_tour_path(_session, :format => :csv), :class => 'btn btn-success'
           = link_to 'Delete', admin_tour_path(_session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 = paginate @tours, :theme => 'comfy'

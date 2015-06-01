@@ -7,6 +7,12 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :barcode
 
+  comma do
+    name
+    barcode
+    quantity
+  end
+
   def to_s
     "Name: #{name || 'N/A'}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"
   end

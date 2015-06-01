@@ -1,5 +1,7 @@
 .page-header
-  = link_to 'New Product', new_admin_product_path, :class => 'btn btn-default pull-right'
+  .btn-group.pull-right
+    = link_to 'New Product', new_admin_product_path, :class => 'btn btn-default'
+    = link_to 'Download All As CSV', admin_products_path(:format => :csv), :class => 'btn btn-success'
   %h2= 'Products'
 
 - if @products.present?

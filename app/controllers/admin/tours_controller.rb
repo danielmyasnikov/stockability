@@ -1,14 +1,24 @@
-class Admin::TourController < Comfy::Admin::Cms::BaseController
+class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   before_action :build_tour,  :only => [:new, :create]
   before_action :load_tour,   :only => [:show, :edit, :update, :destroy]
 
+  respond_to :csv, :html
+
   def index
     @tours = Tour.accessible_by(current_ability).page(params[:page])
+    respond_to do |format|
+      format.html { render }
+      format.csv { render :csv => Tour.accessible_by(current_ability) }
+    end
   end
 
   def show
-    render
+    respond_to do |format|
+      format.html {render}
+      format.csv { render text: @tour.to_csv }
+    end
+
   end
 
   # def new

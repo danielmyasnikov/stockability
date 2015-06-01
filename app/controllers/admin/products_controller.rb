@@ -5,6 +5,10 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
 
   def index
     @products = Product.accessible_by(current_ability).page(params[:page])
+    respond_to do |format|
+      format.html { render }
+      format.csv { render :csv => Product.accessible_by(current_ability) }
+    end
   end
 
   def show

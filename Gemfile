@@ -4,6 +4,12 @@ gem 'rails', '~> 4.2'
 gem 'pg'
 gem 'haml'
 gem 'comfortable_mexican_sofa'
+gem 'unicorn', '~> 4.8.0'
+
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails'
+gem 'capistrano-rvm'
+
 
 group :assets do
   gem 'sass-rails'
@@ -31,9 +37,4 @@ group :test do
   gem 'capybara-email'
   gem 'launchy'
   gem 'ffaker'
-end
-
-group :production do
-  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
-  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end

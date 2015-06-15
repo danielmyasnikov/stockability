@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title Stockability
+    = stylesheet_link_tag    "welcome", :media => "all"
+    = javascript_include_tag "welcome"
+    = csrf_meta_tags
+  %body
+    .page
+      = yield
+    .footer.text-center
+      (C) StockAbility 2015

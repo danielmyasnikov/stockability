@@ -5,7 +5,7 @@ WarehouseCms::Application.routes.draw do
     resources :bins
     resources :companies
     resources :products
-    resources :tours, :only => [:index, :show, :destroy]
+    resources :tours, :only => [ :index, :show, :destroy ]
   end
 
   comfy_route :cms_admin, :path => '/admin'
@@ -18,6 +18,8 @@ WarehouseCms::Application.routes.draw do
     resources :tokens, :only => :create
   end
 
-  comfy_route :cms, :path => '/', :sitemap => false
+  comfy_route :cms, :path => '/*', :sitemap => false
+
+  get '/' => 'welcome#splash'
 
 end

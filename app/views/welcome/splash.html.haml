@@ -1,0 +1,20 @@
+.container
+  .row
+    .col-md-12.text-center
+      .row
+        %img.logo.img-responsive{ :src => 'assets/logo.png' }
+      .row
+        %h2.slogan Means things done right
+
+        %hr
+          .col-md-6.col-md-offset-3
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.
+      .row
+        %hr
+      .row
+        %form.form-inline
+          .form-group
+            %label.form-control-static{ :for => 'email' } Please, register your interest:
+            %input.form-control.sa-input{ :id => 'email', :placeholder => "john.smith@company.com.au", :type => "email"}
+          %button.btn.btn-primary{:type => "submit"} Confirm interest
+

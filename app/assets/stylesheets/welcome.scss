@@ -20,6 +20,11 @@ $mrk-color: #205081;
   border-bottom: 1px solid;
   margin-left: 10px;
   margin-right: 10px;
+  text-align: left;
+}
+
+input.sa-input:focus {
+  color: #333333;
 }
 
 @media (min-width: 768px) {
@@ -27,3 +32,4 @@ $mrk-color: #205081;
     width: 190px !important;
   }
 }
+

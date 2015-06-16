@@ -19,3 +19,5 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 config/unicorn.rb
 config/unicorn_init.sh
+
+config/database.yml

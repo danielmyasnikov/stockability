@@ -8,7 +8,7 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
 server 'stockability.com.au', user: 'ubuntu', roles: %w{web app db}
-set :rails_env, 'production'
+set :rails_env, 'uat'
 
 # role-based syntax
 # ==================

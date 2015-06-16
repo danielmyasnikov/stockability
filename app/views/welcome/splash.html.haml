@@ -1,20 +1,28 @@
 .container
   .row
-    .col-md-12.text-center
+    .col-md-12
       .row
         = image_tag('logo.png', :class => 'logo img-responsive')
       .row
-        %h2.slogan Means things done right
+        %h2.col-md-10.col-md-offset-2.slogan.text-left Stock control made simple
 
+      .row
         %hr
-          .col-md-6.col-md-offset-3
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.
+        .col-md-8.col-md-offset-2.text-left
+          %p
+            Once available to major players only, stock control systems is now a reality for small and medium companies.
+          %p
+            Time has come to replace paper, handwriting and manual data entry for simple and powerful technology.
+          %p
+            <b>stockAbility</b> online service with mobile app for simple stock control are coming soon.
+            %br
+            Watch this space and register your interest below.
       .row
         %hr
       .row
         %form.form-inline{ :id => 'register-interest'}
           .form-group
-            %label.form-control-static{ :for => 'email' } Please, register your interest:
+            %label.form-control-static{ :for => 'email' } Register your interest to stay in touch:
             %input.form-control.sa-input{ :id => 'email', :placeholder => "john.smith@company.com.au", :type => 'email' }
-          %button.btn.btn-primary{ :type => 'submit' } Confirm interest
+          %button.btn.btn-primary{ :type => 'submit' } Submit
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530105415) do
+ActiveRecord::Schema.define(version: 20150618112840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 20150530105415) do
     t.string   "role"
     t.integer  "company_id"
     t.string   "token"
+    t.string   "login"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
@@ -173,7 +176,29 @@ ActiveRecord::Schema.define(version: 20150530105415) do
     t.string   "state"
     t.string   "phone"
     t.string   "abn"
-    t.string   "acn"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "admin_id"
+    t.string   "email"
+    t.string   "web"
+    t.string   "address2"
+    t.string   "address3"
+    t.string   "country"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "address"
+    t.string   "address2"
+    t.string   "address3"
+    t.string   "suburb"
+    t.string   "state"
+    t.string   "postcode"
+    t.string   "country"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

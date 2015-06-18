@@ -7,7 +7,7 @@ class Admin < ActiveRecord::Base
   AVAILABLE_ROLES = [ :member ].freeze
   ROLES = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
 
-  validates_presence_of :company, :unless => :super_admin?
+  validates_presence_of :login, :company, :unless => :super_admin?
 
   after_create :save_with_token
 
@@ -17,9 +17,10 @@ class Admin < ActiveRecord::Base
     end
   end
 
-  def save_with_token
-    self.token = generate_token
-    save!
+  def save_with_token; update_column(:token, generate_token); end
+
+  def email_required?
+    super_admin?
   end
 
 private

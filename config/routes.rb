@@ -1,6 +1,10 @@
 WarehouseCms::Application.routes.draw do
 
   namespace :admin do
+    resources :locations
+  end
+
+  namespace :admin do
     resources :admins, :except => :show
     resources :bins
     resources :companies

@@ -57,7 +57,8 @@ protected
   end
 
   def admin_params
-    params.fetch(:admin, {}).permit(:email, :role, :company_id, :password)
+    params.fetch(:admin, {}).permit(:email, :role, :company_id, :password,
+      :login)
   end
 
   def load_companies

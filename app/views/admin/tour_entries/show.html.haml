@@ -1,4 +1,23 @@
 .page-header
   %h2 Tour Entry
-  
-= debug @tour_entry
+
+%dl.dl-horizontal
+  %dt Location
+  %dd= @tour_entry.location.presence || 'N/A'
+  %dt Bin
+  %dd= @tour_entry.bin.presence || 'N/A'
+  %dt SKU
+  %dd= @tour_entry.sku.presence || 'N/A'
+  %dt Product Barcode
+  %dd= @tour_entry.barcode.presence || 'N/A'
+  %dt Batch Code
+  %dd= @tour_entry.batch_code.presence || 'N/A'
+  %dt Quantity
+  %dd= @tour_entry.quantity.presence || 'N/A'
+  %dt Active?
+  %dd= @tour_entry.active.present? ? 'Yes' : 'Not Active'
+
+
+
+
+

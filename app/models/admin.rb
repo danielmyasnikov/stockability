@@ -4,7 +4,7 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  AVAILABLE_ROLES = [ :member ].freeze
+  AVAILABLE_ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
   ROLES = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
 
   validates_presence_of :login, :company, :unless => :super_admin?
@@ -15,6 +15,14 @@ class Admin < ActiveRecord::Base
     define_method("#{_role}?") do
       role == _role.to_s
     end
+  end
+
+  def self.options_for_select
+    roles = []
+    ROLES.select do |role|
+      roles.push [role.to_s.titleize, role]
+    end
+    roles
   end
 
   def save_with_token; update_column(:token, generate_token); end

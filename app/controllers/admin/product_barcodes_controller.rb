@@ -4,7 +4,7 @@ class Admin::ProductBarcodesController < Comfy::Admin::Cms::BaseController
   before_action :load_product_barcodes,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @product_barcodes = ProductBarcodes.page(params[:page])
+    @product_barcodes = ProductBarcode.page(params[:page])
   end
 
   def show
@@ -46,17 +46,17 @@ class Admin::ProductBarcodesController < Comfy::Admin::Cms::BaseController
 protected
 
   def build_product_barcodes
-    @product_barcodes = ProductBarcodes.new(product_barcodes_params)
+    @product_barcodes = ProductBarcode.new(product_barcodes_params)
   end
 
   def load_product_barcodes
-    @product_barcodes = ProductBarcodes.find(params[:id])
+    @product_barcodes = ProductBarcode.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:danger] = 'Product Barcodes not found'
     redirect_to :action => :index
   end
 
   def product_barcodes_params
-    params.fetch(:product_barcodes, {}).permit(:barcode, :sku, :description, :quantity)
+    params.fetch(:product_barcode, {}).permit(:barcode, :sku, :description, :quantity)
   end
 end

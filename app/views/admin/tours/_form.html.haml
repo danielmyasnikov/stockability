@@ -1,8 +1,8 @@
 = form.text_field :name
 = form.text_field :admin
 = form.text_field :active
-= form.text_field :started
-= form.text_field :completed
+= form.date_field :started
+= form.text_field :completed, data: { cms_datetime: true }
 
 = form.form_group :class => 'form-actions' do
   = form.submit :class => 'btn btn-primary'

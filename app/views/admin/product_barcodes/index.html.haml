@@ -1,5 +1,5 @@
 .page-header
-  = link_to 'New Product Barcodes', new_admin_product_barcodes_path, :class => 'btn btn-default pull-right'
+  = link_to 'New Product Barcode', new_admin_product_barcode_path, :class => 'btn btn-default pull-right'
   %h2= 'Product Barcodes'
 
 = paginate @product_barcodes, :theme => 'comfy'
@@ -11,15 +11,15 @@
     %th Description
     %th Quantity
     %th
-  - @product_barcodes.each do |product_barcodes|
+  - @product_barcodes.each do |product_barcode|
     %tr
-      %td.main= product_barcodes.barcode
-      %td= product_barcodes.sku
-      %td= product_barcodes.description
-      %td= product_barcodes.quantity
+      %td.main= product_barcode.barcode
+      %td= product_barcode.sku
+      %td= product_barcode.description
+      %td= product_barcode.quantity
       %td
         .btn-group.btn-group-sm
-          = link_to 'Edit', edit_admin_product_barcodes_path(product_barcodes), :class => 'btn btn-default'
-          = link_to 'Delete', admin_product_barcodes_path(product_barcodes), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+          = link_to 'Edit', edit_admin_product_barcode_path(product_barcode), :class => 'btn btn-default'
+          = link_to 'Delete', admin_product_barcode_path(product_barcode), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 = paginate @product_barcodes, :theme => 'comfy'

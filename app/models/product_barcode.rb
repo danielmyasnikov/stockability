@@ -1,4 +1,5 @@
-class ProductBarcodes < ActiveRecord::Base
+class ProductBarcode < ActiveRecord::Base
+  belongs_to :company
 
   # -- Relationships --------------------------------------------------------
 

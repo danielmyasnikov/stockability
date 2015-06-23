@@ -1,4 +1,5 @@
-# SA => SuperAdmin
+# --- Admins:
+# SuperAdmin
 # --- CLIENT
 # Admin
 # Manager
@@ -26,7 +27,7 @@ class Ability
   end
 
   def define_member_ability(user)
-    company_obj = [Bin, Product, Admin]
+    company_obj = [Bin, Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
 
     company_obj.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id

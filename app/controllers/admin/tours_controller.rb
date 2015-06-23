@@ -21,31 +21,31 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   end
 
-  # def new
-  #   render
-  # end
+  def new
+    render
+  end
 
-  # def edit
-  #   render
-  # end
+  def edit
+    render
+  end
 
-  # def create
-  #   @session.save!
-  #   flash[:success] = 'Session created'
-  #   redirect_to :action => :show, :id => @session
-  # rescue ActiveRecord::RecordInvalid
-  #   flash.now[:danger] = 'Failed to create Session'
-  #   render :action => :new
-  # end
+  def create
+    @tour.save!
+    flash[:success] = 'Session created'
+    redirect_to :action => :show, :id => @tour
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:danger] = 'Failed to create Session'
+    render :action => :new
+  end
 
-  # def update
-  #   @session.update_attributes!(session_params)
-  #   flash[:success] = 'Session updated'
-  #   redirect_to :action => :show, :id => @session
-  # rescue ActiveRecord::RecordInvalid
-  #   flash.now[:danger] = 'Failed to update Session'
-  #   render :action => :edit
-  # end
+  def update
+    @tour.update_attributes!(session_params)
+    flash[:success] = 'Session updated'
+    redirect_to :action => :show, :id => @tour
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:danger] = 'Failed to update Session'
+    render :action => :edit
+  end
 
   def destroy
     @tour.destroy
@@ -67,6 +67,7 @@ protected
   end
 
   def tour_params
-    params.fetch(:tour, {}).permit(:name)
+    params.fetch(:tour, {}).permit(:name,
+      :admin_id, :active, :started, :completed)
   end
 end

@@ -1,4 +1,5 @@
 class StockLevel < ActiveRecord::Base
+  belongs_to :company
 
   # -- Relationships --------------------------------------------------------
 

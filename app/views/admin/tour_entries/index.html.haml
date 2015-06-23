@@ -1,0 +1,33 @@
+.page-header
+  = link_to 'New Tour Entry', new_admin_tour_entry_path, :class => 'btn btn-default pull-right'
+  %h2= 'Tour Entries'
+
+= paginate @tour_entries, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Tour
+    %th Location
+    %th Bin
+    %th Sku
+    %th Barcode
+    %th Batch Code
+    %th Quantity
+    %th Active
+    %th
+  - @tour_entries.each do |tour_entry|
+    %tr
+      %td.main= tour_entry.tour
+      %td= tour_entry.location
+      %td= tour_entry.bin
+      %td= tour_entry.sku
+      %td= tour_entry.barcode
+      %td= tour_entry.batch_code
+      %td= tour_entry.quantity
+      %td= tour_entry.active
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_tour_entry_path(tour_entry), :class => 'btn btn-default'
+          = link_to 'Delete', admin_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @tour_entries, :theme => 'comfy'

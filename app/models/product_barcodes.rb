@@ -1,5 +1,4 @@
-class Location < ActiveRecord::Base
-
+class ProductBarcodes < ActiveRecord::Base
 
   # -- Relationships --------------------------------------------------------
 
@@ -8,7 +7,6 @@ class Location < ActiveRecord::Base
 
 
   # -- Validations ----------------------------------------------------------
-  # validates presence of code
 
 
   # -- Scopes ---------------------------------------------------------------

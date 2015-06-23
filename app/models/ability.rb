@@ -1,3 +1,9 @@
+# SA => SuperAdmin
+# --- CLIENT
+# Admin
+# Manager
+# Operator
+
 class Ability
   include CanCan::Ability
 

@@ -7,14 +7,14 @@ FactoryGirl.define do
       role :super_admin
     end
 
-    password              'password'
-    password_confirmation 'password'
-
-    trait :member do
+    trait :company_admin do
       login FFaker::Internet.user_name
-      role :member
+      role :admin
       company
     end
+
+    password              'password'
+    password_confirmation 'password'
 
   end
 

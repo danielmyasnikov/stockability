@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin, :type => :model do
 
   let(:super_admin) { FactoryGirl.build(:admin, :super_admin) }
-  let(:admin)       { FactoryGirl.build(:admin, :member) }
+  let(:admin)       { FactoryGirl.build(:admin, :company_admin) }
 
   context 'when an admin is member' do
     subject { admin.save! }

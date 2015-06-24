@@ -2,9 +2,11 @@
   %h2 Product
 
 %dl.dl-horizontal
-  %dt Name
+  %dt Product Name
   %dd= @product.name.presence || 'N/A'
-  %dt Barcode
-  %dd= @product.barcode.presence || 'N/A'
-  %dt Quantity
-  %dd= @product.quantity.presence || 'N/A'
+  %dt Sku
+  %dd= @product.sku.presence || 'N/A'
+  %dt Batch Tracked
+  %dd= @product.batch_tracked.presence || 'N/A'
+  %dt Description
+  %dd= @product.description.presence || 'N/A'

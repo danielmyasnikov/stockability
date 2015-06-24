@@ -10,14 +10,14 @@
   %table.table.table-hover.table-bordered
     %tr
       %th.main Name
-      %th Barcode
-      %th Quantity
+      %th sku
+      %th batch_tracked
       %th
     - @products.each do |product|
       %tr
         %td.main= product.name
-        %td= product.barcode
-        %td= product.quantity
+        %td= product.sku
+        %td= product.batch_tracked
         %td
           .btn-group.btn-group-sm
             = link_to 'Edit', edit_admin_product_path(product), :class => 'btn btn-default'

@@ -4,10 +4,10 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  AVAILABLE_ROLES = [ :member ].freeze
+  AVAILABLE_ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
   ROLES = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
 
-  validates_presence_of :company, :unless => :super_admin?
+  validates_presence_of :login, :company, :unless => :super_admin?
 
   after_create :save_with_token
 
@@ -17,9 +17,26 @@ class Admin < ActiveRecord::Base
     end
   end
 
-  def save_with_token
-    self.token = generate_token
-    save!
+  def self.options_for_select(user)
+    roles = []
+    if user.super_admin?
+      ROLES.select do |role|
+        roles.push [role.to_s.titleize, role]
+      end
+    else
+      ROLES.select do |role|
+        unless role == :super_admin
+          roles.push [role.to_s.titleize, role]
+        end
+      end
+    end
+    roles
+  end
+
+  def save_with_token; update_column(:token, generate_token); end
+
+  def email_required?
+    super_admin?
   end
 
 private

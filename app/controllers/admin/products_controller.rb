@@ -62,6 +62,7 @@ protected
   # end
 
   def product_params
-    params.fetch(:product, {}).permit(:name, :barcode, :quantity)
+    params.fetch(:product, {}).permit(:name, :batch_tracked,
+      :company_id, :sku, :description)
   end
 end

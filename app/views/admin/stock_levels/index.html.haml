@@ -1,0 +1,25 @@
+.page-header
+  = link_to 'New Stock Level', new_admin_stock_level_path, :class => 'btn btn-default pull-right'
+  %h2= 'Stock Levels'
+
+= paginate @stock_levels, :theme => 'comfy'
+
+%table.table.table-hover.table-bordered
+  %tr
+    %th.main Bin
+    %th Sku
+    %th Batch Code
+    %th Quantity
+    %th
+  - @stock_levels.each do |stock_level|
+    %tr
+      %td.main= stock_level.bin
+      %td= stock_level.sku
+      %td= stock_level.batch_code
+      %td= stock_level.quantity
+      %td
+        .btn-group.btn-group-sm
+          = link_to 'Edit', edit_admin_stock_level_path(stock_level), :class => 'btn btn-default'
+          = link_to 'Delete', admin_stock_level_path(stock_level), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+= paginate @stock_levels, :theme => 'comfy'

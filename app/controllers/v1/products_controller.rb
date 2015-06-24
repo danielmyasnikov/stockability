@@ -7,7 +7,7 @@ class V1::ProductsController < V1::BaseController
   rescue NoMethodError
     render json: { status: 'Product was not found' }, status: 404
   rescue ActiveRecord::RecordInvalid
-    render json: 
+    render json:
       { status: 'Unprocessed entity', product: @product.errors }, status: 422
   end
 
@@ -20,3 +20,11 @@ private
     params.require(:products).permit(:barcode, :quantity)
   end
 end
+
+
+{
+  "delete table products": {
+    barcode: 1,
+    quantity: 1
+  }
+}

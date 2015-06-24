@@ -5,11 +5,9 @@ feature 'Authentication' do
   given!(:site) { FactoryGirl.create(:site) }
   given!(:layout) { FactoryGirl.create(:layout) }
 
-  given(:password)     { FFaker::Internet.password(8) }
-  given!(:super_admin) { FactoryGirl.create(:admin, :super_admin,
-    :password => password) }
-  given!(:member)      { FactoryGirl.create(:admin, :member,
-    :password => password) }
+  given!(:super_admin) { FactoryGirl.create(:admin, :super_admin) }
+  given!(:member)      { FactoryGirl.create(:admin, :company_admin,
+    :email => 'daniel.myasnikov@hotmail.com') }
 
   background do
     visit '/admins/sign_in'
@@ -18,7 +16,7 @@ feature 'Authentication' do
   context 'login' do
     scenario 'as a super admin, after successful login I see companies index' do
       fill_in :admin_email, :with => super_admin.email
-      fill_in :admin_password, :with => password
+      fill_in :admin_password, :with => 'password'
 
       find('#login-button').click
 
@@ -27,7 +25,7 @@ feature 'Authentication' do
 
     scenario 'as a super admin, after successful login I see products index' do
       fill_in :admin_email, :with => member.email
-      fill_in :admin_password, :with => password
+      fill_in :admin_password, :with => 'password'
 
       find('#login-button').click
 

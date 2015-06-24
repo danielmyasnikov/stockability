@@ -58,6 +58,8 @@ protected
   end
 
   def company_params
-    params.fetch(:company, {}).permit(:title, :description, :address, :suburb, :postcode, :state, :phone, :abn, :acn)
+    params.fetch(:company, {}).permit(:title, :description, :address,
+      :address2, :address3, :suburb, :postcode, :state,
+      :phone, :abn, :email, :web)
   end
 end

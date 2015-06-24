@@ -2,6 +2,7 @@ class Tour < ActiveRecord::Base
 
   has_and_belongs_to_many :products
   belongs_to :admin
+  belongs_to :company
 
   comma do
     name
@@ -9,6 +10,14 @@ class Tour < ActiveRecord::Base
 
     admin :email
     products :size => 'Number of products scanned'
+  end
+
+  def self.options_for_select(current_ability)
+    accessible_by(current_ability).pluck(:name, :id)
+  end
+
+  def to_s
+    name
   end
 
   def create_or_update_products(products_attr)

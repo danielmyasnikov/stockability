@@ -8,6 +8,10 @@
   %dd= @company.description.presence || 'N/A'
   %dt Address
   %dd= @company.address.presence || 'N/A'
+  %dt Address 2
+  %dd= @company.address2.presence || 'N/A'
+  %dt Address 3
+  %dd= @company.address3.presence || 'N/A'
   %dt Suburb
   %dd= @company.suburb.presence || 'N/A'
   %dt Postcode
@@ -18,5 +22,7 @@
   %dd= @company.phone.presence || 'N/A'
   %dt Abn
   %dd= @company.abn.presence || 'N/A'
-  %dt Acn
-  %dd= @company.acn.presence || 'N/A'
+  %dt Email
+  %dd= @company.email.presence || 'N/A'
+  %dt Web Address
+  %dd= @company.web.presence || 'N/A'

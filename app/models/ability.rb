@@ -1,3 +1,10 @@
+# --- Admins:
+# SuperAdmin
+# --- CLIENT
+# Admin
+# Manager
+# Operator
+
 class Ability
   include CanCan::Ability
 
@@ -10,8 +17,10 @@ class Ability
     case
     when user.super_admin?
       define_sa_ability
-    when user.member?
-      define_member_ability(user)
+    when user.admin?
+      define_admin_ability(user)
+    when user.warehouse_manager?
+      define_manager_ability(user)
     end
   end
 
@@ -19,14 +28,22 @@ class Ability
     can :manage, :all
   end
 
-  def define_member_ability(user)
-    company_obj = [Bin, Product, Admin]
+  def define_admin_ability(user)
+    company_obj = [Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
 
     company_obj.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:view], Tour, :products => { :company_id => user.company_id }
+    can [:view], Company, :id => user.company_id
+  end
+
+  def define_manager_ability(user)
+    company_obj = [Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
+
+    company_obj.each do |_obj|
+      can [:view], _obj, :company_id => user.company_id
+    end
 
     can [:view], Company, :id => user.company_id
   end

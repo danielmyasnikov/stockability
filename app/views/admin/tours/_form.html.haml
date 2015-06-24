@@ -1,0 +1,10 @@
+= form.text_field :name
+= form.text_field :admin
+.form-group
+  %label.control-label.col-sm-2 Active
+  .col-sm-10= check_box_tag :tour_entry, :active, @tour_entry.active
+= form.text_field :started, data: { cms_datetime: true }
+= form.text_field :completed, data: { cms_datetime: true }
+
+= form.form_group :class => 'form-actions' do
+  = form.submit :class => 'btn btn-primary'

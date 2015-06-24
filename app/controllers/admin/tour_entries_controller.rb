@@ -58,6 +58,7 @@ protected
   end
 
   def tour_entry_params
-    params.fetch(:tour_entry, {}).permit(:tour_id, :location, :bin, :sku, :barcode, :batch_code, :quantity, :active)
+    params.fetch(:tour_entry, {}).permit(:tour_id, :location, :bin, :sku,
+      :barcode, :batch_code, :quantity, :active)
   end
 end

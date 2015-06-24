@@ -1,4 +1,28 @@
 .page-header
   %h2 Location
-  
-= debug @location
+
+%dl.dl-horizontal
+  %dt Code
+  %dd= @location.code.presence || 'N/A'
+  %dt Name
+  %dd= @location.name.presence || 'N/A'
+  %dt Phone
+  %dd= @location.phone.presence || 'N/A'
+  %dt Email
+  %dd= @location.email.presence || 'N/A'
+  %dt Address
+  %dd= @location.address.presence || 'N/A'
+  %dt Adress Second line
+  %dd= @location.address2.presence || 'N/A'
+  %dt Adress Third line
+  %dd= @location.address3.presence || 'N/A'
+  %dt Suburb
+  %dd= @location.suburb.presence || 'N/A'
+  %dt State
+  %dd= @location.state.presence || 'N/A'
+  %dt Postcode
+  %dd= @location.postcode.presence || 'N/A'
+  %dt Country
+  %dd= @location.country.presence || 'N/A'
+  %dt Description
+  %dd= @location.description.presence || 'N/A'

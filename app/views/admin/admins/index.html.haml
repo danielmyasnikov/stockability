@@ -7,11 +7,13 @@
 %table.table.table-hover.table-bordered
   %tr
     %th.main Email
+    %th Login
     %th Role
     %th
   - @admins.each do |admin|
     %tr
       %td.main= admin.email
+      %td= admin.login
       %td= admin.role
       %td
         .btn-group.btn-group-sm

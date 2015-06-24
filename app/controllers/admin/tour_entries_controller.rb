@@ -4,7 +4,7 @@ class Admin::TourEntriesController < Comfy::Admin::Cms::BaseController
   before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @tour_entries = TourEntry.page(params[:page])
+    @tour_entries = TourEntry.accessible_by(current_ability).page(params[:page])
   end
 
   def show

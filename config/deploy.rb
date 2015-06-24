@@ -34,12 +34,12 @@ set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/ca
 
 namespace :deploy do
 
-  # after :restart do
-  #   on roles(:web) do
-  #     within release_path do
-  #       execute 'sh config/unicorn_init.sh restart'
-  #     end
-  #   end
-  # end
+  task :restart_unicorn do
+    within release_path do
+      execute 'sh config/unicorn_init.sh restart'
+    end
+  end
+
+  after :restart, :restart_unicorn
 
 end

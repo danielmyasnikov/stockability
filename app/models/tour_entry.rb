@@ -1,5 +1,6 @@
 class TourEntry < ActiveRecord::Base
   belongs_to :company
+  belongs_to :tour
 
   # -- Relationships --------------------------------------------------------
 

@@ -17,10 +17,18 @@ class Admin < ActiveRecord::Base
     end
   end
 
-  def self.options_for_select
+  def self.options_for_select(user)
     roles = []
-    ROLES.select do |role|
-      roles.push [role.to_s.titleize, role]
+    if user.super_admin?
+      ROLES.select do |role|
+        roles.push [role.to_s.titleize, role]
+      end
+    else
+      ROLES.select do |role|
+        unless role == :super_admin
+          roles.push [role.to_s.titleize, role]
+        end
+      end
     end
     roles
   end

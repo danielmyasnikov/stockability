@@ -4,7 +4,7 @@ class Admin::ProductBarcodesController < Comfy::Admin::Cms::BaseController
   before_action :load_product_barcodes,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @product_barcodes = ProductBarcode.page(params[:page])
+    @product_barcodes = ProductBarcode.accessible_by(current_ability).page(params[:page])
   end
 
   def show
@@ -20,6 +20,7 @@ class Admin::ProductBarcodesController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @product_barcodes.company = current_company if current_company
     @product_barcodes.save!
     flash[:success] = 'Product Barcodes created'
     redirect_to :action => :show, :id => @product_barcodes

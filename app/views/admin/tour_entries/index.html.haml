@@ -17,7 +17,7 @@
     %th
   - @tour_entries.each do |tour_entry|
     %tr
-      %td.main= tour_entry.tour
+      %td.main= link_to tour_entry.tour, admin_tour_path(tour_entry.tour) if tour_entry.tour
       %td= tour_entry.location
       %td= tour_entry.bin
       %td= tour_entry.sku

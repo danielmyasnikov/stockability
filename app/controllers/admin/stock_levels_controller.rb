@@ -4,7 +4,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   before_action :load_stock_level,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @stock_levels = StockLevel.page(params[:page])
+    @stock_levels = StockLevel.accessible_by(current_ability).page(params[:page])
   end
 
   def show
@@ -20,6 +20,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @stock_level.company = current_company if current_company
     @stock_level.save!
     flash[:success] = 'Stock Level created'
     redirect_to :action => :show, :id => @stock_level

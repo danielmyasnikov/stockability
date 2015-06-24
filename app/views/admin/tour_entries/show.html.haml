@@ -2,6 +2,8 @@
   %h2 Tour Entry
 
 %dl.dl-horizontal
+  %dt Tour Name
+  %dd= @tour_entry.tour || 'N/A'
   %dt Location
   %dd= @tour_entry.location.presence || 'N/A'
   %dt Bin

@@ -4,7 +4,7 @@ class Admin::LocationsController < Comfy::Admin::Cms::BaseController
   before_action :load_location,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @locations = Location.page(params[:page])
+    @locations = Location.accessible_by(current_ability).page(params[:page])
   end
 
   def show
@@ -20,6 +20,7 @@ class Admin::LocationsController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @location.company = current_company if current_company
     @location.save!
     flash[:success] = 'Location created'
     redirect_to :action => :show, :id => @location

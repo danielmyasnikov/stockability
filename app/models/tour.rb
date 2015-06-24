@@ -12,6 +12,14 @@ class Tour < ActiveRecord::Base
     products :size => 'Number of products scanned'
   end
 
+  def self.options_for_select(current_ability)
+    accessible_by(current_ability).pluck(:name, :id)
+  end
+
+  def to_s
+    name
+  end
+
   def create_or_update_products(products_attr)
     products_attr.each do |product_attr|
       product = Product.find_or_initialize_by(:barcode =>

@@ -8,25 +8,22 @@
 %table.table.table-hover.table-bordered
   %tr
     %th Name
-    %th Produts Barcodes
-    %th Produts Quantity
+    %th Admin
+    %th Active
+    %th Started
+    %th Completed
     %th
   - @tours.each do |tour|
     %tr
-      %td= _session.name
-      %td
-        - _session.products.each do |product|
-          %span Barcode:
-          = link_to product.barcode, admin_product_path(product)
-          %br
-      %td
-        - _session.products.each do |product|
-          %span Quantity:
-          = product.quantity
-          %br
+      %td= tour.name
+      %td= tour.admin.try(:login)
+      %td= tour.active? ? 'Yes' : 'No'
+      %td= tour.started.try(:strftime, "%H:%M - %d/%m/%Y")
+      %td= tour.completed.try(:strftime, "%H:%M - %d/%m/%Y")
       %td
         .btn-group.btn-group-sm
-          = link_to 'Download CSV', admin_tour_path(_session, :format => :csv), :class => 'btn btn-success'
-          = link_to 'Delete', admin_tour_path(_session), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+          = link_to 'Edit', edit_admin_tour_path(tour), :class => 'btn btn-default'
+          = link_to 'Download CSV', admin_tour_path(tour, :format => :csv), :class => 'btn btn-success'
+          = link_to 'Delete', admin_tour_path(tour), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 = paginate @tours, :theme => 'comfy'

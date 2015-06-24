@@ -20,6 +20,7 @@ class Admin::TourEntriesController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @tour_entry.company = current_company if current_company
     @tour_entry.save!
     flash[:success] = 'Tour Entry created'
     redirect_to :action => :show, :id => @tour_entry
@@ -57,6 +58,6 @@ protected
   end
 
   def tour_entry_params
-    params.fetch(:tour_entry, {}).permit(:tour, :location, :bin, :sku, :barcode, :batch_code, :quantity, :active)
+    params.fetch(:tour_entry, {}).permit(:tour_id, :location, :bin, :sku, :barcode, :batch_code, :quantity, :active)
   end
 end

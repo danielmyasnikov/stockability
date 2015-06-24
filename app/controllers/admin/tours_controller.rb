@@ -30,6 +30,7 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
   end
 
   def create
+    @tour.company = current_company if current_company
     @tour.save!
     flash[:success] = 'Session created'
     redirect_to :action => :show, :id => @tour

@@ -3,10 +3,10 @@
 - if @admin.new_record?
   = form.text_field :password
 - if current_admin.super_admin?
-  = form.select :role, Admin.options_for_select
+  = form.select :role, Admin.options_for_select(current_admin)
   = form.select :company_id, options_from_collection_for_select(@companies, 'id', 'title', @admin.company_id), prompt: 'Select company'
 - else
-  = form.select :role, Admin.options_for_select
+  = form.select :role, Admin.options_for_select(current_admin)
 
 .form-group
   %label.control-label.col-sm-2 Token

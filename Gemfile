@@ -27,6 +27,7 @@ gem 'versionist'
 
 gem 'spring-commands-rspec'
 gem 'comma'
+gem 'apipie-rails'
 
 group :test do
   gem 'rspec'

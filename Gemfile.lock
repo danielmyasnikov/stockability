@@ -39,6 +39,8 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.8)
+    apipie-rails (0.3.4)
+      json
     arel (6.0.0)
     autoprefixer-rails (5.1.7)
       execjs
@@ -296,6 +298,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails
   cancancan
   capistrano (~> 3.4.0)
   capistrano-rails

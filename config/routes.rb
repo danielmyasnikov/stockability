@@ -1,8 +1,6 @@
 WarehouseCms::Application.routes.draw do
 
-  namespace :admin do
-    resources :tours
-  end
+  apipie
 
   namespace :admin do
     resources :locations
@@ -13,7 +11,9 @@ WarehouseCms::Application.routes.draw do
     resources :bins
     resources :companies
     resources :products
-    resources :tours, :only => [ :index, :show, :destroy ]
+    resources :tours do
+      collection { post :import }
+    end
   end
 
   # think to change to member
@@ -22,8 +22,8 @@ WarehouseCms::Application.routes.draw do
   devise_for :admins
 
   api_version(:module => "v1", :path => { :value => "api/v1" }, :defaults => {:format => "json"}) do
-    put  'products/update'
-    post 'tours', :controller => 'tours', :action => 'create'
+    resources :products
+    resources :tours
     resources :tokens, :only => :create
   end
 

@@ -7,9 +7,10 @@ class Tour < ActiveRecord::Base
   comma do
     name
     created_at { |time| time.strftime("%Y %m %d - %H:%M") }
-
+    active
+    started    { |started| started.strftime("%Y %m %d - %H:%M") }
+    completed  { |completed| completed.strftime("%Y %m %d - %H:%M") }
     admin :email
-    products :size => 'Number of products scanned'
   end
 
   def self.options_for_select(current_ability)

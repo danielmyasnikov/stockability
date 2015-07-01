@@ -3,12 +3,20 @@ class V1::BaseController < ApiController
   before_action :token_authorize!
   respond_to :json
 
+  rescue_from Apipie::ParamInvalid, Apipie::ParamMissing,
+    with: :error_params
+
   api :GET, '/v1/my-awesome-request?auth[token]=my-awesome-token'
   desc 'Any request requires authentication token'
   param :auth, Hash, required: true  do
     param :token, String, required: true
   end
   def any_request; end
+
+  def error_params(_error)
+    render json:
+      { error: _error.message }, status: 400
+  end
 
 private
   def token_presence

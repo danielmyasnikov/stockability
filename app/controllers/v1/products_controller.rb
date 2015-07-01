@@ -7,7 +7,7 @@ class V1::ProductsController < V1::BaseController
   api!
   desc 'Returns ALL accessible by a admin/manager products'
   def index
-    @products = Product.accessible_by(current_ability)
+    @products = Product.accessible_by(current_ability).since(since_params[:since])
     render json: @products
   end
 
@@ -20,14 +20,12 @@ class V1::ProductsController < V1::BaseController
   api!
   desc 'Creates a product according and product barcodes'
   param :product, Hash, required: true  do
-    param :name, String, required: true
-    param :company_id, String, required: true
     param :sku, String, required: true
     param :description, String
-    param :batch_tracked, :bool
+    param :batch_tracked, String
     param :product_barcodes, Array do
       param :barcode, String, required: true
-      param :quantity, Float, required: true
+      param :quantity, String, required: true
       param :description, String
     end
   end
@@ -42,15 +40,13 @@ class V1::ProductsController < V1::BaseController
 
   api!
   desc 'Updates a product found by database ID and product barcodes'
-  param :product, Hash, required: true  do
-    param :name, String, required: true
-    param :company_id, String, required: true
-    param :sku, String, required: true
+  param :product, Hash, required: true do
+    param :sku, String
     param :description, String
-    param :batch_tracked, :bool
+    param :batch_tracked, String
     param :product_barcodes, Array do
       param :barcode, String, required: true
-      param :quantity, Float, required: true
+      param :quantity, String, required: true
       param :description, String
     end
   end
@@ -79,15 +75,18 @@ private
 
   def build_product
     product          = Product.new product_params
-    @product_service = Services::ProductBarcodesService.new(product, barcode_params)
+    @product_service = Services::ProductBarcodesService.new(product, barcode_params, current_admin)
   end
 
   def product_params
-    params.require(:product).permit(
-      :name, :company_id, :sku, :description, :batch_tracked)
+    params.require(:product).permit(:sku, :description, :batch_tracked, :since)
   end
 
   def barcode_params
-    params.require(:product).fetch(:product_barcodes, {})
+    params.require(:product).permit(:product_barcodes => [:barcode, :quantity, :description])
+  end
+
+  def since_params
+    params.permit(:since)
   end
 end

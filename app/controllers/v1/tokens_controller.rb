@@ -4,15 +4,18 @@ class V1::TokensController < V1::BaseController
 
   api!
   desc 'Creates token for further authentication'
-  param :admin, Hash, required: true  do
+  param :client, Hash, required: true  do
     param :login, String
     param :email, String
     param :password, String
   end
 
   def create
-    admin = Admin.find_by_email(authetication_params[:email])
-    admin ||= Admin.find_by_email(authetication_params[:login])
+    email = authetication_params[:email].presence
+    admin = Admin.find_by_email(email) if email
+
+    login = authetication_params[:login].presence
+    admin ||= Admin.find_by_login(login) if login
 
     if admin.nil?
       failed
@@ -29,10 +32,10 @@ class V1::TokensController < V1::BaseController
 private
 
   def authetication_params
-    params.require(:admin).permit(:email, :password)
+    params.require(:client).permit(:email, :login, :password)
   end
 
-  def failed(message = 'Wrong Email')
+  def failed(message = 'Wrong Email or Login')
     render json: { text: message }, status: 401
   end
 end

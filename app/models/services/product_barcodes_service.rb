@@ -1,10 +1,11 @@
 class Services::ProductBarcodesService
   attr_accessor :errors, :product, :product_barcodes
 
-  def initialize(product, product_barcodes_params = [])
-    @product = product
+  def initialize(product, product_barcodes_params = [], current_admin = nil)
+    @product         = product
+    @product.company ||= current_admin.company
 
-    product_barcodes_params.each do |barcode|
+    product_barcodes_params.fetch(:product_barcodes).each do |barcode|
       product_barcodes << @product.product_barcodes.new(barcode)
     end
 
@@ -38,7 +39,7 @@ class Services::ProductBarcodesService
   def update_attributes(product_params, barcode_params = [])
     product.update_attributes product_params.reject { |x| x == :product_barcodes }
 
-    barcode_params.each do |barcode|
+    barcode_params.fetch(:product_barcodes).each do |barcode|
       product_barcode = @product.product_barcodes.find_or_initialize_by(:barcode => barcode[:barcode])
       begin
         product_barcode.update_attributes(barcode)

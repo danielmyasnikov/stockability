@@ -5,8 +5,15 @@ class ApiController < ApplicationController
   rescue_from ActiveRecord::ActiveRecordError,
     with: :show_errors
 
-  rescue_from Apipie::ParamMissing, ActionController::ParameterMissing,
+  rescue_from CanCan::AccessDenied, with: :show_denied_access
+
+  rescue_from ActionController::ParameterMissing,
     with: :missing_param
+
+  def show_denied_access(_error)
+    render json:
+      { error: _error.message, data: 'Forbidden access' }, status: 403
+  end
 
   def missing_param(_error)
     render json:

@@ -5,7 +5,7 @@ class Services::ProductBarcodesService
     @product         = product
     @product.company ||= current_admin.company
 
-    product_barcodes_params.fetch(:product_barcodes).each do |barcode|
+    product_barcodes_params.fetch(:product_barcodes, []).each do |barcode|
       product_barcodes << @product.product_barcodes.new(barcode)
     end
 

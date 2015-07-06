@@ -60,9 +60,6 @@ private
   def update_barcodes_attributes
     product_barcodes.each do |barcode|
       @barcode = barcode
-      p '>>> params <<<'
-      p barcode_params
-      p obj_product.find_or_initialize_and_create_barcode(barcode_params)
       begin
         obj_product.find_or_initialize_and_create_barcode(barcode_params)
       rescue ActiveRecord::RecordInvalid => error

@@ -1,7 +1,7 @@
 class V1::ProductsController < V1::BaseController
-  before_filter :find_product, except: [:index, :create]
+  before_filter :find_product, only: [:destroy, :update, :show]
 
-  before_action :build_product, :only => [:create]
+  before_action :initialize_product_service, :only => [:create, :update]
   load_and_authorize_resource :except => [:create]
 
   api!
@@ -23,17 +23,18 @@ class V1::ProductsController < V1::BaseController
     param :sku, String, required: true
     param :description, String
     param :batch_tracked, String
-    param :product_barcodes, Array do
-      param :barcode, String, required: true
-      param :quantity, String, required: true
-      param :description, String
-    end
+  end
+  param :product_barcodes, Array do
+    param :barcode, String, required: true
+    param :quantity, String, required: true
+    param :description, String
   end
   def create
-    if @product_service.save
-      render json: { status: 'Ok', product: @product_service.product }
+    @product_service.create
+    if @product_service.errors.empty?
+      render json: { status: 'Ok', product: @product_service.obj_product }
     else
-      render json: { status: 'Product was not saved', errors: @product_service.errors },
+      render json: { status: 'Product was not saved', errors: @product_service.errors.map(&:to_s) },
         status: 422
     end
   end
@@ -51,8 +52,7 @@ class V1::ProductsController < V1::BaseController
     end
   end
   def update
-    @product_service = Services::ProductBarcodesService.find(@product)
-    @product_service.update_attributes(product_params, barcode_params)
+    @product_service.update
     render json: { status: 'Ok', product: @product_service.product }
   rescue Services::ProductBarcodesService::NotFound
     render json: { status: "Product was not found", sku: product_params[:product][:sku] }, status: 404
@@ -73,9 +73,12 @@ private
     @product = Product.find(params[:id])
   end
 
-  def build_product
-    product          = Product.new product_params
-    @product_service = Services::ProductBarcodesService.new(product, barcode_params, current_admin)
+  def initialize_product_service
+    @product_service = Services::ProductBarcodesService.new(
+      :product          => product_params,
+      :product_barcodes => barcode_params.fetch(:product_barcodes, []),
+      :admin            => current_admin
+    )
   end
 
   def product_params
@@ -83,7 +86,7 @@ private
   end
 
   def barcode_params
-    params.require(:product).permit(:product_barcodes => [:barcode, :quantity, :description])
+    params.permit(:product_barcodes => [:barcode, :quantity, :description])
   end
 
   def since_params

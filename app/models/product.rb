@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   belongs_to :company
 
   # validates on 1 company 1 sku
+  validates_presence_of :company_id
   validates_uniqueness_of :sku
   has_many :product_barcodes, foreign_key: :sku, primary_key: :sku
 
@@ -19,8 +20,15 @@ class Product < ActiveRecord::Base
     name
   end
 
-  def to_s
-    "Name: #{name || 'N/A'}, Barcode: #{barcode}, Quantity: #{quantity.to_s}"
+  def find_or_initialize_and_create_barcode(barcode_params)
+    barcode = product_barcodes.find_by_barcode(barcode_params[:barcode])
+    p '.... product ....'
+    p barcode
+    if barcode
+      barcode.update_attributes(barcode_params)
+    else
+      product_barcodes.create(barcode_params)
+    end
   end
 
 end

@@ -6,6 +6,7 @@ class V1::ProductsController < V1::BaseController
 
   api!
   desc 'Returns ALL accessible by a admin/manager products'
+  param :since, String, desc: 'Displays products since the date, eg "14 July 2015"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
     render json: @products
@@ -45,11 +46,11 @@ class V1::ProductsController < V1::BaseController
     param :sku, String
     param :description, String
     param :batch_tracked, String
-    param :product_barcodes, Array do
-      param :barcode, String, required: true
-      param :quantity, String, required: true
-      param :description, String
-    end
+  end
+  param :product_barcodes, Array do
+    param :barcode, String, required: true
+    param :quantity, String, required: true
+    param :description, String
   end
   def update
     @product_service.update

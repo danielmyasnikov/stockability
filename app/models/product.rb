@@ -22,8 +22,6 @@ class Product < ActiveRecord::Base
 
   def find_or_initialize_and_create_barcode(barcode_params)
     barcode = product_barcodes.find_by_barcode(barcode_params[:barcode])
-    p '.... product ....'
-    p barcode
     if barcode
       barcode.update_attributes(barcode_params)
     else

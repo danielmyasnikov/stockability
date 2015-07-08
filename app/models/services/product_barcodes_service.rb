@@ -4,6 +4,7 @@ class Services::ProductBarcodesService
   attr_accessor :errors, :product, :product_barcodes, :obj_product, :admin, :barcode
 
   def initialize(params)
+
     @admin            = params[:admin]
     @product          = params[:product]
     @product_barcodes = params[:product_barcodes]
@@ -12,16 +13,23 @@ class Services::ProductBarcodesService
   end
 
   def create
+    # consider transactions create discuss with Andrey
     create_product
     create_product_barcodes if allow_continue?
   end
 
   def update
     find_product
+    # consider transactions update discuss with Andrey
     if allow_continue?
       update_product_attributes
       update_barcodes_attributes
     end
+  end
+
+  def product_exists?
+    @obj_product = Product.find_by_sku_and_company_id(product_params[:sku], product_params[:company_id])
+    @obj_product.nil?
   end
 
   def errors

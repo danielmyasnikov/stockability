@@ -1,7 +1,9 @@
 .page-header
   .btn-group.pull-right
+    = link_to 'Upload via CSV', import_admin_products_path, :class => 'btn btn-default'
     = link_to 'New Product', new_admin_product_path, :class => 'btn btn-default'
     = link_to 'Download All As CSV', admin_products_path(:format => :csv), :class => 'btn btn-success'
+
   %h2= 'Products'
 
 - if @products.present?
@@ -9,13 +11,14 @@
 
   %table.table.table-hover.table-bordered
     %tr
-      %th.main Name
+      %th.main description
       %th sku
       %th batch_tracked
+
       %th
     - @products.each do |product|
       %tr
-        %td.main= product.name
+        %td.main= product.description
         %td= product.sku
         %td= product.batch_tracked
         %td

@@ -1,8 +1,4 @@
 .page-header
-
-  = form_tag import_admin_tours, multipart: true do
-    = file_field_tag :file
-    = submit_tag "Import"
   = link_to 'Download All As CSV', admin_tours_path(:format => :csv), :class => 'btn btn-success pull-right'
   = link_to 'New Tour', new_admin_tour_path, :class => 'btn btn-default pull-right'
   %h2= 'Tours'

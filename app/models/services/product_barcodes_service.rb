@@ -50,7 +50,7 @@ private
   end
 
   def update_product_attributes
-    obj_product.update_attributes(product_params)
+    obj_product.update_attributes!(product_params)
   rescue ActiveRecord::RecordInvalid => error
     errors << error
   end
@@ -70,7 +70,7 @@ private
     product_barcodes.each do |barcode|
       @barcode = barcode
       begin
-        obj_product.find_or_initialize_and_create_barcode(barcode_params)
+        find_or_initialize_and_create_barcode(barcode_params)
       rescue ActiveRecord::RecordInvalid => error
         errors << error
       end
@@ -105,5 +105,14 @@ private
 
   def allow_continue?
     product_barcodes.present? && product_exists?
+  end
+
+  def find_or_initialize_and_create_barcode(barcode_params)
+    barcode = obj_product.product_barcodes.find_by_barcode(barcode_params[:barcode])
+    if barcode
+      barcode.update_attributes!(barcode_params)
+    else
+      obj_product.product_barcodes.create!(barcode_params)
+    end
   end
 end

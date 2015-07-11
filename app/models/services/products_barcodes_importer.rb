@@ -1,5 +1,5 @@
 class Services::ProductsBarcodesImporter
-  attr_reader :errors, :admin, :services, :file, :product
+  attr_reader :errors, :admin, :services, :file, :product, :successfully_imported, :warnings
   def initialize(file, admin)
     @file  = file
     @admin = admin
@@ -18,6 +18,7 @@ class Services::ProductsBarcodesImporter
 
   def parse_file
     file.each do |ff|
+      next if major_issues?(ff)
       product = products.select { |x| x[:sku] == ff['sku'] }
       if product.empty?
         product = {}
@@ -50,10 +51,16 @@ class Services::ProductsBarcodesImporter
     services.each do |_service|
       _service.product_exists? ? _service.update : _service.create
       if _service.errors.present?
-        errors << { product[:sku].to_sym => _service.errors }
+        warnings << { _service.obj_product.sku => _service.errors }
+      else
+        successfully_imported << { _service.obj_product.sku => ['Successfully imported product and product barcodes'] }
       end
     end
 
+  end
+
+  def successfully_imported
+    @successfully_imported ||= []
   end
 
   def products
@@ -62,6 +69,10 @@ class Services::ProductsBarcodesImporter
 
   def errors
     @errors ||= []
+  end
+
+  def warnings
+    @warnings ||= []
   end
 
   def services
@@ -76,10 +87,21 @@ private
 
   def product_params
     {
-      :sku => product[:sku],
+      :sku           => product[:sku],
       :batch_tracked => product[:batch_tracked],
-      :description => product[:description]
+      :description   => product[:description]
     }
+  end
+
+  def major_issues?(row)
+    if row['sku'].nil?
+      errors << { 'Missing SKU' => ['Please provide SKU'] }
+      return true
+    end
+    if row['barcode'].nil?
+      errors << { 'Missing barcode number' => ['Please provide barcode number'] }
+      return true
+    end
   end
 
 end

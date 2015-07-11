@@ -19,14 +19,4 @@ class Product < ActiveRecord::Base
   comma do
     name
   end
-
-  def find_or_initialize_and_create_barcode(barcode_params)
-    barcode = product_barcodes.find_by_barcode(barcode_params[:barcode])
-    if barcode
-      barcode.update_attributes(barcode_params)
-    else
-      product_barcodes.create(barcode_params)
-    end
-  end
-
 end

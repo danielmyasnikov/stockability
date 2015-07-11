@@ -7,20 +7,43 @@
 
   = form_tag process_import_admin_products_path, multipart: true, :class => 'form-upload' do
     = file_field_tag :file, :style => 'display: inline;'
-    = submit_tag 'Import', class: 'btn btn-primary'
+    = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
 
   %small Download a sample CSV template to see an example of the format required.
   = link_to "Download Sample", sample_admin_products_path(:format => :csv), :class => 'btn btn-default'
 
 
-.container
-  .row
-    - if @errors.present?
-      - @errors.each do |err|
-        - err.each do |key, values|
-          %b= "For SKU: #{key}"
-          - values.each do |value|
-            %ul
-              %li= value
-    - else
-      %p= @message
+
+- @errors.each do |err|
+  .alert.alert-danger{role: 'alert'}
+    %span.sr-only Error:
+    - err.each do |key, values|
+      .text-left
+        %b= "#{key}"
+        - values.each do |value|
+          %ul
+            %li= value
+
+- @warnings.each do |warning|
+  .alert.alert-warning{role: 'alert'}
+    %span.sr-only Warning:
+    - warning.each do |key, values|
+      .text-left
+        %b= "#{key}"
+        - values.each do |value|
+          %ul
+            %li= value
+
+- @successfully_imported.each do |success|
+  .alert.alert-success{role: 'alert'}
+    %span.sr-only Success:
+    - success.each do |key, values|
+      .text-left
+        %b= "#{key}"
+        - values.each do |value|
+          %ul
+            %li= value
+
+
+
+.products_import{ id: 'page-id' }

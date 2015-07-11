@@ -18,9 +18,9 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
   end
 
   def import
-    @successfully_imported = Rails.cache.read("#{current_company.id}-importable-product-successfully_imported")
-    @warnings              = Rails.cache.read("#{current_company.id}-importable-product-warnings")
-    @errors                = Rails.cache.read("#{current_company.id}-importable-product-errors")
+    @successfully_imported = Rails.cache.read("#{current_company.id}-importable-product-successfully_imported") || []
+    @warnings              = Rails.cache.read("#{current_company.id}-importable-product-warnings") || []
+    @errors                = Rails.cache.read("#{current_company.id}-importable-product-errors") || []
   end
 
   def process_import

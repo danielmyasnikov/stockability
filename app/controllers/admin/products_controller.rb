@@ -11,6 +11,30 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
     end
   end
 
+  def sample
+    respond_to do |format|
+      format.csv { render :csv => sample_file }
+    end
+  end
+
+  def import
+    @successfully_imported = Rails.cache.read("#{current_company.id}-importable-product-successfully_imported")
+    @warnings              = Rails.cache.read("#{current_company.id}-importable-product-warnings")
+    @errors                = Rails.cache.read("#{current_company.id}-importable-product-errors")
+  end
+
+  def process_import
+    file      = params[:file]
+    @importer = Services::ProductsBarcodesImporter.new(file.tempfile, current_admin)
+    @importer.import
+
+    Rails.cache.write("#{current_company.id}-importable-product-successfully_imported", @importer.successfully_imported)
+    Rails.cache.write("#{current_company.id}-importable-product-warnings", @importer.warnings)
+    Rails.cache.write("#{current_company.id}-importable-product-errors", @importer.errors)
+
+    redirect_to action: :import
+  end
+
   def show
     render
   end
@@ -64,5 +88,12 @@ protected
   def product_params
     params.fetch(:product, {}).permit(:name, :batch_tracked,
       :company_id, :sku, :description)
+  end
+
+  def sample_file
+    CSV.generate do |row|
+      row << ['sku', 'barcode']
+      row << ['123sku', '12barcode']
+    end
   end
 end

@@ -10,10 +10,12 @@ WarehouseCms::Application.routes.draw do
     resources :admins, :except => :show
     resources :bins
     resources :companies
-    resources :products
-    resources :tours do
-      collection { post :import }
+    resources :products do
+      collection { get :sample }
+      collection { get :import }
+      collection { post :process_import }
     end
+    resources :tours
   end
 
   # think to change to member

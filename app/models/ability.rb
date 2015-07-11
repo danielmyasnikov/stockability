@@ -29,21 +29,25 @@ class Ability
   end
 
   def define_admin_ability(user)
-    company_obj = [Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
+    company_obj = [Product, Admin, Tour, TourEntry, StockLevel]
 
     company_obj.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id
     end
 
+    can [:manage], ProductBarcode, :product => { :company_id => user.company_id }
+
     can [:view], Company, :id => user.company_id
   end
 
   def define_manager_ability(user)
-    company_obj = [Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
+    company_obj = [Product, Admin, Tour, TourEntry, StockLevel]
 
     company_obj.each do |_obj|
       can [:view], _obj, :company_id => user.company_id
     end
+
+    can [:view], ProductBarcode, :product => { :company_id => user.company_id }
 
     can [:view], Company, :id => user.company_id
   end

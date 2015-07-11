@@ -49,7 +49,9 @@ class Services::ProductsBarcodesImporter
   def save_services
     services.each do |_service|
       _service.product_exists? ? _service.update : _service.create
-      errors << _service.errors
+      if _service.errors.present?
+        errors << { product[:sku].to_sym => _service.errors }
+      end
     end
 
   end

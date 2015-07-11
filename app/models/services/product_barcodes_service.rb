@@ -19,17 +19,18 @@ class Services::ProductBarcodesService
   end
 
   def update
-    find_product
-    # consider transactions update discuss with Andrey
-    if allow_continue?
+    if product_exists?
+      # consider transactions update discuss with Andrey
       update_product_attributes
       update_barcodes_attributes
+    else
+      raise NotFound
     end
   end
 
   def product_exists?
     @obj_product = Product.find_by_sku_and_company_id(product_params[:sku], product_params[:company_id])
-    @obj_product.nil?
+    @obj_product.present?
   end
 
   def errors
@@ -103,6 +104,6 @@ private
   end
 
   def allow_continue?
-    product_barcodes.present? && errors.blank?
+    product_barcodes.present? && product_exists?
   end
 end

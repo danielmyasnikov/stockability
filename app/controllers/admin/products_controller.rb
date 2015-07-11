@@ -1,5 +1,6 @@
 class Admin::ProductsController < Comfy::Admin::Cms::BaseController
-
+  before_action :read_errors, :only => :import
+  after_action :clear_errors, :only => :import
   before_action :build_product,  :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
 
@@ -17,9 +18,7 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
     end
   end
 
-  def import
-    @errors = Rails.cache.read("#{current_company.id}-importable-product-errors")
-  end
+  def import; end
 
   def process_import
     file = params[:file]
@@ -28,9 +27,9 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
 
     if @importer.errors
       Rails.cache.write("#{current_company.id}-importable-product-errors", @importer.errors)
-      redirect_to action: :import, :flash => { :errors => @importer.errors }
+      redirect_to action: :import
     else
-      flash[:success] = 'Successfully imported'
+      Rails.cache.write(:message, 'Successfully imported products')
       redirect_to action: :import
     end
   end
@@ -95,5 +94,13 @@ protected
       row << ['sku', 'barcode']
       row << ['123sku', '12barcode']
     end
+  end
+
+  def read_errors
+    @errors = Rails.cache.read("#{current_company.id}-importable-product-errors")
+  end
+
+  def clear_errors
+    @errors = Rails.cache.write("#{current_company.id}-importable-product-errors", nil)
   end
 end

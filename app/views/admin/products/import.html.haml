@@ -17,6 +17,10 @@
   .row
     - if @errors.present?
       - @errors.each do |err|
-        %p There are errors
+        - err.each do |key, values|
+          %b= "For SKU: #{key}"
+          - values.each do |value|
+            %ul
+              %li= value
     - else
-      %p No errors.
+      %p= @message

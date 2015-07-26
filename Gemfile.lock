@@ -107,6 +107,7 @@ GEM
       sass-rails (>= 4.0.3)
     comma (3.2.4)
       activesupport (>= 3.0.0)
+    database_cleaner (1.4.1)
     devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -308,6 +309,7 @@ DEPENDENCIES
   coffee-rails
   comfortable_mexican_sofa
   comma
+  database_cleaner
   devise
   factory_girl_rails
   ffaker

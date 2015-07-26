@@ -25,6 +25,8 @@ WarehouseCms::Application.routes.draw do
 
   api_version(:module => "v1", :path => { :value => "api/v1" }, :defaults => {:format => "json"}) do
     resources :products
+    resources :stock_levels
+    resources :tour_entries
     resources :tours
     resources :tokens, :only => :create
   end

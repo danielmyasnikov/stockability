@@ -8,13 +8,7 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :sku
   has_many :product_barcodes, foreign_key: :sku, primary_key: :sku
 
-  scope :since, -> (since) {
-    if since
-      where("updated_at > ?", since.to_datetime)
-    else
-      all
-    end
-  }
+  scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
 
   comma do
     name

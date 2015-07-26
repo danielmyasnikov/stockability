@@ -13,6 +13,8 @@ class Tour < ActiveRecord::Base
     admin :email
   end
 
+  scope :since, -> (since) { since.present? ? where('updated_at > ?', since.to_datetime) : all }
+
   def self.options_for_select(current_ability)
     accessible_by(current_ability).pluck(:name, :id)
   end

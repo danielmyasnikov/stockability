@@ -1,12 +1,12 @@
 class V1::ProductsController < V1::BaseController
-  before_filter :find_product, only: [:destroy, :update, :show]
 
-  before_action :initialize_product_service, :only => [:create, :update]
   load_and_authorize_resource :except => [:create]
+  before_filter :find_product, only: [:destroy, :update, :show]
+  before_action :initialize_product_service, :only => [:create, :update]
 
   api!
-  desc 'Returns ALL accessible by a admin/manager products'
-  param :since, String, desc: 'Displays products since the date, eg "14 July 2015"'
+  desc 'Returns ALL accessible by a admin/manager/operator products'
+  param :since, String, desc: 'Displays products since the date, eg "14-july-2015"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
     render json: @products

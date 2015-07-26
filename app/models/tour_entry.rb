@@ -12,7 +12,7 @@ class TourEntry < ActiveRecord::Base
 
 
   # -- Scopes ---------------------------------------------------------------
-
+  scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
 
   # -- Class Methods --------------------------------------------------------
 

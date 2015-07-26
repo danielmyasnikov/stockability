@@ -1,19 +1,20 @@
 class Services::ProductBarcodesService
   class NotFound < StandardError; end
 
-  attr_accessor :errors, :product, :product_barcodes, :obj_product, :admin, :barcode
+  attr_accessor :product_errors, :barcode_errors, :product, :product_barcodes,
+    :obj_product, :admin, :barcode, :product_failed, :failed_barcodes,
+    :product_failed_on_create
+
 
   def initialize(params)
-
     @admin            = params[:admin]
-    @product          = params[:product]
-    @product_barcodes = params[:product_barcodes]
+    @product          = params.fetch(:product)
+    @product_barcodes = params.fetch(:product_barcodes, [])
 
     self
   end
 
   def create
-    # consider transactions create discuss with Andrey
     create_product
     create_product_barcodes if allow_continue?
   end
@@ -33,8 +34,16 @@ class Services::ProductBarcodesService
     @obj_product.present?
   end
 
-  def errors
-    @errors ||= []
+  def product_errors
+    @product_errors ||= []
+  end
+
+  def barcode_errors
+    @barcode_errors ||= []
+  end
+
+  def failed_barcodes
+    @failed_barcodes ||= {}
   end
 
 private
@@ -44,7 +53,8 @@ private
       @obj_product = Product.create!(product_params)
       true
     rescue ActiveRecord::RecordInvalid => error
-      errors << error
+      product_errors << error
+      record_product_failure
       false
     end
   end
@@ -52,16 +62,18 @@ private
   def update_product_attributes
     obj_product.update_attributes!(product_params)
   rescue ActiveRecord::RecordInvalid => error
-    errors << error
+    product_errors << error
+    record_product_failure
   end
 
   def create_product_barcodes
     product_barcodes.each do |barcode|
       @barcode = barcode
       begin
-        obj_product.product_barcodes.create(barcode_params)
+        obj_product.product_barcodes.create!(barcode_params)
       rescue ActiveRecord::RecordInvalid => error
-        errors << error
+        barcode_errors << error
+        record_barcode_failure
       end
     end
   end
@@ -72,7 +84,8 @@ private
       begin
         find_or_initialize_and_create_barcode(barcode_params)
       rescue ActiveRecord::RecordInvalid => error
-        errors << error
+        barcode_errors << error
+        record_barcode_failure
       end
     end
   end
@@ -114,5 +127,17 @@ private
     else
       obj_product.product_barcodes.create!(barcode_params)
     end
+  end
+
+  def record_product_failure(on_create = true)
+    if on_create
+      @product_failed_on_create = true
+    else
+      @product_failed = true
+    end
+  end
+
+  def record_barcode_failure
+    failed_barcodes.merge!(barcode[:barcode] => barcode_errors)
   end
 end

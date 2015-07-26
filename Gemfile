@@ -38,4 +38,5 @@ group :test do
   gem 'capybara-email'
   gem 'launchy'
   gem 'ffaker'
+  gem 'database_cleaner'
 end

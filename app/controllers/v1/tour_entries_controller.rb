@@ -29,8 +29,8 @@ private
 
   def tour_entry_params
     params.require(:tour_entry).permit(
-      :tour_id, :sku, :batch_code, :quantity, :location, :bin, :sku,
-      :barcode, :batch_code, :quantity, :active)
+      :tour_id, :sku, :batch_code, :quantity, :location_id, :bin_id, :barcode,
+      :active)
   end
 
   def since_params

@@ -1,4 +1,5 @@
 .page-header
+  = link_to 'Upload via CSV', import_admin_stock_levels_path, :class => 'btn btn-default btn-primary pull-right'
   = link_to 'New Stock Level', new_admin_stock_level_path, :class => 'btn btn-default pull-right'
   %h2= 'Stock Levels'
 
@@ -6,14 +7,16 @@
 
 %table.table.table-hover.table-bordered
   %tr
-    %th.main Bin
+    %th.main Location Code
+    %th Bin Code
     %th Sku
     %th Batch Code
     %th Quantity
     %th
   - @stock_levels.each do |stock_level|
     %tr
-      %td.main= stock_level.bin
+      %td.main= stock_level.location.try(:code)
+      %td= stock_level.bin.try(:code)
       %td= stock_level.sku
       %td= stock_level.batch_code
       %td= stock_level.quantity

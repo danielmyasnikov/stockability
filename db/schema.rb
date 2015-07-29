@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727233032) do
+ActiveRecord::Schema.define(version: 20150729074255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150727233032) do
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
   create_table "bins", force: :cascade do |t|
-    t.string   "title"
+    t.string   "code"
     t.string   "location_code"
     t.integer  "company_id"
     t.datetime "created_at"
@@ -231,14 +231,14 @@ ActiveRecord::Schema.define(version: 20150727233032) do
   end
 
   create_table "stock_levels", force: :cascade do |t|
-    t.integer  "bin_id"
+    t.string   "bin_code"
     t.string   "sku"
     t.string   "batch_code"
     t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
-    t.integer  "location_id"
+    t.string   "location_code"
   end
 
   create_table "tour_entries", force: :cascade do |t|

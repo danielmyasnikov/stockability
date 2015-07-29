@@ -17,7 +17,7 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
 
   def sample
     respond_to do |format|
-      format.csv { render :csv => sample_file }
+      format.csv { render text: Product.sample }
     end
   end
 
@@ -86,23 +86,20 @@ protected
       :company_id, :sku, :description)
   end
 
-  def sample_file
-    CSV.generate do |row|
-      row << ['sku', 'barcode']
-      row << ['123sku', '12barcode']
-    end
-  end
-
   def save_import
-    Rails.cache.write("#{current_company.id}-importable-product-successfully_imported", @importer)
+    Rails.cache.write(data_key, @importer)
   end
 
   def read_import
-    @importer = Rails.cache.read("#{current_company.id}-importable-product-successfully_imported")
+    @importer = Rails.cache.read(data_key)
     @importer_results = @importer.try(:display_results) || []
   end
 
   def forget_import
-    Rails.cache.write("#{current_company.id}-importable-product-successfully_imported", nil)
+    Rails.cache.write(data_key, nil)
+  end
+
+  def data_key
+    "#{current_company.try(:id)}-importable-product-successfully_imported"
   end
 end

@@ -10,14 +10,14 @@
     = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
 
   %small Download a sample CSV template to see an example of the format required.
-  = link_to "Download Sample", sample_admin_products_path(:format => :csv), :class => 'btn btn-default'
+  = link_to "Download Sample", sample_admin_products_path(format: :csv), :class => 'btn btn-default'
 
 
 %table.table
   %thead
     %tr
       %th sku
-      %th batch_tracked
+      %th batch code
       %th description
       %th barcode
       %th description

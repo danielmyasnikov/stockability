@@ -4,14 +4,14 @@ class Tour < ActiveRecord::Base
   belongs_to :admin
   belongs_to :company
 
-  comma do
-    name
-    created_at { |time| time.strftime("%Y %m %d - %H:%M") }
-    active
-    started    { |started| started.strftime("%Y %m %d - %H:%M") }
-    completed  { |completed| completed.strftime("%Y %m %d - %H:%M") }
-    admin :email
-  end
+  # comma do
+  #   name
+  #   created_at { |time| time.strftime("%Y %m %d - %H:%M") }
+  #   active
+  #   started    { |started| started.strftime("%Y %m %d - %H:%M") }
+  #   completed  { |completed| completed.strftime("%Y %m %d - %H:%M") }
+  #   admin :email
+  # end
 
   scope :since, -> (since) { since.present? ? where('updated_at > ?', since.to_datetime) : all }
 

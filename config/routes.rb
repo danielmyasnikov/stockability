@@ -6,7 +6,11 @@ WarehouseCms::Application.routes.draw do
     resources :locations
     resources :product_barcodes
     resources :tour_entries
-    resources :stock_levels
+    resources :stock_levels do
+      collection { get :sample }
+      collection { get :import }
+      collection { post :process_import }
+    end
     resources :admins, :except => :show
     resources :bins
     resources :companies

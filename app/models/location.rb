@@ -5,4 +5,6 @@ class Location < ActiveRecord::Base
 
   # does not assume if the code is upcase or downcase
   validates :code, uniqueness: { scope: [:company_id] }
+
+  validates_presence_of :name
 end

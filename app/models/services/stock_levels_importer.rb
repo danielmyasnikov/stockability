@@ -40,10 +40,7 @@ private
   def normalize_data
     file.each do |row|
       if @imported_row = HashWithIndifferentAccess.new(row)
-        p row
-        p imported_row[:sku]
         @location    = Location.find_or_initialize_by(location_params)
-        p @location
         @bin         = Bin.find_or_initialize_by(bin_params)
         @product     = Product.find_or_initialize_by(product_params)
         @stock_level = StockLevel.find_or_initialize_by(stock_level_params)
@@ -53,18 +50,11 @@ private
   end
 
   def save_data
-    # define biz rules
-    p @location
     @location.save
     @bin.save
     @product.save
     @stock_level.save
-
-    p ">>>> RESULT <<<<"
-    p import_params
-    p results
-
-    @results.push(import_params)
+    results.push(import_params)
   end
 
   def stock_level_params
@@ -102,11 +92,23 @@ private
 
   def import_params
     {
-      sku: imported_row[:sku],
-      batch_code: imported_row[:batch_code],
-      quantity: imported_row[:quantity],
-      bin_code: imported_row[:bin_code],
-      location_code: imported_row[:location_code]
+      sku:                 imported_row[:sku],
+      batch_code:          imported_row[:batch_code],
+      quantity:            imported_row[:quantity],
+      bin_code:            imported_row[:bin_code],
+      location_code:       imported_row[:location_code],
+      product_errors:      import_errors(product),
+      bin_errors:          import_errors(bin),
+      location_errors:     import_errors(location),
+      stock_levels_errors: import_errors(product)
     }
+  end
+
+  def import_errors(item)
+    if item.errors.present?
+      item.errors.full_messages.join(', ')
+    else
+      'OK'
+    end
   end
 end

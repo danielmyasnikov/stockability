@@ -17,7 +17,7 @@ FactoryGirl.define do
   end
 
   factory :bin do
-    title FFaker::Internet.user_name
+    sequence(:code) { |i| FFaker::Internet.user_name }
     location
   end
 
@@ -26,7 +26,7 @@ FactoryGirl.define do
   end
 
   factory :location do
-    code FFaker::Internet.user_name
+    sequence(:code) { |i| FFaker::Internet.user_name }
   end
 
   factory :product do

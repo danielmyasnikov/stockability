@@ -12,7 +12,7 @@ class StockLevel < ActiveRecord::Base
 
 
   # -- Validations ----------------------------------------------------------
-  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code] }
+  # validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code] }
 
   # -- Scopes ---------------------------------------------------------------
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }

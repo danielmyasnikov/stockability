@@ -16,11 +16,11 @@ class V1::StockLevelsController < V1::BaseController
   api!
   desc 'Creates stock level item'
   param :stock_level, Hash, required: true do
-    param :bin_id,      String
+    param :bin_code,      String
     param :sku,         String
     param :batch_code,  String
     param :quantity,    String
-    param :location_id, String
+    param :location_code, String
   end
   def create
     @stock_level = StockLevel.create!(stock_level_params.merge(company_params))
@@ -30,11 +30,11 @@ class V1::StockLevelsController < V1::BaseController
   api!
   desc 'Updates stock level item'
   param :stock_level, Hash, required: true do
-    param :bin_id,      String
+    param :bin_code,      String
     param :sku,         String
     param :batch_code,  String
     param :quantity,    String
-    param :location_id, String
+    param :location_code, String
   end
   def update
     @stock_level.update_attributes!(stock_level_params)
@@ -55,7 +55,7 @@ private
   end
 
   def stock_level_params
-    params.require(:stock_level).permit(:bin_id, :sku, :batch_code, :quantity, :location_id)
+    params.require(:stock_level).permit(:bin_code, :sku, :batch_code, :quantity, :location_code)
   end
 
   def company_params

@@ -1,0 +1,44 @@
+.page-header
+  .btn-group.pull-right
+    = link_to '< Back to stock levels', admin_stock_levels_path, :class => 'btn btn-default'
+    = link_to 'New stock level', new_admin_stock_level_path, :class => 'btn btn-default'
+
+  %h2= 'Importing Stock Levels'
+
+  = form_tag process_import_admin_stock_levels_path, multipart: true, :class => 'form-upload' do
+    = file_field_tag :file, :style => 'display: inline;'
+    = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
+
+  %small Download a sample CSV template to see an example of the format required.
+  = link_to "Download Sample", sample_admin_stock_levels_path(:format => :csv), :class => 'btn btn-default'
+
+
+%table.table
+  %thead
+    %tr
+      %th SKU
+      %th Batch Code
+      %th Quantity
+      %th Bin Code
+      %th Location Code
+      %th Product Errors
+      %th Bin Errors
+      %th Location Errors
+      %th Stock Levels Errors
+  %tbody
+    - @results.each do |result|
+      %tr
+        %td= result[:sku]
+        %td= result[:batch_code]
+        %td= result[:quantity]
+        %td= result[:bin_code]
+        %td= result[:location_code]
+        %td= result[:product_errors]
+        %td= result[:bin_errors]
+        %td= result[:location_errors]
+        %td= result[:stock_levels_errors]
+
+.products_import{ id: 'page-id' }
+
+
+

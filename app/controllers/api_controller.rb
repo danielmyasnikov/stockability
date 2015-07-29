@@ -2,7 +2,7 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
-  rescue_from ActiveRecord::ActiveRecordError,
+  rescue_from ActiveRecord::RecordInvalid,
     with: :show_errors
 
   rescue_from CanCan::AccessDenied, with: :show_denied_access
@@ -21,7 +21,6 @@ class ApiController < ApplicationController
   end
 
   def show_errors(_error)
-    render json:
-      { error: _error.message }, status: 422
+    render json: { error: _error.message }, status: 422
   end
 end

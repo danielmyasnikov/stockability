@@ -1,20 +1,33 @@
 class V1::ToursController < V1::BaseController
-  before_filter :build_tour
+  load_and_authorize_resource :except => [:create]
+
+  def index
+    @tours = Tour.accessible_by(current_ability).since(since_params)
+    render json: @tours
+  end
+
+  def show
+    render json: @tour
+  end
 
   def create
-    @tour.save!
-    if tour_params[:tour][:products].present?
-      @tour.create_or_update_products(tour_params[:tour][:products])
-    end
-    render json: { status: 'Ok', tour: @tour }
+    @tour = Tour.create!(tour_params.merge(company_params))
+    render json: @tour
+  end
+
+  def update
+    @tour.update_attributes!(tour_params)
+    render json: @tour
+  end
+
+  def destroy
+    @tour.destroy
+    render json: @tour
   end
 
 protected
-  def build_tour
-    @tour = Tour.new(:admin => @client)
-  end
 
   def tour_params
-    params.permit(:tour => { :products => [:barcode, :quantity] })
+    params.require(:tour).permit(:name, :active, :started, :completed)
   end
 end

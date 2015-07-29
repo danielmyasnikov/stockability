@@ -23,7 +23,7 @@ class V1::TokensController < V1::BaseController
     end
 
     if admin.valid_password?(authetication_params[:password])
-      render json: { token: admin.token }, :message => 'Wrong Password'
+      render json: { token: admin.token }
     else
       failed('Wrong Password')
     end

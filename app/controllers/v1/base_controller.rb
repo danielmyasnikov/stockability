@@ -4,7 +4,7 @@ class V1::BaseController < ApiController
   respond_to :json
 
   rescue_from Apipie::ParamInvalid, Apipie::ParamMissing,
-    with: :error_params
+      with: :error_params
 
   api :GET, '/v1/my-awesome-request?auth[token]=my-awesome-token'
   desc 'Any request requires authentication token'
@@ -34,5 +34,13 @@ private
 
   def token_params
     params.fetch(:auth, {}).permit(:token)
+  end
+
+  def company_params
+    { company_id: current_admin.company_id }
+  end
+
+  def since_params
+    params.permit(:since)
   end
 end

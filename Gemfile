@@ -26,7 +26,7 @@ gem 'kaminari'
 gem 'versionist'
 
 gem 'spring-commands-rspec'
-gem 'comma'
+# gem 'comma'
 gem 'apipie-rails'
 
 group :test do
@@ -38,4 +38,5 @@ group :test do
   gem 'capybara-email'
   gem 'launchy'
   gem 'ffaker'
+  gem 'database_cleaner'
 end

@@ -10,40 +10,34 @@
     = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
 
   %small Download a sample CSV template to see an example of the format required.
-  = link_to "Download Sample", sample_admin_products_path(:format => :csv), :class => 'btn btn-default'
+  = link_to "Download Sample", sample_admin_products_path(format: :csv), :class => 'btn btn-default'
 
 
-
-- @errors.each do |err|
-  .alert.alert-danger{role: 'alert'}
-    %span.sr-only Error:
-    - err.each do |key, values|
-      .text-left
-        %b= "#{key}"
-        - values.each do |value|
-          %ul
-            %li= value
-
-- @warnings.each do |warning|
-  .alert.alert-warning{role: 'alert'}
-    %span.sr-only Warning:
-    - warning.each do |key, values|
-      .text-left
-        %b= "#{key}"
-        - values.each do |value|
-          %ul
-            %li= value
-
-- @successfully_imported.each do |success|
-  .alert.alert-success{role: 'alert'}
-    %span.sr-only Success:
-    - success.each do |key, values|
-      .text-left
-        %b= "#{key}"
-        - values.each do |value|
-          %ul
-            %li= value
-
-
+%table.table
+  %thead
+    %tr
+      %th sku
+      %th batch code
+      %th description
+      %th barcode
+      %th description
+      %th quantity
+      %th product status
+      %th product messages
+      %th barcode status
+      %th barcode messages
+  %tbody
+    - @importer_results.each do |result|
+      %tr
+        %td= result[:sku]
+        %td= result[:batch_tracked]
+        %td= result[:description]
+        %td= result[:barcode]
+        %td= result[:barcode_description]
+        %td= result[:quantity]
+        %td= interpret_status(result[:status])
+        %td= interpret_message(result[:messages])
+        %td= interpret_status(result[:barcode_status])
+        %td= interpret_message(result[:barcode_messages])
 
 .products_import{ id: 'page-id' }

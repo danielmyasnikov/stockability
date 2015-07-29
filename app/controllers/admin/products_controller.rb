@@ -3,6 +3,10 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
   before_action :build_product,  :only => [:new, :create]
   load_and_authorize_resource :except => [:new, :create]
 
+  after_action :save_import, only: :process_import
+  before_action :read_import, only: :import
+  after_action :forget_import, only: :import
+
   def index
     @products = Product.accessible_by(current_ability).page(params[:page])
     respond_to do |format|
@@ -13,24 +17,16 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
 
   def sample
     respond_to do |format|
-      format.csv { render :csv => sample_file }
+      format.csv { render text: Product.sample }
     end
   end
 
-  def import
-    @successfully_imported = Rails.cache.read("#{current_company.id}-importable-product-successfully_imported") || []
-    @warnings              = Rails.cache.read("#{current_company.id}-importable-product-warnings") || []
-    @errors                = Rails.cache.read("#{current_company.id}-importable-product-errors") || []
-  end
+  def import; end
 
   def process_import
     file      = params[:file]
     @importer = Services::ProductsBarcodesImporter.new(file.tempfile, current_admin)
     @importer.import
-
-    Rails.cache.write("#{current_company.id}-importable-product-successfully_imported", @importer.successfully_imported)
-    Rails.cache.write("#{current_company.id}-importable-product-warnings", @importer.warnings)
-    Rails.cache.write("#{current_company.id}-importable-product-errors", @importer.errors)
 
     redirect_to action: :import
   end
@@ -90,10 +86,20 @@ protected
       :company_id, :sku, :description)
   end
 
-  def sample_file
-    CSV.generate do |row|
-      row << ['sku', 'barcode']
-      row << ['123sku', '12barcode']
-    end
+  def save_import
+    Rails.cache.write(data_key, @importer)
+  end
+
+  def read_import
+    @importer = Rails.cache.read(data_key)
+    @importer_results = @importer.try(:display_results) || []
+  end
+
+  def forget_import
+    Rails.cache.write(data_key, nil)
+  end
+
+  def data_key
+    "#{current_company.try(:id)}-importable-product-successfully_imported"
   end
 end

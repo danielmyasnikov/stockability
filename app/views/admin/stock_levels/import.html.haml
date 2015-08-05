@@ -21,10 +21,7 @@
       %th Quantity
       %th Bin Code
       %th Location Code
-      %th Product Errors
-      %th Bin Errors
-      %th Location Errors
-      %th Stock Levels Errors
+      %th Errors
   %tbody
     - @results.each do |result|
       %tr
@@ -33,10 +30,7 @@
         %td= result[:quantity]
         %td= result[:bin_code]
         %td= result[:location_code]
-        %td= result[:product_errors]
-        %td= result[:bin_errors]
-        %td= result[:location_errors]
-        %td= result[:stock_levels_errors]
+        %td= result[:errors]
 
 .products_import{ id: 'page-id' }
 

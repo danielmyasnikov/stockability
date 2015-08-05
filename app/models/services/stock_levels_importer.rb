@@ -1,12 +1,21 @@
 class Services::StockLevelsImporter
-  attr_reader :errors, :admin, :file, :imported_row, :stock_level,
-              :successfully_imported, :warnings, :location, :bin, :product, :results
+  cattr_reader :results
+  attr_reader :errors, :admin, :file, :imported_row, :stock_level, :custom_errors,
+              :successfully_imported, :warnings, :location, :product
 
   STATUS = {
     0 => 'OK',
     1 => 'WARNINGS',
     2 => 'ERROR'
   }
+
+  def self.nullify_results
+    @@results = []
+  end
+
+  def self.results
+    @@results ||= []
+  end
 
   def initialize(file, admin)
     @file  = file
@@ -17,14 +26,6 @@ class Services::StockLevelsImporter
     parse_file
     validate_data
     normalize_data
-  end
-
-  def results
-    @results ||= []
-  end
-
-  def imported_row
-    @imported_row ||= {}
   end
 
 private
@@ -40,21 +41,22 @@ private
   def normalize_data
     file.each do |row|
       if @imported_row = HashWithIndifferentAccess.new(row)
-        @location    = Location.find_or_initialize_by(location_params)
-        @bin         = Bin.find_or_initialize_by(bin_params)
-        @product     = Product.find_or_initialize_by(product_params)
-        @stock_level = StockLevel.find_or_initialize_by(stock_level_params)
+        @custom_errors = nil
+        @location      = Location.find_by(location_params)
+        @product       = Product.find_or_initialize_by(product_params)
+        @stock_level   = StockLevel.new(stock_level_params)
         save_data
       end
     end
   end
 
   def save_data
-    @location.save
-    @bin.save
-    @product.save
-    @stock_level.save
-    results.push(import_params)
+    if @location.try(:valid?) && @product.save
+      @stock_level.save
+    else
+      @custom_errors = 'Location or Product have issues'
+    end
+    Services::StockLevelsImporter.results.push(import_params)
   end
 
   def stock_level_params
@@ -75,14 +77,6 @@ private
     }
   end
 
-  def bin_params
-    {
-      code:          imported_row[:bin_code],
-      location_code: imported_row[:location_code],
-      company_id:    admin.company_id
-    }
-  end
-
   def location_params
     {
       code:       imported_row[:location_code],
@@ -92,23 +86,40 @@ private
 
   def import_params
     {
-      sku:                 imported_row[:sku],
-      batch_code:          imported_row[:batch_code],
-      quantity:            imported_row[:quantity],
-      bin_code:            imported_row[:bin_code],
-      location_code:       imported_row[:location_code],
-      product_errors:      import_errors(product),
-      bin_errors:          import_errors(bin),
-      location_errors:     import_errors(location),
-      stock_levels_errors: import_errors(product)
+      sku:           imported_row[:sku],
+      batch_code:    imported_row[:batch_code],
+      quantity:      imported_row[:quantity],
+      bin_code:      imported_row[:bin_code],
+      location_code: imported_row[:location_code],
+      errors:        errors
     }
   end
 
-  def import_errors(item)
+  def errors
+    if custom_errors
+      custom_errors
+    else
+      import_errors(location, product, stock_level)
+    end
+  end
+
+  def imported_row
+    @imported_row ||= {}
+  end
+
+  def import_errors(*items)
+    _errors = ''
+    items.each do |item|
+      if import_error(item)
+        _errors << import_error(item)
+      end
+    end
+    _errors
+  end
+
+  def import_error(item)
     if item.errors.present?
       item.errors.full_messages.join(', ')
-    else
-      'OK'
     end
   end
 end

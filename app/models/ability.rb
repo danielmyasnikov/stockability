@@ -29,7 +29,7 @@ class Ability
   end
 
   def define_admin_ability(user)
-    company_obj = [Product, Admin, Tour, TourEntry, StockLevel]
+    company_obj = [Location, Product, Admin, Tour, TourEntry, StockLevel]
 
     company_obj.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id
@@ -41,7 +41,7 @@ class Ability
   end
 
   def define_manager_ability(user)
-    company_obj = [Product, Admin, Tour, TourEntry, StockLevel]
+    company_obj = [Location, Product, Admin, Tour, TourEntry, StockLevel]
 
     company_obj.each do |_obj|
       can [:view], _obj, :company_id => user.company_id

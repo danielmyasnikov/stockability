@@ -5,6 +5,7 @@ RSpec.describe 'TourEntries API', type: :request do
   let(:my_tour_entries)  { FactoryGirl.create_list(:tour_entry, 3, :company_id => @client.company_id) }
   # !other company id should not be harcoded
   let(:other_tour_entry) { FactoryGirl.create(:tour_entry, :company_id => 1) }
+  let!(location) { FactoryGirl.create(:location, code: "ABC123") }
 
   let(:tour_entry_params) {
     {
@@ -13,8 +14,8 @@ RSpec.describe 'TourEntries API', type: :request do
         sku: 'TEST555',
         batch_code: 'HELLOWORLD',
         quantity: 1,
-        location: 1,
-        bin: 1,
+        location_code: 'ABC123',
+        bin_code: '100',
         barcode: 'BAR111',
         active: true
       }

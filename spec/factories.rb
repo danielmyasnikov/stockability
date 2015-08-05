@@ -16,11 +16,6 @@ FactoryGirl.define do
     password_confirmation 'password'
   end
 
-  factory :bin do
-    sequence(:code) { |i| FFaker::Internet.user_name }
-    location
-  end
-
   factory :company do
     title { FFaker::Name.first_name }
   end
@@ -41,7 +36,7 @@ FactoryGirl.define do
   end
 
   factory :stock_level do
-    bin
+    bin_code 'A07'
     sku 'ABC123'
     batch_code 'ZYC334'
     quantity 1
@@ -62,7 +57,7 @@ FactoryGirl.define do
   factory :tour_entry do
     tour
     location
-    bin
+    bin_code 'A08'
     sku 'BLA333'
     barcode 'BAR555'
     batch_code 'ZYX444'

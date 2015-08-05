@@ -6,3 +6,13 @@ TADA list:
 => change admins to users (think through the naming)
 => insert query for index action
 => array in query params -> still investigating ???
+
+
+TADA LIST (05/08/2015)
+=> apipie to write
+=> download as csv
+=> to show all the new columns for stock level
+=> add indecies for foreign keys
+=> merge bins with stock levels
+=> locations should not be created by stock_level csv import
+=> compandy_id and location_code as composite key

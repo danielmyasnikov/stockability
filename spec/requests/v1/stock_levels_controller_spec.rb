@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'StockLevels API', type: :request do
 
   let(:my_stock_levels)    { FactoryGirl.create_list(:stock_level, 3, :company_id => @client.company_id) }
-  let(:other_stock_levels) { FactoryGirl.create(:stock_level, :company_id => 3) }
+  let(:other_stock_levels) { FactoryGirl.create(:stock_level, :company_id => @client.company_id + 1) }
 
   before :all do; STOCKLEVELAPI = '/api/v1/stock_levels'; end
 
@@ -24,8 +24,9 @@ RSpec.describe 'StockLevels API', type: :request do
   end
 
   describe '.index' do
-    # it's not verifying cancancan methods
-    # that's for not screwing up
+    # It's a good idea to test the correct behaviour of the index action
+    # That must look like tests are written to check cancancan behaviour
+    # However it's a good idea to double check the behavour all together
     it 'does not display stock levels from a different company' do
       my_stock_levels
       other_stock_levels
@@ -71,11 +72,11 @@ RSpec.describe 'StockLevels API', type: :request do
   describe '.create' do
     let(:stock_level_params) {
          { stock_level: {
-          bin_id: 1,
+          bin_code: 'BIN111',
           sku: 'TEST555',
           batch_code: 'HELLOWORLD',
           quantity: 1,
-          location_id: 1
+          location_code: 'LOC445'
         }
       }
     }
@@ -99,13 +100,12 @@ RSpec.describe 'StockLevels API', type: :request do
 
   describe '.update' do
     let(:stock_level_params) {
-      {
-        stock_level: {
-          bin_id: 1,
+      { stock_level: {
+          bin_code: 'BIN111',
           sku: 'TEST555',
           batch_code: 'HELLOWORLD',
           quantity: 1,
-          location_id: 1
+          location_code: 'LOC445',
         }
       }
     }

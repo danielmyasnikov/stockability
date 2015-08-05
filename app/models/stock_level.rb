@@ -5,14 +5,15 @@ class StockLevel < ActiveRecord::Base
   # => this will fail if a different company will have a product with the same SKU
   belongs_to :product, foreign_key: :sku, primary_key: :sku
   belongs_to :location, foreign_key: :location_code, primary_key: :code
-  belongs_to :bin, foreign_key: :bin_code, primary_key: :code
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------
 
 
   # -- Validations ----------------------------------------------------------
-  # validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code] }
+  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code], message: 'Record is not unique' }
+  validates_presence_of :sku, :location_code
+  validates_associated :product, :location
 
   # -- Scopes ---------------------------------------------------------------
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
@@ -29,5 +30,9 @@ class StockLevel < ActiveRecord::Base
   end
 
   # -- Instance Methods -----------------------------------------------------
-
+  def quantity=(quantity)
+    unless quantity.to_i > 0
+      update_column(:quantity, 1)
+    end
+  end
 end

@@ -78,7 +78,7 @@ protected
   end
 
   def stock_level_params
-    params.fetch(:stock_level, {}).permit(:bin, :sku, :batch_code, :quantity)
+    params.fetch(:stock_level, {}).permit(:bin_code, :sku, :batch_code, :quantity)
   end
 
   def save_import
@@ -87,11 +87,12 @@ protected
 
   def read_import
     @importer = Rails.cache.read(data_key)
-    @results = @importer.try(:results) || []
+    @results = Services::StockLevelsImporter.results
   end
 
   def forget_import
     Rails.cache.write(data_key, nil)
+    Services::StockLevelsImporter.nullify_results
   end
 
   def data_key

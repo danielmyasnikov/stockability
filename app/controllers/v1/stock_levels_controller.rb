@@ -3,7 +3,7 @@ class V1::StockLevelsController < V1::BaseController
 
   api!
   desc 'Returns ALL accessible by a admin/manager/operator stock levels'
-  param :since, String, desc: 'Displays stock levels since the date, eg "14-july-2015"'
+  param :since, String, desc: 'Displays stock levels since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @stock_levels = StockLevel.accessible_by(current_ability).since(since_params[:since])
     render json: @stock_levels
@@ -17,10 +17,10 @@ class V1::StockLevelsController < V1::BaseController
   desc 'Creates stock level item'
   param :stock_level, Hash, required: true do
     param :bin_code,      String
-    param :sku,         String
-    param :batch_code,  String
-    param :quantity,    String
-    param :location_code, String
+    param :sku,           String, required: true
+    param :batch_code,    String
+    param :quantity,      String
+    param :location_code, String, required: true
   end
   def create
     @stock_level = StockLevel.create!(stock_level_params.merge(company_params))
@@ -31,10 +31,8 @@ class V1::StockLevelsController < V1::BaseController
   desc 'Updates stock level item'
   param :stock_level, Hash, required: true do
     param :bin_code,      String
-    param :sku,         String
-    param :batch_code,  String
-    param :quantity,    String
-    param :location_code, String
+    param :batch_code,    String
+    param :quantity,      String
   end
   def update
     @stock_level.update_attributes!(stock_level_params)

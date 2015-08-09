@@ -2,6 +2,8 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
+  # create custom error handler, so you can rise and catch exceptions inside v1 controller
+
   rescue_from ActiveRecord::RecordInvalid,
     with: :show_errors
 

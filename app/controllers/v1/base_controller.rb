@@ -14,8 +14,7 @@ class V1::BaseController < ApiController
   def any_request; end
 
   def error_params(_error)
-    render json:
-      { error: _error.message }, status: 400
+    render json: { error: _error.message }, status: 400
   end
 
 private

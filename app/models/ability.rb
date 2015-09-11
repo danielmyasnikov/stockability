@@ -7,6 +7,7 @@
 
 class Ability
   include CanCan::Ability
+  COMPANY_OBJ = [Location, Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
 
   def initialize(user)
     alias_action :index, :show, to: :view
@@ -22,7 +23,7 @@ class Ability
     when user.warehouse_manager?
       define_manager_ability(user)
     when user.warehouse_operator?
-      define_manager_ability(user)
+      define_operator_ability(user)
     end
   end
 
@@ -33,29 +34,21 @@ private
   end
 
   def define_admin_ability(user)
-    company_obj = [Location, Product, Admin, Tour, TourEntry, StockLevel]
-
-    company_obj.each do |_obj|
+    COMPANY_OBJ.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:manage], ProductBarcode, :product => { :company_id => user.company_id }
-
-    can [:view], Company, :id => user.company_id
+    can [:manage], Company, :id => user.company_id
   end
 
-  # questionable?? discuess with Andrey
   def define_manager_ability(user)
-    company_obj = [Location, Product, Admin, Tour, TourEntry, StockLevel]
-
-    company_obj.each do |_obj|
-      can [:view], _obj, :company_id => user.company_id
+    COMPANY_OBJ.each do |_obj|
+      can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:view], ProductBarcode, :product => { :company_id => user.company_id }
-
     can [:view], Company, :id => user.company_id
   end
 
+  # read only access
   def define_operator_ability(user); end
 end

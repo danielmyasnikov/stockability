@@ -16,3 +16,22 @@ TADA LIST (05/08/2015)
 => merge bins with stock levels
 => locations should not be created by stock_level csv import
 => compandy_id and location_code as composite key
+
+TADA LIST (07/09/2015)
+=== API ===
+=> API: products: few caviats on products creation (done);
+=> API: stock levels: updates SKU of a stock level (done)
+=> API: tour entries: write quantity as 1 if nil provided (done)
+=> API: write product barcodes
+=> fix model issues: if a different company will have a product with the same SKU
+=== ADMIN (AS SUPER ADMIN) ===
+=> Companies: super admin failed to update a company
+=> Admin: update an super / admin / manager / operator fails. STACK LEVEL TOO DEEP
+=== ADMIN (AS MANAGER) ===
+=> Products: should not be able to update products
+=> Products: should / or should not upload products via CSV
+=> Products: can't download products: No comma format for class Product defined for style default
+=> (OPINION) Products: product view page is not descriptive, shall we put there product barcodes with stock levels?
+=> Product Barcodes: similar abilities as above
+=> Admins: stack level to deep. Manager should not create admins?
+=> Workflow with tour approvals? TourEntry approved => Product updated?

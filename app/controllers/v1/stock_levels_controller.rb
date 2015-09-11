@@ -36,12 +36,12 @@ class V1::StockLevelsController < V1::BaseController
   api!
   desc 'Updates stock level item'
   param :stock_level, Hash, required: true do
-    param :bin_code,      String
-    param :batch_code,    String
-    param :quantity,      String
+    param :bin_code,   String
+    param :batch_code, String
+    param :quantity,   String, required: true
   end
   def update
-    @stock_level.update_attributes!(stock_level_params)
+    @stock_level.update_attributes!(stock_level_update_params)
     render json: @stock_level
   end
 
@@ -60,6 +60,10 @@ private
 
   def stock_level_params
     params.require(:stock_level).permit(:bin_code, :sku, :batch_code, :quantity, :location_code)
+  end
+
+  def stock_level_update_params
+    params.require(:stock_level).permit(:bin_code, :batch_code, :quantity)
   end
 
   def location_params

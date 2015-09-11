@@ -29,6 +29,7 @@ WarehouseCms::Application.routes.draw do
 
   api_version(:module => "v1", :path => { :value => "api/v1" }, :defaults => {:format => "json"}) do
     resources :products
+    resources :product_barcodes
     resources :stock_levels
     resources :tour_entries
     resources :tours
@@ -38,5 +39,4 @@ WarehouseCms::Application.routes.draw do
   comfy_route :cms, :path => '/*', :sitemap => false
 
   get '/' => 'welcome#splash'
-
 end

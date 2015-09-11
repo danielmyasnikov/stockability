@@ -21,8 +21,12 @@ class Ability
       define_admin_ability(user)
     when user.warehouse_manager?
       define_manager_ability(user)
+    when user.warehouse_operator?
+      define_manager_ability(user)
     end
   end
+
+private
 
   def define_sa_ability
     can :manage, :all
@@ -40,6 +44,7 @@ class Ability
     can [:view], Company, :id => user.company_id
   end
 
+  # questionable?? discuess with Andrey
   def define_manager_ability(user)
     company_obj = [Location, Product, Admin, Tour, TourEntry, StockLevel]
 
@@ -51,4 +56,6 @@ class Ability
 
     can [:view], Company, :id => user.company_id
   end
+
+  def define_operator_ability(user); end
 end

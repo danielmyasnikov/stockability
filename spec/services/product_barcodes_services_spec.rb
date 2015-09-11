@@ -145,8 +145,8 @@ RSpec.describe Services::ProductBarcodesService, :type => :services do
       barcode = ProductBarcode.create(barcode_params.first)
       missing_quantity_error_message = ActiveRecord::RecordInvalid.new(barcode).message
       expect(service.failed_barcodes.keys).to eq( ['JYZ789'] )
-      expect(service.failed_barcodes.values.first.first.message).to eq( missing_quantity_error_message )
-      expect(service.barcode_errors.first.message).to eq(missing_quantity_error_message)
+      expect(service.failed_barcodes.values.first.first.message).to eq( "Validation failed: Quantity can't be blank" )
+      expect(service.barcode_errors.first.message).to eq("Validation failed: Quantity can't be blank")
     end
   end
 

@@ -20,14 +20,14 @@ class V1::BaseController < ApiController
 private
   def token_presence
     if token_params[:token].blank?
-      render json: { text: 'Forbidden access. Please authenticate' }, status: 403
+      render json: { text: 'Forbidden access. Please supply token' }, status: 403
       return
     end
   end
 
   def token_authorize!
     @current_admin = Admin.find_by_token(token_params[:token])
-    render json: { text: 'Forbidden access. Please authenticate' }, status: 403 if current_admin.nil?
+    render json: { text: 'Forbidden access. Admin / Manager / Operator were not found' }, status: 403 if current_admin.nil?
     return
   end
 

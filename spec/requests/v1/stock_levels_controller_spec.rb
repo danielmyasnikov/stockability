@@ -70,8 +70,7 @@ RSpec.describe 'StockLevels API', type: :request do
   end
 
   describe '.create' do
-    let!(:product) { FactoryGirl.create(:product, :sku => 'TEST555') }
-    let!(:location) { FactoryGirl.create(:location, :code => 'LOC445') }
+    let!(:location) { FactoryGirl.create(:location, code: 'LOC445', company_id: @client.company_id) }
     let(:stock_level_params) {
          { stock_level: {
           bin_code: 'BIN111',
@@ -86,8 +85,6 @@ RSpec.describe 'StockLevels API', type: :request do
     it 'creates a stock levels' do
       post_params = @auth_details.merge(stock_level_params)
       post STOCKLEVELAPI, post_params
-      p '>>>'
-      p response
       expect(json['sku']).to eq(stock_level_params[:stock_level][:sku])
       expect(response.status).to eq(200)
     end

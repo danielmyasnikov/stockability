@@ -3,7 +3,7 @@ class V1::ToursController < V1::BaseController
 
   api!
   desc 'Returns ALL accessible by a admin/manager/operator tours'
-  param :since, String, desc: 'Displays tours since the date, eg "14-july-2015"'
+  param :since, String, desc: 'Displays tours since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @tours = Tour.accessible_by(current_ability).since(since_params)
     render json: @tours
@@ -18,8 +18,9 @@ class V1::ToursController < V1::BaseController
   api!
   desc 'Creates tour entry item'
   param :tour, Hash, required: true do
-    param :name,      String, required: true
-    param :active,    String
+    param :name,    String, required: true
+    param :active,  String
+    param :started, String
   end
   def create
     @tour = Tour.create!(tour_params.merge(company_params))
@@ -30,9 +31,9 @@ class V1::ToursController < V1::BaseController
   desc 'Creates tour entry item'
   param :tour, Hash, required: true do
     param :name,      String, required: true
-    param :active,    String
-    param :started,   String
-    param :completed, String
+    param :active,    String, desc: 'Boolean, pass "true" or "false"'
+    param :started,   String, desc: 'DateTime, eg "2015-08-04T10:24:35.729Z"'
+    param :completed, String, desc: 'DateTime, eg "2015-08-04T10:24:35.729Z"'
   end
   def update
     @tour.update_attributes!(tour_params)

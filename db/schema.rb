@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805092845) do
+ActiveRecord::Schema.define(version: 20150910102421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 20150805092845) do
     t.string   "barcode"
     t.string   "sku"
     t.text     "description"
-    t.float    "quantity"
+    t.integer  "quantity",    default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 20150805092845) do
     t.string   "bin_code"
     t.string   "sku"
     t.string   "batch_code"
-    t.float    "quantity"
+    t.integer  "quantity",      default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 20150805092845) do
     t.string   "sku"
     t.string   "barcode"
     t.string   "batch_code"
-    t.float    "quantity"
+    t.integer  "quantity",      default: 1
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"

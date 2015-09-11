@@ -14,7 +14,7 @@ class ApiController < ApplicationController
 
   def show_denied_access(_error)
     render json:
-      { error: _error.message, data: 'Forbidden access' }, status: 403
+      { error: _error.message, data: '[UNAUTHORIZED] Forbidden access' }, status: 403
   end
 
   def missing_param(_error)

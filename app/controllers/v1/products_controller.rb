@@ -6,7 +6,7 @@ class V1::ProductsController < V1::BaseController
 
   api!
   desc 'Returns ALL accessible by a admin/manager/operator products'
-  param :since, String, desc: 'Displays products since the date, eg "14-july-2015"'
+  param :since, String, desc: 'Displays products since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
     render json: @products
@@ -32,11 +32,14 @@ class V1::ProductsController < V1::BaseController
   end
   def create
     @product_service.create
-    if @product_service.errors.empty?
+    if @product_service.product_errors.empty? && @product_service.barcode_errors.empty?
       render json: { status: 'Ok', product: @product_service.obj_product }
     else
-      render json: { status: 'Product was not saved', errors: @product_service.errors.map(&:to_s) },
-        status: 422
+      render json: {
+        status:         'Product was not saved',
+        product_errors: @product_service.product_errors.map(&:to_s),
+        barcode_errors: @product_service.barcode_errors.map(&:to_s)
+      }, status: 422
     end
   end
 
@@ -59,7 +62,11 @@ class V1::ProductsController < V1::BaseController
     render json: { status: "Product was not found", sku: product_params[:product][:sku] }, status: 404
   rescue ActiveRecord::RecordInvalid
     render json:
-      { status: 'Unprocessed entity', product: @product.errors }, status: 422
+      {
+        status: 'Unprocessed entity',
+        product_errors: @product_service.product_errors,
+        barcode_errors: @product_service.barcode_errors
+      }, status: 422
   end
 
   api!

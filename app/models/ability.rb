@@ -50,5 +50,16 @@ private
   end
 
   # read only access
-  def define_operator_ability(user); end
+  def define_operator_ability(user)
+    operatable_obj = [Tour, TourEntry]
+    managable_obj  = [Tour, TourEntry]
+
+    operatable_obj.each do |_obj|
+      can [:manage], _obj, :company_id => user.company_id
+    end
+
+    managable_obj.each do |_obj|
+      can [:view], _obj, :company_id => user.company_id
+    end
+  end
 end

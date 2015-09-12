@@ -30,9 +30,11 @@ class StockLevel < ActiveRecord::Base
   end
 
   # -- Instance Methods -----------------------------------------------------
-  def quantity=(quantity)
-    unless quantity.to_i > 0
-      update_column(:quantity, 1)
+  def quantity=(value)
+    if value.to_i > 0
+      write_attribute(:quantity, value)
+    else
+      write_attribute(:quantity, 1)
     end
   end
 end

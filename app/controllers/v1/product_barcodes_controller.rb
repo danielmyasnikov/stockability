@@ -35,7 +35,7 @@ class V1::ProductBarcodesController < V1::BaseController
     param :description, String
   end
   def update
-    @product_barcode.update_attributes!(product_barcode_create_params)
+    @product_barcode.update_attributes!(product_barcode_update_params)
     render json: @product_barcode
   end
 

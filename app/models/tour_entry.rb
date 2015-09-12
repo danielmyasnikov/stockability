@@ -20,6 +20,12 @@ class TourEntry < ActiveRecord::Base
 
 
   # -- Instance Methods -----------------------------------------------------
-
+  def quantity=(value)
+    if value.to_i > 0
+      write_attribute(:quantity, value)
+    else
+      write_attribute(:quantity, 1)
+    end
+  end
 
 end

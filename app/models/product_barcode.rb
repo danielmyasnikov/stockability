@@ -8,4 +8,10 @@ class ProductBarcode < ActiveRecord::Base
   validates_associated :product
 
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
+
+  def quantity=(value)
+    unless value.to_i > 0
+      write_attribute(:quantity, 1)
+    end
+  end
 end

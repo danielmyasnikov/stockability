@@ -21,7 +21,6 @@ class Services::ProductBarcodesService
 
   def update
     if product_exists?
-      # consider transactions update discuss with Andrey
       update_product_attributes
       update_barcodes_attributes
     else
@@ -59,13 +58,6 @@ private
     end
   end
 
-  def update_product_attributes
-    obj_product.update_attributes!(product_params)
-  rescue ActiveRecord::RecordInvalid => error
-    product_errors << error
-    record_product_failure
-  end
-
   def create_product_barcodes
     product_barcodes.each do |barcode|
       @barcode = barcode
@@ -76,6 +68,13 @@ private
         record_barcode_failure
       end
     end
+  end
+
+  def update_product_attributes
+    obj_product.update_attributes!(product_params)
+  rescue ActiveRecord::RecordInvalid => error
+    product_errors << error
+    record_product_failure
   end
 
   def update_barcodes_attributes
@@ -109,10 +108,10 @@ private
 
   def barcode_params
     {
-      barcode:      barcode[:barcode],
-      description:  barcode[:description],
-      quantity:     barcode[:quantity],
-      company_id:   admin.company_id
+      barcode:     barcode[:barcode],
+      description: barcode[:description],
+      quantity:    barcode[:quantity],
+      company_id:  admin.company_id
     }
   end
 

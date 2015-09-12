@@ -5,7 +5,7 @@ class V1::TourEntriesController < V1::BaseController
   desc 'Returns ALL accessible by a admin/manager/operator tour entires'
   param :since, String, desc: 'Displays tour entries since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
-    @tour_entries = TourEntry.accessible_by(current_ability).since(since_params)
+    @tour_entries = TourEntry.accessible_by(current_ability).since(since_params[:since])
     render json: @tour_entries
   end
 

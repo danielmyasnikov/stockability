@@ -27,7 +27,7 @@ class V1::ProductsController < V1::BaseController
   end
   param :product_barcodes, Array do
     param :barcode, String, required: true
-    param :quantity, String, required: true
+    param :quantity, String
     param :description, String
   end
   def create
@@ -59,7 +59,7 @@ class V1::ProductsController < V1::BaseController
     @product_service.update
     render json: { status: 'Ok', product: @product_service.product }
   rescue Services::ProductBarcodesService::NotFound
-    render json: { status: "Product was not found", sku: product_params[:product][:sku] }, status: 404
+    render json: { status: "Product was not found", sku: product_params[:sku] }, status: 404
   rescue ActiveRecord::RecordInvalid
     render json:
       {

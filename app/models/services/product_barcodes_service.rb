@@ -93,14 +93,13 @@ private
   def find_product
     @obj_product = Product.find_by_sku_and_company_id(product_params[:sku], product_params[:company_id])
     if @obj_product.nil?
-      errors << 'Not found product by SKU within a company'
+      product_errors << 'Not found product by SKU within a company'
       raise NotFound
     end
   end
 
   def product_params
     {
-      name:          product[:name],
       sku:           product[:sku],
       description:   product[:description],
       batch_tracked: product[:batch_tracked],
@@ -112,7 +111,8 @@ private
     {
       barcode:      barcode[:barcode],
       description:  barcode[:description],
-      quantity:     barcode[:quantity]
+      quantity:     barcode[:quantity],
+      company_id:   admin.company_id
     }
   end
 

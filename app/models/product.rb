@@ -1,5 +1,4 @@
 class Product < ActiveRecord::Base
-  # remove product name
   has_and_belongs_to_many :tours
   belongs_to :company
   has_many :product_barcodes, foreign_key: :sku, primary_key: :sku, dependent: :destroy

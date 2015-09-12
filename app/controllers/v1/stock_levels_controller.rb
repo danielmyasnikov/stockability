@@ -38,7 +38,7 @@ class V1::StockLevelsController < V1::BaseController
   param :stock_level, Hash, required: true do
     param :bin_code,   String
     param :batch_code, String
-    param :quantity,   String, required: true
+    param :quantity,   String
   end
   def update
     @stock_level.update_attributes!(stock_level_update_params)

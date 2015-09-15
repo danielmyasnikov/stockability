@@ -2,7 +2,8 @@
 
 ComfortableMexicanSofa.configure do |config|
   # Title of the admin area
-  #   config.cms_title = 'ComfortableMexicanSofa CMS Engine'
+  env = Rails.env.production? ? '' : Rails.env
+  config.cms_title = "#{env.capitalize} StockAbility"
 
   # Controller that is inherited from CmsAdmin::BaseController
   config.base_controller = 'CmsAdmin::ApplicationController'

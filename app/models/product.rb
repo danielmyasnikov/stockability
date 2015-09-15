@@ -2,11 +2,18 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :tours
   belongs_to :company
   has_many :product_barcodes, foreign_key: :sku, primary_key: :sku, dependent: :destroy
-  has_many :stock_levels, foreign_key: :sku, primary_key: :sku, dependent: :destroy
 
-  # validates on 1 company 1 sku
+  # TODO: apply to all other entities
+  has_many :stock_levels, -> (product) {
+    where("stock_levels.company_id = :company_id",
+      company_id: product.company_id, sku: product.sku)
+    },
+  foreign_key: :sku, primary_key: :sku, dependent: :destroy
+
   validates_presence_of :company_id
-  validates_uniqueness_of :sku
+  validates :sku, uniqueness: {
+    scope: [:company_id], message: 'Product is is not unique within a company.'
+  }
 
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
 

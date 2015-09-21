@@ -8,6 +8,7 @@
 %table.table.table-hover.table-bordered
   %tr
     %th.main Location Code
+    %th Bin Code
     %th Sku
     %th Batch Code
     %th Quantity
@@ -15,6 +16,7 @@
   - @stock_levels.each do |stock_level|
     %tr
       %td.main= stock_level.location.try(:code)
+      %td= stock_level.bin_code
       %td= stock_level.sku
       %td= stock_level.batch_code
       %td= stock_level.quantity

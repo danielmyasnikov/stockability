@@ -6,7 +6,7 @@ RSpec.describe 'Token management', type: :request do
     it 'creates a token when the user successfully authenticated' do
       client = FactoryGirl.create(:admin, :company_admin)
       post '/api/v1/tokens', client: { login: client.login, password: client.password }
-      expect(json['token']).to eq(client.token)
+      expect(json['client']['token']).to eq(client.token)
     end
 
     context 'when the user authentication fails' do

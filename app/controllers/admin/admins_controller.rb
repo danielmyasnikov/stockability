@@ -19,12 +19,12 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
 
   def create
     @admin.password_confirmation = admin_params[:password]
-    @admin.company = current_company if current_company
+    @admin.company = current_company
     @admin.save!
-    flash[:success] = 'Admin created'
-    redirect_to :action => :edit, :id => @admin
-  rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = 'Failed to create Admin'
+    flash[:success] = 'Succesfully created'
+    redirect_to :action => :index
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:danger] = "Failed to create Admin: #{e.message}"
     render :action => :new
   end
 

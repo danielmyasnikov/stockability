@@ -7,6 +7,4 @@ class Company < ActiveRecord::Base
   has_many :tours
 
   validates_presence_of :title
-
-  validates_associated :admins
 end

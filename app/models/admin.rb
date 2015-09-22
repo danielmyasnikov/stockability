@@ -10,8 +10,6 @@ class Admin < ActiveRecord::Base
   validates_presence_of :login, :company, :unless => :super_admin?
   validates_uniqueness_of :login
 
-  validates_associated :company
-
   after_create :save_with_token
 
   ROLES.each do |_role|

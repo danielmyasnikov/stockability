@@ -1,19 +1,17 @@
-%li= active_link_to 'Companies', admin_companies_path
+%li= active_link_to 'Tours', admin_tours_path
 
--# %li= active_link_to 'Bins', admin_bins_path
+%li= active_link_to 'Tour Entries', admin_tour_entries_path
 
 %li= active_link_to 'Products', admin_products_path
 
 %li= active_link_to 'Product Barcodes', admin_product_barcodes_path
 
-%li= active_link_to 'Admins', admin_admins_path
+%li= active_link_to 'Stock Levels', admin_stock_levels_path
 
 %li= active_link_to 'Locations', admin_locations_path
 
-%li= active_link_to 'Stock Levels', admin_stock_levels_path
+%li= active_link_to 'User Management', admin_admins_path
 
-%li= active_link_to 'Tour Entries', admin_tour_entries_path
-
-%li= active_link_to 'Tours', admin_tours_path
+%li= active_link_to 'Companies', admin_companies_path
 
 %li= active_link_to 'Log out', destroy_admin_session_path, method: :delete

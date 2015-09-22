@@ -60,4 +60,8 @@ protected
   def product_barcodes_params
     params.fetch(:product_barcode, {}).permit(:barcode, :sku, :description, :quantity)
   end
+
+  def company_params
+    { :company_id => @admin.company_id }
+  end
 end

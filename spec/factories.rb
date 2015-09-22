@@ -32,16 +32,15 @@ FactoryGirl.define do
   factory :product_barcode do
     barcode 'ZYX987'
     quantity 1
-    # product
   end
 
   factory :stock_level do
     bin_code 'A07'
-    sku 'ABC123'
     batch_code 'ZYC334'
     quantity 1
     company
     location
+    product
   end
 
   factory :site, :class => 'Comfy::Cms::Site' do
@@ -56,7 +55,7 @@ FactoryGirl.define do
 
   factory :tour_entry do
     tour
-    location
+    location_code 'BATCH001'
     bin_code 'A08'
     sku 'BLA333'
     barcode 'BAR555'

@@ -2,9 +2,14 @@ class StockLevel < ActiveRecord::Base
 
   # -- Relationships --------------------------------------------------------
   belongs_to :company
-  # => this will fail if a different company will have a product with the same SKU
-  belongs_to :product, foreign_key: :sku, primary_key: :sku
-  belongs_to :location, foreign_key: :location_code, primary_key: :code
+
+  belongs_to :product, -> (stock_level) {
+    where("products.company_id = :company_id", company_id: stock_level.company_id)
+  }, foreign_key: :sku, primary_key: :sku
+
+  belongs_to :location, -> (stock_level) {
+    where("locations.company_id = :company_id", company_id: stock_level.company_id)
+  }, foreign_key: :location_code, primary_key: :code
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------

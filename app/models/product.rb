@@ -1,12 +1,16 @@
 class Product < ActiveRecord::Base
   has_and_belongs_to_many :tours
   belongs_to :company
-  has_many :product_barcodes, foreign_key: :sku, primary_key: :sku, dependent: :destroy
+  has_many :product_barcodes, -> (product) {
+    where("product_barcodes.company_id = :company_id",
+      company_id: product.company_id)
+    },
+  foreign_key: :sku, primary_key: :sku, dependent: :destroy
 
   # TODO: apply to all other entities
   has_many :stock_levels, -> (product) {
     where("stock_levels.company_id = :company_id",
-      company_id: product.company_id, sku: product.sku)
+      company_id: product.company_id)
     },
   foreign_key: :sku, primary_key: :sku, dependent: :destroy
 

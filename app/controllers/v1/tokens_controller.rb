@@ -3,13 +3,14 @@ class V1::TokensController < V1::BaseController
   skip_before_action :token_authorize!
 
   api!
-  desc 'Creates token for further authentication'
+  desc "Creates token for further authentication.
+    POST: /api/v1/tokens.json?client[email]=my.email@mail.com&client[password]=pass
+  "
   param :client, Hash, required: true  do
     param :login, String
     param :email, String
     param :password, String
   end
-
   def create
     email = authetication_params[:email].presence
     admin = Admin.find_by_email(email) if email

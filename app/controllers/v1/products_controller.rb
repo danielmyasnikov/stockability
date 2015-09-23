@@ -5,7 +5,9 @@ class V1::ProductsController < V1::BaseController
   before_action :initialize_product_service, :only => [:create, :update]
 
   api!
-  desc 'Returns ALL accessible by a admin/manager/operator products'
+  desc "Returns ALL accessible by a admin/manager/operator products
+    GET /api/v1/products.json?auth[token]=c4c7-7e32&since=2015-08-04T10:24:35.729Z
+  "
   param :since, String, desc: 'Displays products since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
@@ -13,13 +15,17 @@ class V1::ProductsController < V1::BaseController
   end
 
   api!
-  desc 'Returns a SINGLE product accessible by a admin/manager products'
+  desc "Returns a single accessible by a admin/manager/operator product
+    GET /api/v1/products.json?auth[token]=c4c7-7e32&product[id]=167229
+  "
   def show
     render json: @product
   end
 
   api!
-  desc 'Creates a product according and product barcodes'
+  desc "Creates a product according and product barcodes
+    POST /api/v1/products.json?auth[token]=c4c7-7e32&product[id]=167229
+  "
   param :product, Hash, required: true  do
     param :sku, String, required: true
     param :description, String

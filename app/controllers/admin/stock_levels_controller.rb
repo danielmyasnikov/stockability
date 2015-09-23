@@ -2,6 +2,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
 
   before_action :build_stock_level,  :only => [:new, :create]
   before_action :load_stock_level,   :only => [:show, :edit, :update, :destroy]
+  before_action :select_options, :only => [:index]
 
   after_action :save_import, only: :process_import
   before_action :read_import, only: :import
@@ -97,5 +98,17 @@ protected
 
   def data_key
     "#{current_company.try(:id)}-importable-stock-levels"
+  end
+
+  def select_options
+    products = Product.accessible_by(current_ability).select(:name, :sku)
+    @sku_options = products.map { |opt| [opt.sku, opt.name.to_s + ' ' + opt.sku] }
+
+    location = Location.accessible_by(current_ability).select(:code, :name)
+    @location_options = location.map { |opt| [opt.code, opt.name.to_s + ' ' + opt.code] }
+
+    @bin_options = StockLevel.accessible_by(current_ability).map do |opt|
+      [opt.bin_code, opt.bin_code]
+    end
   end
 end

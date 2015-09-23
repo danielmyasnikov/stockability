@@ -41,4 +41,8 @@ class StockLevel < ActiveRecord::Base
       write_attribute(:quantity, 1)
     end
   end
+
+  def associated_with_tour_entry?
+    false # fill in a logic on how to associate the records
+  end
 end

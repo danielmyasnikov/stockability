@@ -29,4 +29,8 @@ class Product < ActiveRecord::Base
       csv << %w(mysqku3 test 1 556 second_barcode 50005)
     end
   end
+
+  def option_title
+    name.to_s + ' ' + sku
+  end
 end

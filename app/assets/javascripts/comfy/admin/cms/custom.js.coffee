@@ -1,10 +1,5 @@
-Stockability = {}
+# custom admin javascript manifest file
+# add application speficic logic in the tree, add references to the file here
 
-Stockability.ProductsImport = ($) ->
-
-  $('#import').attr('disabled', 'disabled');
-  $('#file').on 'change', ->
-    $('#import').removeAttr('disabled');
-
-$ ->
-  Stockability.ProductsImport($) if $("#page-id").hasClass('products_import')
+#= require comfy/admin/cms/products
+#= require comfy/admin/cms/stock_levels

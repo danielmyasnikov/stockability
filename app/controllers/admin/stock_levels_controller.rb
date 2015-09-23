@@ -9,7 +9,8 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   after_action :forget_import, only: :import
 
   def index
-    @stock_levels = StockLevel.accessible_by(current_ability).page(params[:page])
+    @stock_levels = StockLevel.accessible_by(current_ability).
+      page(params[:page]).where(search_params)
   end
 
   def show
@@ -102,13 +103,19 @@ protected
 
   def select_options
     products = Product.accessible_by(current_ability).select(:name, :sku)
-    @sku_options = products.map { |opt| [opt.sku, opt.name.to_s + ' ' + opt.sku] }
+    @sku_options = products.map { |opt| [opt.option_title, opt.sku] }
 
     location = Location.accessible_by(current_ability).select(:code, :name)
-    @location_options = location.map { |opt| [opt.code, opt.name.to_s + ' ' + opt.code] }
+    @location_options = location.map { |opt| [opt.option_title, opt.code] }
 
     @bin_options = StockLevel.accessible_by(current_ability).map do |opt|
       [opt.bin_code, opt.bin_code]
     end
+  end
+
+  def search_params
+    search = params.permit(:bin_code, :location_code, :sku)
+    search.delete_if { |k, v| v.empty? } # what if value for one of columns is searchable nil?
+    search = search.each { |k, v| search[k] = v.split(',') }
   end
 end

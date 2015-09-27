@@ -1,13 +1,17 @@
 #= require dataTables/jquery.dataTables
 #= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+#= require select2
 
 Stockability = {}
 
 Stockability.StockLevel = ($) ->
   $('#assign-results').attr('disabled', true)
-  $('#stock-levels').dataTables
-    serverSide: true
-    ajax: $('#stock-levels').data('source')
+  $('.filter-select').select2
+    theme: 'bootstrap'
+  $('#stock-levels').DataTable
+    searching: false
+    ordering: false
+    processing: true
 
   $('#reset-all').click (e) ->
     e.preventDefault()
@@ -32,7 +36,6 @@ Stockability.StockLevel = ($) ->
 
   $('#check_all').on 'change', (e) ->
     is_all_check = $(this).is(':checked')
-    console.log(is_all_check)
     check_stock_levels(is_all_check)
 
   $('#stock-levels .check').on 'change', ->
@@ -53,7 +56,6 @@ Stockability.StockLevel = ($) ->
     else
       checkbox   = $(this).find('.check')
       is_checked = $(checkbox).is(':checked')
-      console.log(checkbox, is_checked)
       check_stock_level(!is_checked, checkbox)
 
   $('#tour_id').on 'change', ->

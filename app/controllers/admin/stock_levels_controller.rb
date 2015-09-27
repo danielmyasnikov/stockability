@@ -12,8 +12,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   after_action :forget_import, only: :import
 
   def index
-    @stock_levels = StockLevel.accessible_by(current_ability).
-      page(params[:page]).where(search_params)
+    @stock_levels = StockLevel.accessible_by(current_ability).where(search_params)
   end
 
   def show
@@ -63,7 +62,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
       redirect_to controller: :tours, action: :new
     else
       if @processor.errors.blank?
-        flash[:success] = 'Stock Level created'
+        flash[:success] = 'Association for Stock Levels is created'
       else
         flash[:danger] = 'Some stock levels are failed for an import'
       end

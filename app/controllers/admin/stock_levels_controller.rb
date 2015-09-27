@@ -3,6 +3,9 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   before_action :build_stock_level,  :only => [:new, :create]
   before_action :load_stock_level,   :only => [:show, :edit, :update, :destroy]
   before_action :select_options, :only => [:index]
+  before_action :compact_select_options, :only => [:index]
+  before_action :load_tours, :only => [:index]
+  after_action :save_processed_records, only: :process_stock_levels
 
   after_action :save_import, only: :process_import
   before_action :read_import, only: :import
@@ -29,6 +32,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
 
   def process_import
     file      = params[:file]
+    # this is weak solution
     @importer = Services::StockLevelsImporter.new(file.tempfile, current_admin)
     @importer.import
 
@@ -49,6 +53,23 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   rescue ActiveRecord::RecordInvalid
     flash.now[:danger] = 'Failed to create Stock Level'
     render :action => :new
+  end
+
+  def process_stock_levels
+    @processor = Services::StockLevelsProcessor.new(stock_levels_params, params[:tour])
+    @processor.process
+
+    if params[:tour] == 'NEWTOUR'
+      redirect_to controller: :tours, action: :new
+    else
+      if @processor.errors.blank?
+        flash[:success] = 'Stock Level created'
+      else
+        flash[:danger] = 'Some stock levels are failed for an import'
+      end
+
+      redirect_to action: :index
+    end
   end
 
   def update
@@ -83,6 +104,10 @@ protected
     params.fetch(:stock_level, {}).permit(:bin_code, :sku, :batch_code, :quantity)
   end
 
+  def stock_levels_params
+    params[:stock_levels].split(',')
+  end
+
   def save_import
     Rails.cache.write(data_key, @importer)
   end
@@ -97,25 +122,44 @@ protected
     Services::StockLevelsImporter.nullify_results
   end
 
+  def save_processed_records
+    Rails.cache.write(data_key, @processor)
+  end
+
+  def read_proceesed_records
+    @processor = Rails.cache.read(data_key)
+    # Services::StockLevelsProcessor.nullify_results
+    Rails.cache.write(data_key, nil)
+  end
+
   def data_key
-    "#{current_company.try(:id)}-importable-stock-levels"
+    "#{current_company.try(:id)}-stock-levels"
   end
 
   def select_options
-    products = Product.accessible_by(current_ability).select(:name, :sku)
-    @sku_options = products.map { |opt| [opt.option_title, opt.sku] }
+    s_levels = StockLevel.accessible_by(current_ability).select(:sku, :location_code, :bin_code)
 
-    location = Location.accessible_by(current_ability).select(:code, :name)
-    @location_options = location.map { |opt| [opt.option_title, opt.code] }
+    @sku_options      = s_levels.map { |opt| [opt.sku, opt.sku] }
+    @location_options = s_levels.map { |opt| [opt.location_code, opt.location_code] }
+    @bin_options      = s_levels.map { |opt| [opt.bin_code, opt.bin_code] }
+  end
 
-    @bin_options = StockLevel.accessible_by(current_ability).map do |opt|
-      [opt.bin_code, opt.bin_code]
+  def compact_select_options
+    [@bin_options, @location_options, @sku_options].map do |x|
+      x.uniq!
+      x.delete_if  { |x| x == [nil, nil] }
     end
   end
 
   def search_params
     search = params.permit(:bin_code, :location_code, :sku)
     search.delete_if { |k, v| v.empty? } # what if value for one of columns is searchable nil?
-    search = search.each { |k, v| search[k] = v.split(',') }
+    @search_params = search.each { |k, v| search[k] = v.split(',') }
+  end
+
+  def load_tours
+    tours = Tour.accessible_by(current_ability).select(:name, :id)
+    @tour_options = tours.map { |opt| [opt.name, opt.id] }
+    @tour_options.push(['New Tour', 'NEWTOUR'])
   end
 end

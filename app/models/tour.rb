@@ -2,6 +2,7 @@ class Tour < ActiveRecord::Base
 
   belongs_to :admin
   belongs_to :company
+  has_many :tour_entries
 
   # comma do
   #   name

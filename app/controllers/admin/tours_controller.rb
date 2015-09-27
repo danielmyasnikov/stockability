@@ -2,6 +2,7 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   before_action :build_tour,  :only => [:new, :create]
   before_action :load_tour,   :only => [:show, :edit, :update, :destroy]
+  before_action :append_tour_entries, only: :create
 
   respond_to :csv, :html
 
@@ -32,19 +33,19 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
   def create
     @tour.company = current_company if current_company
     @tour.save!
-    flash[:success] = 'Session created'
+    flash[:success] = 'Tour created'
     redirect_to :action => :show, :id => @tour
   rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = 'Failed to create Session'
+    flash.now[:danger] = 'Failed to create Tour'
     render :action => :new
   end
 
   def update
-    @tour.update_attributes!(session_params)
-    flash[:success] = 'Session updated'
+    @tour.update_attributes!(tour_params)
+    flash[:success] = 'Tour updated'
     redirect_to :action => :show, :id => @tour
   rescue ActiveRecord::RecordInvalid
-    flash.now[:danger] = 'Failed to update Session'
+    flash.now[:danger] = 'Failed to update Tour'
     render :action => :edit
   end
 
@@ -55,6 +56,18 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
   end
 
 protected
+
+  def append_tour_entries
+    @processor = Rails.cache.read(stock_levels_data_key)
+    if @processor.present?
+      @tour.tour_entries <<  @processor.tour_entries
+      Rails.cache.write(stock_levels_data_key, nil)
+    end
+  end
+
+  def stock_levels_data_key
+    "#{current_company.id}-stock-levels"
+  end
 
   def build_tour
     @tour = Tour.new(tour_params)

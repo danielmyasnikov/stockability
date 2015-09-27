@@ -7,7 +7,7 @@
 = form.text_field :started, data: { cms_datetime: true }
 = form.text_field :completed, data: { cms_datetime: true }
 
-= form.select :admin
+= form.select :admin, Admin.where(company_id: @current_admin.id)
 
 = form.form_group :class => 'form-actions' do
   = form.submit :class => 'btn btn-primary'

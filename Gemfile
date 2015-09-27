@@ -30,9 +30,7 @@ gem 'comma'
 gem 'apipie-rails'
 
 gem 'jquery-datatables-rails'
-gem 'ajax-datatables-rails'
 gem 'select2-rails'
-
 
 group :test do
   gem 'rspec'
@@ -45,3 +43,4 @@ group :test do
   gem 'ffaker'
   gem 'database_cleaner'
 end
+gem 'byebug'

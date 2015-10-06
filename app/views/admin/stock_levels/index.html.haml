@@ -17,17 +17,13 @@
   .col-sm-4
     = select_tag(:bin_code_filter, options_for_select(@bin_options, @search_params[:bin_code]), class: 'form-control filter-select', multiple: true,
       "data-option-selected" => params[:bin_code],
-      "data-placeholder" => "Selet bin code")
-
-.row
-  .col-sm-4.col-sm-offset-8
+      "data-placeholder" => "Select bin code")
+    %hr
     = link_to 'Filter', nil, { id: 'filter-results', class: 'btn btn-primary' }
-    = link_to 'Reset All', nil, { id: 'reset-all', class: 'btn btn-default' }
-
-.row
-  .col-sm-4.col-sm-offset-8
-    = collection_select(:tour, :id, @tour_options, :last, :first, :prompt => true)
-    = link_to 'Assign!', nil, { id: 'assign-results', class: 'btn btn-primary' }
+    = link_to 'Reset All', nil, { id: 'reset-all' }
+    %hr
+    = collection_select(:tour, :id, @tour_options, :last, :first, {:prompt => 'Select Associated Tour'}, class: 'form-control')
+    = link_to 'Assign!', nil, { id: 'assign-results', class: 'btn btn-success', style: 'width: 100%; margin-top: 10px;' }
 
 %table.table.table-hover.table-bordered.display{:cellspacing => "0", :width => "100%", id: 'stock-levels' }
   %thead

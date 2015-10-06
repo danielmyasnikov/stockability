@@ -5,12 +5,42 @@
 Stockability = {}
 
 Stockability.StockLevel = ($) ->
+
+  check_stock_levels = (is_checked) ->
+    assign_available(is_checked)
+    for checkbox in $('#stock-levels .check')
+      $(checkbox).prop('checked', is_checked)
+
+  check_stock_level = (is_checked, checkbox) ->
+    assign_available(is_checked)
+    $(checkbox).prop('checked', is_checked)
+
+  assign_available = (is_checked, is_selected) ->
+    is_assign_available = false
+
+    if is_selected?
+      is_assign_available = verify_checked_value()
+
+    if is_checked == true
+      is_assign_available = verify_selected_value()
+
+    if is_assign_available == true
+      $('#assign-results').attr('disabled', false)
+    else
+      $('#assign-results').attr('disabled', true)
+
+  verify_checked_value = ->
+    $('#stock-levels .check').is(':checked') == true
+
+  verify_selected_value = ->
+    $('#tour_id').val() != ""
+
   $('#assign-results').attr('disabled', true)
   $('.filter-select').select2
     theme: 'bootstrap'
-  $('#stock-levels').DataTable
-    searching: false
-    ordering: false
+  datatable = $('#stock-levels').DataTable
+    searching:  false
+    ordering:   false
     processing: true
 
   $('#reset-all').click (e) ->
@@ -36,7 +66,10 @@ Stockability.StockLevel = ($) ->
 
   $('#check_all').on 'change', (e) ->
     is_all_check = $(this).is(':checked')
+    cells        = datatable.cells().nodes();
+    $(cells).find(':checkbox').prop('checked', is_all_check);
     check_stock_levels(is_all_check)
+    return true
 
   $('#stock-levels .check').on 'change', ->
     is_checked = $(this).is(':checked')
@@ -50,49 +83,9 @@ Stockability.StockLevel = ($) ->
     url          = encodeURI('/admin/stock_levels/process_stock_levels?' + params)
     window.location.replace url
 
-  $('#stock-levels tr').on 'click', (e) ->
-    if e.target.type == 'checkbox'
-      e.stopPropagation
-    else
-      checkbox   = $(this).find('.check')
-      is_checked = $(checkbox).is(':checked')
-      check_stock_level(!is_checked, checkbox)
-
   $('#tour_id').on 'change', ->
     selected_value = $(this).val()
     assign_available(undefined, selected_value)
-
-  check_stock_levels = (is_checked) ->
-    assign_available(is_checked)
-    for checkbox in $('#stock-levels .check')
-      $(checkbox).prop('checked', is_checked)
-
-  check_stock_level = (is_checked, checkbox) ->
-    assign_available(is_checked)
-    $(checkbox).prop('checked', is_checked)
-
-
-
-  assign_available = (is_checked, is_selected) ->
-    is_assign_available = false
-
-    if is_selected?
-      is_assign_available = verify_checked_value()
-
-    if is_checked == true
-      is_assign_available = verify_selected_value()
-
-    if is_assign_available == true
-      $('#assign-results').attr('disabled', false)
-    else
-      $('#assign-results').attr('disabled', true)
-
-
-  verify_checked_value = ->
-    $('#stock-levels .check').is(':checked') == true
-
-  verify_selected_value = ->
-    $('#tour_id').val() != ""
 
 $ ->
   Stockability.StockLevel($) if $("#page-id").hasClass('stock_levels')

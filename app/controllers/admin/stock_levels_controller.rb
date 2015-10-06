@@ -159,6 +159,6 @@ protected
   def load_tours
     tours = Tour.accessible_by(current_ability).select(:name, :id)
     @tour_options = tours.map { |opt| [opt.name, opt.id] }
-    @tour_options.push(['New Tour', 'NEWTOUR'])
+    @tour_options.push(['! - Create New Tour', 'NEWTOUR'])
   end
 end

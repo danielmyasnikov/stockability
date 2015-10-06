@@ -5,7 +5,7 @@ class Admin < ActiveRecord::Base
     :trackable, :validatable
 
   AVAILABLE_ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
-  ROLES = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
+  ROLES           = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
 
   validates_presence_of :login, :company, :unless => :super_admin?
   validates_uniqueness_of :login
@@ -16,6 +16,10 @@ class Admin < ActiveRecord::Base
     define_method("#{_role}?") do
       role == _role.to_s
     end
+  end
+
+  def can_manage_admins?
+    super_admin? || admin?
   end
 
   def self.options_for_select(user)

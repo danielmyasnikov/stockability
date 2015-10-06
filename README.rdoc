@@ -22,11 +22,11 @@ TADA LIST (07/09/2015)
 => API: products: few caviats on products creation (done);
 => API: stock levels: updates SKU of a stock level (done)
 => API: tour entries: write quantity as 1 if nil provided (done)
-=> API: write product barcodes
-=> fix model issues: if a different company will have a product with the same SKU
+=> API: write product barcodes (done)
+=> fix model issues: if a different company will have a product with the same SKU (done)
 === ADMIN (AS SUPER ADMIN) ===
-=> Companies: super admin failed to update a company
-=> Admin: update an super / admin / manager / operator fails. STACK LEVEL TOO DEEP
+=> Companies: super admin failed to update a company (done)
+=> Admin: update an super / admin / manager / operator fails. STACK LEVEL TOO DEEP (done)
 === ADMIN (AS MANAGER) ===
 => Products: should not be able to update products
 => Products: should / or should not upload products via CSV

@@ -7,13 +7,14 @@
 
 class Ability
   include CanCan::Ability
-  COMPANY_OBJ = [Location, Product, Admin, Tour, TourEntry, StockLevel, ProductBarcode]
+  COMPANY_OBJ = [Location, Product, Tour, TourEntry, StockLevel, ProductBarcode]
 
   def initialize(user)
     alias_action :index, :show, to: :view
     alias_action :index, :show, :edit, :update, to: :touch
 
     cannot :manage, :all
+    can [:view], Admin, :company_id => user.company_id
 
     case
     when user.super_admin?
@@ -38,6 +39,7 @@ private
       can [:manage], _obj, :company_id => user.company_id
     end
 
+    can [:manage], Admin, :company_id => user.can_manage_admins?
     can [:manage], Company, :id => user.company_id
   end
 
@@ -46,6 +48,7 @@ private
       can [:manage], _obj, :company_id => user.company_id
     end
 
+    can [:manage], Admin, :company_id => user.can_manage_admins?
     can [:view], Company, :id => user.company_id
   end
 
@@ -57,6 +60,8 @@ private
     operatable_obj.each do |_obj|
       can [:manage], _obj, :company_id => user.company_id
     end
+
+    can [:manage], Admin, :company_id => user.can_manage_admins?
 
     managable_obj.each do |_obj|
       can [:view], _obj, :company_id => user.company_id

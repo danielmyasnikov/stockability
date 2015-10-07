@@ -48,45 +48,57 @@ feature 'Authentication' do
   end
 
   scenario 'filter by product SKU, bin code and location code' do
-    expect(page).to have_content('LOC001')
-    expect(page).to have_content('BIN002')
-    expect(page).to have_content('SKU002')
-
+    within '#stock-levels' do
+      expect(page).to have_content('LOC001')
+      expect(page).to have_content('BIN002')
+      expect(page).to have_content('SKU002')
+    end
   end
 
   context 'when filtering by SKU' do
-    scenario 'filters results' do
-      fill_in 'SKU', with: 'SKU001'
-      expect(page).to     have_content('SKU001')
-      expect(page).not_to have_content('SKU002')
+    scenario 'filters results', js: true do
+      select 'SKU001', from: 'sku_filter'
+      click_link 'Filter'
+      within '#stock-levels' do
+        expect(page).to     have_content('SKU001')
+        expect(page).not_to have_content('SKU002')
+      end
     end
   end
 
   context 'when filtering by BIN CODE' do
-    scenario 'filters results' do
-      fill_in 'Bin Code', with: 'BIN001'
-      expect(page).to     have_content('BIN001')
-      expect(page).not_to have_content('BIN002')
+    scenario 'filters results', js: true do
+      select 'BIN001', from: 'bin_code_filter'
+      click_link 'Filter'
+      within '#stock-levels' do
+        expect(page).to     have_content('BIN001')
+        expect(page).not_to have_content('BIN002')
+      end
     end
   end
 
   context 'when filtering by LOCATION CODE' do
-    scenario 'filters results' do
-      fill_in 'Location Code', with: 'LOC001'
-      expect(page).to     have_content('LOC001')
-      expect(page).not_to have_content('LOC002')
+    scenario 'filters results', js: true do
+      select 'LOC001', from: 'location_code_filter'
+      click_link 'Filter'
+      within '#stock-levels' do
+        expect(page).to     have_content('LOC001')
+        expect(page).not_to have_content('LOC002')
+      end
     end
   end
 
   context 'when selecting filtered results' do
-    scenario 'filter stock levels and assign them to a new tour' do
-      fill_in 'Location Code', with: 'LOC001'
-      check('checkbox[value=' + stock_level_loc.id + ']')
-      select('New tour', :from => 'tours')
+    scenario 'filter stock levels and assign them to a new tour', js: true do
+      first("input[type=checkbox]").set(true)
+      select('! - Create New Tour', :from => 'tour_id')
       last_tour_id    = Tour.last.try(:id) || 0
       current_tour_id = last_tour_id + 1
-      expect(page.path).to be('/admin/tours/' + current_tour_id + '/edit' )
-      tour = Tour.find(current_tour_id)
+      click_link 'Assign!'
+      expect(current_path).to eq("/admin/tours/new")
+      fill_in :tour_name, :with => "NEW TOUR HEY"
+      find('input[type="submit"]').click
+      tour = Tour.last
       expect(tour.tour_entries).not_to eq(nil)
     end
   end

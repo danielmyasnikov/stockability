@@ -19,7 +19,6 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
       format.html {render}
       format.csv { render text: @tour.to_csv }
     end
-
   end
 
   def new

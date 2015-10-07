@@ -2,6 +2,7 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   before_action :build_tour,  :only => [:new, :create]
   before_action :load_tour,   :only => [:show, :edit, :update, :destroy]
+  before_action :load_admins, :only => [:new, :edit]
   before_action :append_tour_entries, only: :create
 
   respond_to :csv, :html
@@ -70,6 +71,11 @@ protected
 
   def build_tour
     @tour = Tour.new(tour_params)
+  end
+
+  def load_admins
+    @admins = Admin.accessible_by(current_ability).select(:id, :first_name, :last_name)
+    @admins = @admins.map { |a| [a.to_s, a.id] }
   end
 
   def load_tour

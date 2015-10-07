@@ -38,6 +38,10 @@ class Admin < ActiveRecord::Base
     roles
   end
 
+  def to_s
+    first_name.to_s + ' ' + last_name.to_s
+  end
+
   def save_with_token; update_column(:token, generate_token); end
 
   def email_required?

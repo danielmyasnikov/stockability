@@ -50,7 +50,7 @@ FactoryGirl.define do
   end
 
   factory :tour do
-
+    name { FFaker::Name.first_name.downcase }
   end
 
   factory :tour_entry do

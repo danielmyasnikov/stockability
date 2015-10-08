@@ -19,7 +19,6 @@ module WarehouseCms
     config.assets.version = '1.0'
 
     # FIXME: convert to standard ISO?
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end
 end

@@ -1,7 +1,10 @@
 class Tour < ActiveRecord::Base
 
+  validates_presence_of :name
+
   belongs_to :admin
   belongs_to :company
+  has_many :tour_entries
 
   # comma do
   #   name

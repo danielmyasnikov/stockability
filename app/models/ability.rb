@@ -5,6 +5,8 @@
 # Manager
 # Operator
 
+
+# think through API, access level for managers / operators
 class Ability
   include CanCan::Ability
   COMPANY_OBJ = [Location, Product, Tour, TourEntry, StockLevel, ProductBarcode]

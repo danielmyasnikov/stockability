@@ -29,6 +29,13 @@ gem 'spring-commands-rspec'
 gem 'comma'
 gem 'apipie-rails'
 
+gem 'jquery-datatables-rails'
+gem 'select2-rails'
+
+group :development do
+  gem 'byebug'
+end
+
 group :test do
   gem 'rspec'
   gem 'rspec-rails'

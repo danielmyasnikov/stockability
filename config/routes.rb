@@ -10,7 +10,7 @@ WarehouseCms::Application.routes.draw do
       collection { get :sample }
       collection { get :import }
       collection { post :process_import }
-      collection { get :process_stock_levels }
+      collection { post :process_stock_levels }
     end
     resources :admins, :except => :show
     resources :bins

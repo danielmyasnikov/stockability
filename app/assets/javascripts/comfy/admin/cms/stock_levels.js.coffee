@@ -77,11 +77,25 @@ Stockability.StockLevel = ($) ->
 
   $('#assign-results').on 'click', (e) ->
     e.preventDefault()
-    stock_levels = ($(stock_level).data('id') for stock_level in $('.check:checkbox:checked'))
+    cells        = datatable.cells().nodes();
+    stock_levels = $(cells).find(':checkbox:checked')
+    stock_levels = ($(stock_level).data('id') for stock_level in stock_levels)
+
     tour         = $('#tour_id').val()
-    params       = "stock_levels=#{stock_levels}&tour=#{tour}"
-    url          = encodeURI('/admin/stock_levels/process_stock_levels?' + params)
-    window.location.replace url
+
+    $.ajax
+      url: '/admin/stock_levels/process_stock_levels'
+      type: 'POST'
+      data:
+        tour: tour
+        stock_levels: stock_levels
+      success: (response) ->
+        if response.redirect_required == true
+          window.location.replace '/admin/tours/new'
+        else
+          alert('Successfully Associated')
+      fail: (response) ->
+        alert('Something went wrong. We are notified, and will taken an action ASAP.')
 
   $('#tour_id').on 'change', ->
     selected_value = $(this).val()

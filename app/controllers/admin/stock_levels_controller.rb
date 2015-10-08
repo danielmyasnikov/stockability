@@ -58,16 +58,11 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
     @processor = Services::StockLevelsProcessor.new(stock_levels_params, params[:tour])
     @processor.process
 
-    if params[:tour] == 'NEWTOUR'
-      redirect_to controller: :tours, action: :new
+    if @processor.errors.blank?
+      render json: { redirect_required: is_redirect_required? }
     else
-      if @processor.errors.blank?
-        flash[:success] = 'Association for Stock Levels is created'
-      else
-        flash[:danger] = 'Some stock levels are failed for an import'
-      end
-
-      redirect_to action: :index
+      render json: { redirect_required: is_redirect_required?,
+        errors: @processor.errors }, status: 422
     end
   end
 
@@ -104,7 +99,7 @@ protected
   end
 
   def stock_levels_params
-    params[:stock_levels].split(',')
+    params[:stock_levels]
   end
 
   def save_import
@@ -160,5 +155,9 @@ protected
     tours = Tour.accessible_by(current_ability).select(:name, :id)
     @tour_options = tours.map { |opt| [opt.name, opt.id] }
     @tour_options.push(['! - Create New Tour', 'NEWTOUR'])
+  end
+
+  def is_redirect_required?
+    params[:tour] == 'NEWTOUR'
   end
 end

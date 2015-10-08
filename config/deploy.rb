@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, "#{fetch(:stage)}_stockability"
-set :repo_url, 'git@bitbucket.org:dmyasnikov/cms.git'
+set :repo_url, 'https://stockability@bitbucket.org/stockability-group/stockability-web.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

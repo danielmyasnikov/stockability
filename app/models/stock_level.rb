@@ -16,7 +16,7 @@ class StockLevel < ActiveRecord::Base
 
 
   # -- Validations ----------------------------------------------------------
-  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code], message: 'Record is not unique' }
+  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code, :batch_code], message: 'Record is not unique' }
   validates_presence_of :sku, :location_code
 
   # -- Scopes ---------------------------------------------------------------

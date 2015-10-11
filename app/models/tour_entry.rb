@@ -1,9 +1,10 @@
 class TourEntry < ActiveRecord::Base
+  # -- Relationships --------------------------------------------------------
+  has_many :stock_levels, through: :inventories
+  has_many :inventories
+
   belongs_to :company
   belongs_to :tour
-
-  # -- Relationships --------------------------------------------------------
-
 
   # -- Callbacks ------------------------------------------------------------
 

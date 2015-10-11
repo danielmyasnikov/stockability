@@ -4,19 +4,27 @@ class V1::StockLevelsController < V1::BaseController
   before_filter :find_or_create_product, only: [:create]
 
   api!
-  desc 'Returns ALL accessible by a admin/manager/operator stock levels'
+  desc "Returns ALL accessible by a admin/manager/operator stock levels
+    GET /api/v1/stock_levels.json?auth[token]=c4c7-7e32
+  "
   param :since, String, desc: 'Displays stock levels since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @stock_levels = StockLevel.accessible_by(current_ability).since(since_params[:since])
     render json: @stock_levels
   end
 
+  api!
+  desc "Returns accessible by a admin/manager/operator stock level
+    GET /api/v1/stock_levels/1.json?auth[token]=c4c7-7e32
+  "
   def show
     render json: @stock_level
   end
 
   api!
-  desc 'Creates stock level item'
+  desc "Creates stock level item
+    POST /api/v1/stock_levels.json?auth[token]=c4c7-7e32&stock_level[bin_code]=BIN001&stock_level[sku]=SKU001&stock_level[batch_code]=BATCH01&stock_level[quantity]=55&stock_level[location_code]=LOC001
+  "
   param :stock_level, Hash, required: true do
     param :bin_code,      String
     param :sku,           String, required: true
@@ -34,7 +42,9 @@ class V1::StockLevelsController < V1::BaseController
   end
 
   api!
-  desc 'Updates stock level item'
+  desc "Updates stock level item
+    PUT /api/v1/stock_levels/1.json?auth[token]=c4c7-7e32&stock_level[bin_code]=BIN001&stock_level[batch_code]=BATCH01&stock_level[quantity]=55
+  "
   param :stock_level, Hash, required: true do
     param :bin_code,   String
     param :batch_code, String
@@ -46,7 +56,9 @@ class V1::StockLevelsController < V1::BaseController
   end
 
   api!
-  desc 'Deletes a stock level (by database ID)'
+  desc "Deletes a stock level
+    DELETE /api/v1/stock_levels/1.json?auth[token]=c4c7-7e32
+  "
   def destroy
     @stock_level.destroy
     render json: @stock_level

@@ -2,7 +2,9 @@ class V1::ToursController < V1::BaseController
   load_and_authorize_resource :except => [:create]
 
   api!
-  desc 'Returns ALL accessible by a admin/manager/operator tours'
+  desc "Returns ALL accessible by a admin/manager/operator tours
+    GET /api/v1/tours.json?auth[token]=c4c7-7e32&since=2015-08-04T10:24:35.729Z
+  "
   param :since, String, desc: 'Displays tours since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @tours = Tour.accessible_by(current_ability).since(since_params[:since])
@@ -10,13 +12,17 @@ class V1::ToursController < V1::BaseController
   end
 
   api!
-  desc 'Returns a SINGLE tour entry accessible by a admin/manager tours'
+  desc "Returns a SINGLE tour entry accessible by a admin/manager tours
+    GET /api/v1/tours/1.json?auth[token]=c4c7-7e32
+  "
   def show
     render json: @tour
   end
 
   api!
-  desc 'Creates tour entry item'
+  desc "Creates tour entry item
+    POST /api/v1/tours.json?auth[token]=c4c7-7e32&name=TOURNAME
+  "
   param :tour, Hash, required: true do
     param :name,    String, required: true
     param :active,  String
@@ -28,7 +34,9 @@ class V1::ToursController < V1::BaseController
   end
 
   api!
-  desc 'Creates tour entry item'
+  desc "Creates tour entry item
+    PUT /api/v1/tours/1.json?auth[token]=c4c7-7e32&name=TOURNAME
+  "
   param :tour, Hash, required: true do
     param :name,      String, required: true
     param :active,    String, desc: 'Boolean, pass "true" or "false"'
@@ -41,7 +49,8 @@ class V1::ToursController < V1::BaseController
   end
 
   api!
-  desc 'Deletes a tour entry (by database ID)'
+  desc "Deletes a tour entry
+    DELETE /api/v1/tours/1.json?auth[token]=c4c7-7e32"
   def destroy
     @tour.destroy
     render json: @tour

@@ -7,27 +7,22 @@ Stockability = {}
 Stockability.StockLevel = ($) ->
 
   check_stock_levels = (is_checked) ->
-    assign_available(is_checked)
     for checkbox in $('#stock-levels .check')
       $(checkbox).prop('checked', is_checked)
 
   check_stock_level = (is_checked, checkbox) ->
-    assign_available(is_checked)
     $(checkbox).prop('checked', is_checked)
 
-  assign_available = (is_checked, is_selected) ->
+  assign_available = ->
     is_assign_available = false
+    is_assign_available = verify_checked_value()
 
-    if is_selected?
-      is_assign_available = verify_checked_value()
-
-    if is_checked == true
+    if (is_assign_available)
       is_assign_available = verify_selected_value()
-
-    if is_assign_available == true
-      $('#assign-results').attr('disabled', false)
     else
-      $('#assign-results').attr('disabled', true)
+      return is_assign_available
+
+    is_assign_available
 
   verify_checked_value = ->
     $('#stock-levels .check').is(':checked') == true
@@ -35,9 +30,14 @@ Stockability.StockLevel = ($) ->
   verify_selected_value = ->
     $('#tour_id').val() != ""
 
-  $('#assign-results').attr('disabled', true)
   $('.filter-select').select2
     theme: 'bootstrap'
+    minimumInputLength: 1
+    tags: true
+
+  $('.assign-tour').select2
+    theme: 'bootstrap'
+
   datatable = $('#stock-levels').DataTable
     searching:  false
     ordering:   false
@@ -52,6 +52,7 @@ Stockability.StockLevel = ($) ->
 
   $('#filter-results').click (e) ->
     e.preventDefault()
+
     sku_params =      $('#sku_filter').val()           || []
     bin_code_params = $('#bin_code_filter').val()      || []
     loc_code_params = $('#location_code_filter').val() || []
@@ -77,11 +78,16 @@ Stockability.StockLevel = ($) ->
 
   $('#assign-results').on 'click', (e) ->
     e.preventDefault()
+
     cells        = datatable.cells().nodes();
     stock_levels = $(cells).find(':checkbox:checked')
     stock_levels = ($(stock_level).data('id') for stock_level in stock_levels)
 
     tour         = $('#tour_id').val()
+
+    if !assign_available()
+      alert('Please select Tour and check Stock Levels')
+      return false
 
     $.ajax
       url: '/admin/stock_levels/process_stock_levels'
@@ -99,7 +105,6 @@ Stockability.StockLevel = ($) ->
 
   $('#tour_id').on 'change', ->
     selected_value = $(this).val()
-    assign_available(undefined, selected_value)
 
 $ ->
   Stockability.StockLevel($) if $("#page-id").hasClass('stock_levels')

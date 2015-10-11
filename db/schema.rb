@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912004155) do
+ActiveRecord::Schema.define(version: 20151011003031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,14 @@ ActiveRecord::Schema.define(version: 20150912004155) do
     t.string   "address3"
     t.string   "country"
   end
+
+  create_table "inventories", id: false, force: :cascade do |t|
+    t.integer "tour_entry_id"
+    t.integer "stock_level_id"
+  end
+
+  add_index "inventories", ["stock_level_id"], name: "index_inventories_on_stock_level_id", using: :btree
+  add_index "inventories", ["tour_entry_id"], name: "index_inventories_on_tour_entry_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.string   "code"

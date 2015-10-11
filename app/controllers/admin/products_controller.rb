@@ -11,13 +11,19 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
     @products = Product.accessible_by(current_ability).page(params[:page])
     respond_to do |format|
       format.html { render }
-      format.csv { render :csv => Product.accessible_by(current_ability) }
     end
   end
 
   def sample
     respond_to do |format|
       format.csv { render text: Product.sample }
+    end
+  end
+
+  def download
+    @products = Product.accessible_by(current_ability)
+    respond_to do |format|
+      format.csv { send_data Product.to_csv(@products), filename: "products-#{Date.today}.csv" }
     end
   end
 

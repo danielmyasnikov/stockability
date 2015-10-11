@@ -7,6 +7,7 @@ WarehouseCms::Application.routes.draw do
     resources :product_barcodes
     resources :tour_entries
     resources :stock_levels do
+      collection { get :download }
       collection { get :sample }
       collection { get :import }
       collection { post :process_import }
@@ -16,6 +17,7 @@ WarehouseCms::Application.routes.draw do
     resources :bins
     resources :companies
     resources :products do
+      collection { get :download }
       collection { get :sample }
       collection { get :import }
       collection { post :process_import }

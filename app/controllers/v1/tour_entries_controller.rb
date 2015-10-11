@@ -2,7 +2,9 @@ class V1::TourEntriesController < V1::BaseController
   load_and_authorize_resource except: :create
 
   api!
-  desc 'Returns ALL accessible by a admin/manager/operator tour entires'
+  desc "Returns ALL accessible by a admin/manager/operator tour entires
+    GET /api/v1/tour_entries.json?auth[token]=c4c7-7e32&since=2015-08-04T10:24:35.729Z
+  "
   param :since, String, desc: 'Displays tour entries since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @tour_entries = TourEntry.accessible_by(current_ability).since(since_params[:since])
@@ -10,13 +12,17 @@ class V1::TourEntriesController < V1::BaseController
   end
 
   api!
-  desc 'Returns a SINGLE tour entry accessible by a admin/manager products'
+  desc "Returns a SINGLE tour entry accessible by a admin/manager products
+    GET /api/v1/tour_entries/1.json?auth[token]=c4c7-7e32
+  "
   def show
     render json: @tour_entry
   end
 
   api!
-  desc 'Creates tour entry item'
+  desc "Creates tour entry item
+    POST /api/v1/tour_entries.json?auth[token]=c4c7-7e32&tour_entry[tour_id]=1&tour_entry[sku]=SKU001&tour_entry[quantity]=1&tour_entry[location_code]=LOC001&tour_entry[barcode]=BAR001
+  "
   param :tour_entry, Hash, required: true do
     param :tour_id,       String, required: true
     param :sku,           String, required: true
@@ -33,7 +39,9 @@ class V1::TourEntriesController < V1::BaseController
   end
 
   api!
-  desc 'Updates tour entry item'
+  desc "Updates tour entry item
+    PUT /api/v1/tour_entries/1.json?auth[token]=c4c7-7e32&tour_entry[tour_id]=1&tour_entry[sku]=SKU001&tour_entry[quantity]=1&tour_entry[location_code]=LOC001&tour_entry[barcode]=BAR001
+  "
   param :tour_entry, Hash, required: true do
     param :tour_id,       String, required: true
     param :sku,           String, required: true
@@ -50,7 +58,9 @@ class V1::TourEntriesController < V1::BaseController
   end
 
   api!
-  desc 'Deletes a tour entry (by database ID)'
+  desc "Deletes a tour entry (by database ID)
+    DELETE /api/v1/tour_entries/1.json?auth[token]=c4c7-7e32
+  "
   def destroy
     @tour_entry.destroy
     render json: @tour_entry

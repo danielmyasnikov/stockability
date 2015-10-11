@@ -19,6 +19,7 @@ class Services::StockLevelsProcessor
 
       if @tour_entry.save
         tour_entries << @tour_entry
+        stock_level.tour_entries << @tour_entry
       else
         errors << @tour_entry.errors
       end

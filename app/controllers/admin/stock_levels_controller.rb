@@ -5,6 +5,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   before_action :select_options, :only => [:index]
   before_action :compact_select_options, :only => [:index]
   before_action :load_tours, :only => [:index]
+  before_action :define_search_params, :only => [:index, :download]
   after_action :save_processed_records, only: :process_stock_levels
 
   after_action :save_import, only: :process_import
@@ -12,7 +13,7 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   after_action :forget_import, only: :import
 
   def index
-    @stock_levels = StockLevel.accessible_by(current_ability).where(search_params)
+    @stock_levels = StockLevel.accessible_by(current_ability).smart_search(search_params)
   end
 
   def show
@@ -41,6 +42,13 @@ class Admin::StockLevelsController < Comfy::Admin::Cms::BaseController
   def sample
     respond_to do |format|
       format.csv { render text: StockLevel.sample }
+    end
+  end
+
+  def download
+    stock_levels = StockLevel.accessible_by(current_ability).smart_search(search_params)
+    respond_to do |format|
+      format.csv { send_data StockLevel.to_csv(stock_levels), filename: "stock-levels-#{Date.today}.csv" }
     end
   end
 
@@ -146,9 +154,7 @@ protected
   end
 
   def search_params
-    search = params.permit(:bin_code, :location_code, :sku)
-    search.delete_if { |k, v| v.empty? } # what if value for one of columns is searchable nil?
-    @search_params = search.each { |k, v| search[k] = v.split(',') }
+    params.slice(:bin_code, :location_code, :sku)
   end
 
   def load_tours
@@ -159,5 +165,11 @@ protected
 
   def is_redirect_required?
     params[:tour] == 'NEWTOUR'
+  end
+
+  def define_search_params
+    [:sku, :location_code, :bin_code].each do |param|
+      eval("@params_#{param} = #{params[param].try(:split, ',')}") if params[param].present?
+    end
   end
 end

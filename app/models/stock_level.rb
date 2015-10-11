@@ -1,4 +1,5 @@
 class StockLevel < ActiveRecord::Base
+  include Sequel::SearchHelpers
 
   # -- Relationships --------------------------------------------------------
   belongs_to :company
@@ -10,13 +11,16 @@ class StockLevel < ActiveRecord::Base
   belongs_to :location, -> (stock_level) {
     where("locations.company_id = :company_id", company_id: stock_level.company_id)
   }, foreign_key: :location_code, primary_key: :code
+
+  has_many :tour_entries, through: :inventories
+  has_many :inventories
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------
 
 
   # -- Validations ----------------------------------------------------------
-  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code], message: 'Record is not unique' }
+  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code, :batch_code], message: 'Record is not unique' }
   validates_presence_of :sku, :location_code
 
   # -- Scopes ---------------------------------------------------------------
@@ -33,6 +37,15 @@ class StockLevel < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(stock_levels)
+    CSV.generate do |csv|
+      csv << %w(sku location_code bin_code batch_code quantity product_description)
+      stock_levels.each do |sl|
+        csv << [sl.sku, sl.location_code, sl.bin_code, sl.batch_code, sl.quantity, sl.product.try(:description)]
+      end
+    end
+  end
+
   # -- Instance Methods -----------------------------------------------------
   def quantity=(value)
     if value.to_i > 0
@@ -44,5 +57,9 @@ class StockLevel < ActiveRecord::Base
 
   def associated_with_tour_entry?
     false # fill in a logic on how to associate the records
+  end
+
+  def last_tours
+    tour_entries.order('created_at DESC').map(&:tour).take(3)
   end
 end

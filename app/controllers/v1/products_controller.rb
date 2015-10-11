@@ -1,7 +1,7 @@
 class V1::ProductsController < V1::BaseController
 
   load_and_authorize_resource :except => [:create]
-  before_filter :find_product, only: [:destroy, :update, :show]
+  before_filter :find_product, only: [:destroy, :show]
   before_action :initialize_product_service, :only => [:create, :update]
 
   api!
@@ -16,7 +16,7 @@ class V1::ProductsController < V1::BaseController
 
   api!
   desc "Returns a single accessible by a admin/manager/operator product
-    GET /api/v1/products.json?auth[token]=c4c7-7e32&product[id]=167229
+    GET /api/v1/products/167229.json?auth[token]=c4c7-7e32
   "
   def show
     render json: @product
@@ -24,7 +24,7 @@ class V1::ProductsController < V1::BaseController
 
   api!
   desc "Creates a product according and product barcodes
-    POST /api/v1/products.json?auth[token]=c4c7-7e32&product[id]=167229
+    POST /api/v1/products/167229.json?auth[token]=c4c7-7e32&product[sku]=SKU001&product[batch_tracked]=1&product_barcodes[][barcode]=BARCODE001&product_barcodes[][quantity]=10
   "
   param :product, Hash, required: true  do
     param :sku, String, required: true
@@ -50,7 +50,9 @@ class V1::ProductsController < V1::BaseController
   end
 
   api!
-  desc 'Updates a product found by database ID and product barcodes'
+  desc "Updates a product found by database ID and product barcodes
+    PUT /api/v1/products/167229.json?auth[token]=c4c7-7e32&product[sku]=167229&product[batch_tracked]=1&product_barcodes[][barcode]=BARCODE001&product_barcodes[][quantity]=10
+  "
   param :product, Hash, required: true do
     param :sku, String
     param :description, String
@@ -76,7 +78,9 @@ class V1::ProductsController < V1::BaseController
   end
 
   api!
-  desc 'Deletes a product (by database ID) and product barcodes'
+  desc "Deletes a product (by database ID) and product barcodes
+    DELETE /api/v1/products/167229.json?auth[token]=c4c7-7e32-4r42eAb9x9
+  "
   def destroy
     @product.destroy
     render json: @product

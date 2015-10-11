@@ -26,7 +26,6 @@ gem 'kaminari'
 gem 'versionist'
 
 gem 'spring-commands-rspec'
-gem 'comma'
 gem 'apipie-rails'
 
 gem 'jquery-datatables-rails'

@@ -35,3 +35,13 @@ TADA LIST (07/09/2015)
 => Product Barcodes: similar abilities as above
 => Admins: stack level to deep. Manager should not create admins?
 => Workflow with tour approvals? TourEntry approved => Product updated?
+
+
+TADA LIST (08/10/2015)
+== ADMIN ==
+=> Change admins to users on UI: suggestion: to change admins on UI upgrade
+=> stock levels
+==> Put New Tour Associated on the top of select;
+==> From Associated to Assigned (on popup) # make it as a rule: by the end of the sprint go and clear all the messages
+==> Change: Assigned with tour -> On Tour: and display as tags the last 2 tours and 3 dots
+==> Finish trello stuff

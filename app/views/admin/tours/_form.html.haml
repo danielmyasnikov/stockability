@@ -1,5 +1,4 @@
 = form.text_field :name
-= form.text_field :admin
 .form-group
   %label.control-label.col-sm-2 Active
   .col-sm-10= check_box_tag :tour, nil, nil, { :checked => @tour.active?, :name => 'tour_entry[active]'}

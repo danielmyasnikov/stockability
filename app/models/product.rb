@@ -30,6 +30,25 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(products)
+    CSV.generate do |csv|
+      csv << %w(sku description batch_tracked barcode description quantity)
+      products.each do |product|
+        if product.product_barcodes.present?
+          product.product_barcodes.each_with_index do |barcode, index|
+            if index == 0
+              csv << [product.sku, product.description, product.batch_tracked, barcode.barcode, barcode.description, barcode.quantity]
+            else
+              csv << [nil, nil, nil, barcode.barcode, barcode.description, barcode.quantity]
+            end
+          end
+        else
+          csv << [product.sku, product.description, product.batch_tracked, nil, nil, nil]
+        end
+      end
+    end
+  end
+
   def option_title
     name.to_s + ' ' + sku
   end

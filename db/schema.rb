@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20151011003031) do
     t.string   "country"
   end
 
-  create_table "inventories", id: false, force: :cascade do |t|
+  create_table "inventories", force: :cascade do |t|
     t.integer "tour_entry_id"
     t.integer "stock_level_id"
   end

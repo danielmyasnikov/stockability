@@ -13,7 +13,7 @@ class StockLevel < ActiveRecord::Base
   }, foreign_key: :location_code, primary_key: :code
 
   has_many :tour_entries, through: :inventories
-  has_many :inventories
+  has_many :inventories, dependent: :destroy
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------

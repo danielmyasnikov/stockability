@@ -4,7 +4,7 @@ class Tour < ActiveRecord::Base
 
   belongs_to :admin
   belongs_to :company
-  has_many :tour_entries
+  has_many :tour_entries, dependent: :destroy
 
   # comma do
   #   name

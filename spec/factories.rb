@@ -66,7 +66,7 @@ FactoryGirl.define do
   end
 
   factory :layout, :class => 'Comfy::Cms::Layout' do
-    label { FFaker::Name.first_name }
+    label { FFaker::Name.first_name.downcase }
     site
     identifier { FFaker::Name.first_name.downcase }
   end

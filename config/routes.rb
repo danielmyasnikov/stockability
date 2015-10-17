@@ -5,7 +5,9 @@ WarehouseCms::Application.routes.draw do
   namespace :admin do
     resources :locations
     resources :product_barcodes
-    resources :tour_entries
+    resources :tour_entries do
+      collection { get :download }
+    end
     resources :stock_levels do
       collection { get :download }
       collection { get :sample }
@@ -22,7 +24,9 @@ WarehouseCms::Application.routes.draw do
       collection { get :import }
       collection { post :process_import }
     end
-    resources :tours
+    resources :tours do
+      collection { get :download }
+    end
   end
 
   # think to change to member

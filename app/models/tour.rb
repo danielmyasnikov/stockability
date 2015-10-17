@@ -6,15 +6,6 @@ class Tour < ActiveRecord::Base
   belongs_to :company
   has_many :tour_entries, dependent: :destroy
 
-  # comma do
-  #   name
-  #   created_at { |time| time.strftime("%Y %m %d - %H:%M") }
-  #   active
-  #   started    { |started| started.strftime("%Y %m %d - %H:%M") }
-  #   completed  { |completed| completed.strftime("%Y %m %d - %H:%M") }
-  #   admin :email
-  # end
-
   scope :since, -> (since) { since.present? ? where('updated_at > ?', since.to_datetime) : all }
 
   def self.options_for_select(current_ability)
@@ -25,24 +16,13 @@ class Tour < ActiveRecord::Base
     name
   end
 
-  def create_or_update_products(products_attr)
-    products_attr.each do |product_attr|
-      product = Product.find_or_initialize_by(:barcode =>
-        product_attr[:barcode])
-
-      product.quantity = product.quantity.to_i + product_attr[:quantity].to_i
-      product.save!
-
-      products << product
-    end
-  end
-
-  def to_csv
-    _name = name || DateTime.now.strftime("%Y%m%d%H%M%S")
+  def self.to_csv(current_ability)
     CSV.generate do |csv|
-      csv << ["Product Name", "Product Barcode", "Product Quantity"]
-      products.each do |product|
-        csv << [product.name, product.barcode, product.quantity]
+      csv << [:name, :admin, :active, :started, :completed, :created_at, :updated_at]
+
+      accessible_by(current_ability).each do |tour|
+        csv << [tour.name, tour.admin.try(:login), tour.active, tour.started,
+          tour.completed, tour.created_at.strftime('%Y-%m-%d %H:%M:%S'), tour.updated_at.strftime('%Y-%m-%d %H:%M:%S')]
       end
     end
   end

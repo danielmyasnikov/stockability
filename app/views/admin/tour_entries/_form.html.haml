@@ -1,10 +1,11 @@
 = form.select :tour_id, options_for_select(Tour.options_for_select(current_ability)), include_blank: true
-= form.text_field :location
-= form.text_field :bin
+= form.select :location_code, options_for_select(@locations, @tour_entry.location_code) #, nil, class: 'select2'
+= form.text_field :bin_code
 = form.text_field :sku
 = form.text_field :barcode
 = form.text_field :batch_code
 = form.text_field :quantity
+
 .form-group
   %label.control-label.col-sm-2 Active
   .col-sm-10= check_box_tag :tour_entry, nil, nil, { :checked => @tour_entry.active?, :name => 'tour_entry[active]'}

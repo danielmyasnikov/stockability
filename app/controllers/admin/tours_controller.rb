@@ -9,9 +9,11 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
 
   def index
     @tours = Tour.accessible_by(current_ability).page(params[:page])
+  end
+
+  def download
     respond_to do |format|
-      format.html { render }
-      format.csv { render :csv => Tour.accessible_by(current_ability) }
+      format.csv { send_data Tour.to_csv(current_ability), filename: "tours-#{Date.today}.csv" }
     end
   end
 

@@ -2,6 +2,7 @@ class Admin::TourEntriesController < Comfy::Admin::Cms::BaseController
 
   before_action :build_tour_entry,  :only => [:new, :create]
   before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
+  before_action :load_locations, :only => [:new, :create, :edit, :update]
 
   def index
     @tour_entries = TourEntry.accessible_by(current_ability).page(params[:page])
@@ -60,5 +61,9 @@ protected
   def tour_entry_params
     params.fetch(:tour_entry, {}).permit(:tour_id, :location, :bin, :sku,
       :barcode, :batch_code, :quantity, :active)
+  end
+
+  def load_locations
+    @locations = Location.accessible_by(current_ability).pluck(:code)
   end
 end

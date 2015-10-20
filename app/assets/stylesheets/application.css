@@ -1,4 +1,11 @@
 /*
- *= require_self
- *= require_tree .
+ *= require font-awesome
+ *= require bootstrap.css
+ *= require plugins/dataTables/dataTables.bootstrap.css
+ *= require plugins/dataTables/dataTables.responsive.css
+ *= require plugins/dataTables/dataTables.tableTools.min.css
+ *= require select2
+ *= require select2-bootstrap
+ *= require animate
+ *= require style
  */

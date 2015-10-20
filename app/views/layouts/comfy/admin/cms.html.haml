@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    = render 'layouts/comfy/admin/cms/head'
+  %body
+    #wrapper
+      = render 'layouts/comfy/admin/cms/left_nav'
+      #page-wrapper.gray-bg
+        = render 'layouts/comfy/admin/cms/top_nav'
+        = render 'layouts/comfy/admin/cms/body'
+        = render 'layouts/comfy/admin/cms/footer'
+    / Mainly scripts
+    = javascript_include_tag "new_layout.js"

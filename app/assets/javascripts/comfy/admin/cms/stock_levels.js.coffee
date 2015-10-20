@@ -1,5 +1,3 @@
-#= require dataTables/jquery.dataTables
-#= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 #= require select2
 
 Stockability = {}
@@ -40,7 +38,7 @@ Stockability.StockLevel = ($) ->
 
   datatable = $('#stock-levels').DataTable
     searching:  false
-    ordering:   false
+    ordering:   true
     processing: true
 
   $('#reset-all').click (e) ->

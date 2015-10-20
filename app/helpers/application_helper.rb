@@ -23,4 +23,17 @@ module ApplicationHelper
     return 'No Errors' unless errors.present?
     errors.map(&:message).join(', ')
   end
+
+  def in_style_comfy_meny title, path
+    content_tag :li, :class => active(path) do
+      content = content_tag :a, :href => path do
+        concat(content_tag :i, nil, :class => ['fa', 'fa-th-large'])
+        concat(content_tag(:span, title, :class => 'nav-label'))
+      end
+    end
+  end
+
+  def active(path)
+    'active' if request.fullpath == path
+  end
 end

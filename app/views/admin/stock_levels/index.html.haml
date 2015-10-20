@@ -27,7 +27,9 @@
     = collection_select(:tour, :id, @tour_options, :last, :first, {:prompt => 'Select Associated Tour'}, class: 'form-control assign-tour')
     = link_to 'Assign!', nil, { id: 'assign-results', class: 'btn btn-success', style: 'width: 100%; margin-top: 10px;' }
 
-%table.table.table-hover.table-bordered.display{:cellspacing => "0", :width => "100%", id: 'stock-levels' }
+%hr
+
+%table.table.table-striped.table-hover.table-bordered.display{:cellspacing => "0", :width => "100%", id: 'stock-levels' }
   %thead
     %tr
       %th= check_box_tag :check_all
@@ -41,16 +43,16 @@
   %tbody
     - @stock_levels.each do |stock_level|
       %tr
-        %td= check_box_tag :check_stock_level, nil, nil, data: { id: stock_level.id }, class: 'check'
-        %td
+        %td.col-sm-1= check_box_tag :check_stock_level, nil, nil, data: { id: stock_level.id }, class: 'check'
+        %td.col-sm-1
           - stock_level.last_tours.each do |tour|
             = link_to truncate(tour.name, length: 12), admin_tour_path(tour), class: 'label label-default'
-        %td.main= stock_level.location_code
-        %td= stock_level.bin_code
-        %td= stock_level.sku
-        %td= stock_level.batch_code
-        %td= stock_level.quantity
-        %td
+        %td.col-sm-1= stock_level.location_code
+        %td.col-sm-1= stock_level.bin_code
+        %td.col-sm-1= stock_level.sku
+        %td.col-sm-1= stock_level.batch_code
+        %td.col-sm-1= stock_level.quantity
+        %td.col-sm-1
           .btn-group.btn-group-sm
             = link_to 'Edit', edit_admin_stock_level_path(stock_level), :class => 'btn btn-default'
             = link_to 'Delete', admin_stock_level_path(stock_level), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

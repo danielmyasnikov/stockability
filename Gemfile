@@ -4,6 +4,7 @@ gem 'rails', '~> 4.2'
 gem 'pg'
 gem 'haml'
 gem 'comfortable_mexican_sofa'
+gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'
 
 gem 'capistrano', '~> 3.4.0'

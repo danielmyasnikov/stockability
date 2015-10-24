@@ -15,6 +15,20 @@ module ApplicationHelper
     end
   end
 
+  def collapse!
+    if cookies['sa.collapsed'].present?
+      'mini-navbar'
+    end
+  end
+
+  def home_path_for(resource)
+    if resource.super_admin?
+      admin_companies_path
+    else
+      admin_products_path
+    end
+  end
+
   def interpret_status(status)
     Services::ProductsBarcodesImporter::STATUS[status]
   end
@@ -26,10 +40,12 @@ module ApplicationHelper
 
   def in_style_comfy_meny title, path, options = {}
     link_options = { :href => path }.merge(options)
+    icon = options[:icon] || 'fa-th-large'
+    nav_label = options[:nav_label] || 'nav-label'
     content_tag :li, :class => active(path) do
       content = content_tag :a, link_options do
-        concat(content_tag :i, nil, :class => ['fa', 'fa-th-large'])
-        concat(content_tag(:span, title, :class => 'nav-label'))
+        concat(content_tag :i, nil, :class => ['fa', icon])
+        concat(content_tag(:span, title, :class => nav_label))
       end
     end
   end

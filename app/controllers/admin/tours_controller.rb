@@ -8,7 +8,7 @@ class Admin::ToursController < Comfy::Admin::Cms::BaseController
   respond_to :csv, :html
 
   def index
-    @tours = Tour.accessible_by(current_ability).page(params[:page])
+    @tours = Tour.accessible_by(current_ability) #.page(params[:page])
   end
 
   def download

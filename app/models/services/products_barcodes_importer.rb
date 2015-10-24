@@ -198,4 +198,8 @@ private
     true
   end
 
+  def errors
+    @errors ||= []
+  end
+
 end

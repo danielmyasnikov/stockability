@@ -8,7 +8,7 @@ class Admin::ProductsController < Comfy::Admin::Cms::BaseController
   after_action :forget_import, only: :import
 
   def index
-    @products = Product.accessible_by(current_ability).page(params[:page])
+    @products = Product.accessible_by(current_ability)
     respond_to do |format|
       format.html { render }
     end

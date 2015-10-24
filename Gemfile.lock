@@ -156,6 +156,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.3)
       railties (>= 3.2.16)
+    js_cookie_rails (1.0.1)
+      railties (>= 3.1)
     json (1.8.2)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
@@ -327,6 +329,7 @@ DEPENDENCIES
   haml
   jquery-datatables-rails
   jquery-rails
+  js_cookie_rails
   kaminari
   launchy
   pg

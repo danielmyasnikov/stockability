@@ -2,35 +2,33 @@
   = link_to 'New Company', new_admin_company_path, :class => 'btn btn-default pull-right'
   %h2= 'Companies'
 
-= paginate @companies, :theme => 'comfy'
-
-%table.table.table-hover.table-bordered
-  %tr
-    %th.main Title
-    %th Description
-    %th Address
-    %th Suburb
-    %th Postcode
-    %th State
-    %th Phone
-    %th Abn
-    %th
-  - @companies.each do |company|
+%table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+  %thead
     %tr
-      %td.main= company.title
-      %td= company.description
-      %td= company.address
-      %td= company.suburb
-      %td= company.postcode
-      %td= company.state
-      %td= company.phone
-      %td= company.abn
-      %td
-        .btn-group.btn-group-sm
-          - if can?(:manage, Company)
-            = link_to 'Edit', edit_admin_company_path(company), :class => 'btn btn-default'
-            = link_to 'Delete', admin_company_path(company), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
-          - else
-            = link_to 'Show', admin_company_path(company), :class => 'btn btn-default'
-
-= paginate @companies, :theme => 'comfy'
+      %th.col-sm-1.main Title
+      %th.col-sm-1 Description
+      %th.col-sm-1 Address
+      %th.col-sm-1 Suburb
+      %th.col-sm-1 Postcode
+      %th.col-sm-1 State
+      %th.col-sm-1 Phone
+      %th.col-sm-1 Abn
+      %th.col-sm-1
+  %tbody
+    - @companies.each do |company|
+      %tr
+        %td.main= company.title
+        %td= company.description
+        %td= company.address
+        %td= company.suburb
+        %td= company.postcode
+        %td= company.state
+        %td= company.phone
+        %td= company.abn
+        %td
+          .btn-group.btn-group-sm
+            - if can?(:manage, Company)
+              = link_to 'Edit', edit_admin_company_path(company), :class => 'btn btn-default'
+              = link_to 'Delete', admin_company_path(company), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+            - else
+              = link_to 'Show', admin_company_path(company), :class => 'btn btn-default'

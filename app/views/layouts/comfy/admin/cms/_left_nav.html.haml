@@ -6,7 +6,7 @@
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             %span.clear
               %span.block.m-t-xs
-                %strong.font-bold= current_admin.login.truncate(25)
+                %strong.font-bold= current_admin.username.truncate(25)
               %span.text-muted.text-xs.block
                 = current_admin.role
                 -# %b.caret
@@ -15,11 +15,11 @@
           -#     %a{:href => "#"} Logout
         .logo-element
           SA+
+      = in_style_comfy_meny 'Stock Levels', admin_stock_levels_path
       = in_style_comfy_meny 'Tours', admin_tours_path
       = in_style_comfy_meny 'Tour Entries', admin_tour_entries_path
       = in_style_comfy_meny 'Products', admin_products_path
       = in_style_comfy_meny 'Product Barcodes', admin_product_barcodes_path
-      = in_style_comfy_meny 'Stock Levels', admin_stock_levels_path
       = in_style_comfy_meny 'Locations', admin_locations_path
-      = in_style_comfy_meny 'User Management', admin_admins_path
-      = in_style_comfy_meny 'Companies', admin_companies_path
+      = in_style_comfy_meny 'Users', admin_admins_path
+      = in_style_comfy_meny 'Company', admin_companies_path

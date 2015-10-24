@@ -24,9 +24,10 @@ module ApplicationHelper
     errors.map(&:message).join(', ')
   end
 
-  def in_style_comfy_meny title, path
+  def in_style_comfy_meny title, path, options = {}
+    link_options = { :href => path }.merge(options)
     content_tag :li, :class => active(path) do
-      content = content_tag :a, :href => path do
+      content = content_tag :a, link_options do
         concat(content_tag :i, nil, :class => ['fa', 'fa-th-large'])
         concat(content_tag(:span, title, :class => 'nav-label'))
       end

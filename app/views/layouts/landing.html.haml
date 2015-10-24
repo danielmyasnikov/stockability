@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %title Stockability
+    = stylesheet_link_tag    "landings", :media => "all"
+    = javascript_include_tag "landings"
+    = csrf_meta_tags
+  %body
+    .page
+      = yield

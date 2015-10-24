@@ -1,8 +1,8 @@
 .page-header
   .btn-group.pull-right
-    = link_to 'Upload via CSV', import_admin_products_path, :class => 'btn btn-default'
+    = link_to 'Upload CSV', import_admin_products_path, :class => 'btn btn-default'
     = link_to 'New Product', new_admin_product_path, :class => 'btn btn-default'
-    = link_to 'Download All As CSV', download_admin_products_path(:format => :csv), :class => 'btn btn-success'
+    = link_to 'Download CSV', download_admin_products_path(:format => :csv), :class => 'btn btn-success'
 
   %h2= 'Products'
 
@@ -11,15 +11,15 @@
 
   %table.table.table-hover.table-bordered
     %tr
-      %th Description
       %th SKU
-      %th Batch Tracked ?
+      %th Batch Tracked
+      %th Description
       %th
     - @products.each do |product|
       %tr
-        %td= product.description
         %td= product.sku
         %td= product.batch_tracked == 1 ? 'Yes' : 'No'
+        %td= product.description
         %td
           .btn-group.btn-group-sm
             = link_to 'Edit', edit_admin_product_path(product), :class => 'btn btn-default'

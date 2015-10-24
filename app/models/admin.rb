@@ -7,7 +7,7 @@ class Admin < ActiveRecord::Base
   AVAILABLE_ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
   ROLES           = [ :super_admin, AVAILABLE_ROLES ].flatten.freeze
 
-  validates_presence_of :login, :company, :unless => :super_admin?
+  validates_presence_of :login, :company, :if => :requires_login?
   validates_uniqueness_of :login
 
   after_create :save_with_token
@@ -20,6 +20,17 @@ class Admin < ActiveRecord::Base
 
   def can_manage_admins?
     super_admin? || admin?
+  end
+
+  def username
+    case
+    when self.to_s.present?
+      self.to_s
+    when login.present?
+      login
+    when email.present?
+      email
+    end
   end
 
   def self.options_for_select(user)
@@ -51,5 +62,9 @@ class Admin < ActiveRecord::Base
 private
   def generate_token
     SecureRandom.uuid
+  end
+
+  def requires_login?
+    !super_admin?
   end
 end

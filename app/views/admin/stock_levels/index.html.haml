@@ -1,7 +1,8 @@
 .page-header
-  = link_to 'Upload via CSV', import_admin_stock_levels_path, :class => 'btn btn-default btn-primary pull-right'
-  = link_to 'Download CSV', download_admin_stock_levels_path(sku: params[:sku], location_code: params[:location_code], bin_code: params[:bin_code], format: :csv), :class => 'btn btn-success pull-right'
-  = link_to 'New Stock Level', new_admin_stock_level_path, :class => 'btn btn-default pull-right'
+  .btn-group
+    = link_to 'Upload CSV', import_admin_stock_levels_path, :class => 'btn btn-default btn-primary pull-right'
+    = link_to 'Download CSV', download_admin_stock_levels_path(sku: params[:sku], location_code: params[:location_code], bin_code: params[:bin_code], format: :csv), :class => 'btn btn-success pull-right'
+    = link_to 'New Stock Level', new_admin_stock_level_path, :class => 'btn btn-default pull-right'
 
   %h2= 'Stock Levels'
 
@@ -24,20 +25,21 @@
     = link_to 'Filter', nil, { id: 'filter-results', class: 'btn btn-primary' }
     = link_to 'Reset All', nil, { id: 'reset-all' }
     %hr
-    = collection_select(:tour, :id, @tour_options, :last, :first, {:prompt => 'Select Associated Tour'}, class: 'form-control assign-tour')
-    = link_to 'Assign!', nil, { id: 'assign-results', class: 'btn btn-success', style: 'width: 100%; margin-top: 10px;' }
+    = collection_select(:tour, :id, @tour_options, :last, :first, {:prompt => 'Select Tour'}, class: 'form-control assign-tour')
+    = link_to 'Assign', nil, { id: 'assign-results', class: 'btn btn-success', style: 'width: 100%; margin-top: 10px;' }
 
 %hr
 
 %table.table.table-striped.table-hover.table-bordered.display{:cellspacing => "0", :width => "100%", id: 'stock-levels' }
   %thead
     %tr
+
       %th= check_box_tag :check_all
       %th On Tour
-      %th.main Location Code
-      %th Bin Code
-      %th Sku
-      %th Batch Code
+      %th Location
+      %th Bin
+      %th SKU
+      %th Batch
       %th Quantity
       %th
   %tbody

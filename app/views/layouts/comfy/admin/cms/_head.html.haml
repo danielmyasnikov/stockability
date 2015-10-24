@@ -1,4 +1,6 @@
 %meta{ :charset => "utf-8" }
 %meta{ :content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-  %title Company Name | Stockabilty | Environment != Production
-  = stylesheet_link_tag "application"
+= content_tag :title, "Stockabilty | #{current_admin.company.try(:title)}"
+%title Stockabilty | Company Name |
+= stylesheet_link_tag "application"
+= csrf_meta_tag

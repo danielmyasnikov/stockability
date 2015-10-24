@@ -5,7 +5,4 @@
         %i.fa.fa-bars
       -# = render 'layouts/comfy/admin/cms/search'
     %ul.nav.navbar-top-links.navbar-right
-      %li
-        %a{:href => "#"}
-          %i.fa.fa-sign-out
-          Log out
+      = in_style_comfy_meny 'Log Out', destroy_admin_session_path, data: { method: :delete, confirm: 'Are you sure?' }

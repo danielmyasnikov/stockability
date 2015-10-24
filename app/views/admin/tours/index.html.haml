@@ -1,6 +1,7 @@
 .page-header
-  = link_to 'Download All As CSV', download_admin_tours_path(:format => :csv), :class => 'btn btn-success pull-right'
-  = link_to 'New Tour', new_admin_tour_path, :class => 'btn btn-default pull-right'
+  .btn-group
+    = link_to 'Download CSV', download_admin_tours_path(:format => :csv), :class => 'btn btn-success pull-right'
+    = link_to 'New Tour', new_admin_tour_path, :class => 'btn btn-default pull-right'
   %h2= 'Tours'
 
 = paginate @tours, :theme => 'comfy'
@@ -8,7 +9,7 @@
 %table.table.table-hover.table-bordered
   %tr
     %th Name
-    %th Admin
+    %th Users
     %th Active
     %th Started
     %th Completed

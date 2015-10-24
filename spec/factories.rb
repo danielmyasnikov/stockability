@@ -12,6 +12,18 @@ FactoryGirl.define do
       company
     end
 
+    trait :warehouse_manager do
+      role :warehouse_manager
+      sequence(:login) { |i| FFaker::Internet.user_name }
+      company
+    end
+
+    trait :warehouse_operator do
+      role :warehouse_operator
+      sequence(:login) { |i| FFaker::Internet.user_name }
+      company
+    end
+
     password              'password'
     password_confirmation 'password'
   end

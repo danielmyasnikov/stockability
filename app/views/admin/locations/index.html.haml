@@ -8,30 +8,12 @@
   %tr
     %th.main Code
     %th Name
-    %th Phone
-    %th Email
-    %th Address
-    %th Address2
-    %th Address3
-    %th Suburb
-    %th State
-    %th Postcode
-    %th Country
     %th Description
     %th
   - @locations.each do |location|
     %tr
       %td.main= location.code
       %td= location.name
-      %td= location.phone
-      %td= location.email
-      %td= location.address
-      %td= location.address2
-      %td= location.address3
-      %td= location.suburb
-      %td= location.state
-      %td= location.postcode
-      %td= location.country
       %td= location.description
       %td
         .btn-group.btn-group-sm

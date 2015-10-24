@@ -6,14 +6,13 @@
 
 %table.table.table-hover.table-bordered
   %tr
-    %th.main Tour
+    %th Tour
     %th Location
     %th Bin
-    %th Sku
+    %th SKU
     %th Barcode
-    %th Batch Code
+    %th Batch
     %th Quantity
-    %th Active
     %th
   - @tour_entries.each do |tour_entry|
     %tr
@@ -24,7 +23,6 @@
       %td= tour_entry.barcode
       %td= tour_entry.batch_code
       %td= tour_entry.quantity
-      %td= tour_entry.active
       %td
         .btn-group.btn-group-sm
           = link_to 'Edit', edit_admin_tour_entry_path(tour_entry), :class => 'btn btn-default'

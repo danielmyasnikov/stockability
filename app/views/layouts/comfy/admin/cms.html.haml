@@ -2,7 +2,8 @@
 %html
   %head
     = render 'layouts/comfy/admin/cms/head'
-  %body
+  %body{ class: collapse! }
+    #settings.hidden{ :data => { :host => Settings.host } }
     #wrapper
       = render 'layouts/comfy/admin/cms/left_nav'
       #page-wrapper.gray-bg

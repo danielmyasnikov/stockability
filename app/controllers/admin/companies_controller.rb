@@ -5,7 +5,7 @@ class Admin::CompaniesController < Comfy::Admin::Cms::BaseController
   load_and_authorize_resource :except => [:new, :create]
 
   def index
-    @companies = Company.accessible_by(current_ability).page(params[:page])
+    @companies = Company.accessible_by(current_ability) #.page(params[:page])
   end
 
   def show

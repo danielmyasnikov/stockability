@@ -1,0 +1,20 @@
+.row
+  .col-md-6
+    %h2.font-bold Request Password Change
+    %p
+      Lorem ipsum...x
+    %p
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+    %p
+      When an unknown printer took a galley of type and scrambled it to make a type specimen book.
+    %p
+      %small It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+  .col-md-6
+    .ibox-content
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+        = devise_error_messages!
+        .form-group
+          = f.email_field :email, autofocus: true, class: 'form-control'
+
+        = f.submit "Reset password", :id => "reset-password-button", :class => 'btn btn-primary block full-width m-b'
+      = render "devise/shared/links"

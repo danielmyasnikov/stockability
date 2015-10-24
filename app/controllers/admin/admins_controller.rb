@@ -6,7 +6,7 @@ class Admin::AdminsController < Comfy::Admin::Cms::BaseController
   load_and_authorize_resource :except => [:new, :create]
 
   def index
-    @admins = Admin.accessible_by(current_ability).page(params[:page])
+    @admins = Admin.accessible_by(current_ability)
   end
 
   def new

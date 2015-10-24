@@ -31,6 +31,7 @@ gem 'apipie-rails'
 
 gem 'jquery-datatables-rails'
 gem 'select2-rails'
+gem 'js_cookie_rails'
 
 group :development do
   gem 'byebug'

@@ -32,7 +32,15 @@ WarehouseCms::Application.routes.draw do
   # think to change to member
   comfy_route :cms_admin, :path => '/admin'
 
-  devise_for :admins
+  devise_for :admins, :controllers => {
+    :registrations => 'stockability_auth/registrations',
+    :sessions => 'stockability_auth/sessions',
+    :passwords => 'stockability_auth/passwords'
+  }
+
+  authenticated :admin do
+    root :to => "application#index"
+  end
 
   api_version(:module => "v1", :path => { :value => "api/v1" }, :defaults => {:format => "json"}) do
     resources :products
@@ -45,5 +53,5 @@ WarehouseCms::Application.routes.draw do
 
   comfy_route :cms, :path => '/*', :sitemap => false
 
-  get '/' => 'welcome#splash'
+  get '/' => 'landings#splash'
 end

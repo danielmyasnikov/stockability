@@ -4,7 +4,7 @@ class Admin::LocationsController < Comfy::Admin::Cms::BaseController
   before_action :load_location,   :only => [:show, :edit, :update, :destroy]
 
   def index
-    @locations = Location.accessible_by(current_ability).page(params[:page])
+    @locations = Location.accessible_by(current_ability) #.page(params[:page])
   end
 
   def show

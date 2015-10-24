@@ -1,0 +1,21 @@
+.row
+  .col-md-6
+    %h2.font-bold Welcome to StockAbility
+    %p
+      Lorem ipsum.....
+    %p
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+    %p
+      Lorem ipsum....
+    %p
+      %small Lorem ipsum....
+  .col-md-6
+    .ibox-content
+      = form_for(resource, as: resource_name, url: session_path(resource_name), :class => '.m-t', :role => 'form') do |f|
+        = flash_message
+        .form-group
+          = f.email_field :email, autofocus: true, :placeholder => 'Email', :class => 'form-control'
+        .form-group
+          = f.password_field :password, autocomplete: "off", :placeholder => 'Password', :class => 'form-control'
+        = f.submit "Log in", :id => "login-button", :class => 'btn btn-primary block full-width m-b'
+      = render "devise/shared/links"

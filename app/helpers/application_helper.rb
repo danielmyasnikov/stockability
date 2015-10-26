@@ -40,14 +40,20 @@ module ApplicationHelper
 
   def in_style_comfy_meny title, path, options = {}
     link_options = { :href => path }.merge(options)
-    icon = options[:icon] || 'fa-th-large'
-    nav_label = options[:nav_label] || 'nav-label'
+    icon         = options[:icon] || 'fa-th-large'
+    nav_label    = options[:nav_label] || 'nav-label'
+    link_options.merge!(tooltip(title)) if options[:tooltip]
+
     content_tag :li, :class => active(path) do
       content = content_tag :a, link_options do
         concat(content_tag :i, nil, :class => ['fa', icon])
         concat(content_tag(:span, title, :class => nav_label))
       end
     end
+  end
+
+  def tooltip title
+    { :data => { :toggle => 'tooltip', :placement => 'right', :title => title } }
   end
 
   def active(path)

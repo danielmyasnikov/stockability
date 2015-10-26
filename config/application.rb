@@ -19,8 +19,8 @@ module WarehouseCms
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
 
-    config.assets.precompile += %w( login.scss )
-    config.assets.precompile += %w( landings.scss )
-    config.assets.precompile += %w( landings.coffee )
+    config.assets.precompile += %w( login.css )
+    config.assets.precompile += %w( landings.css )
+    config.assets.precompile += %w( landings.js )
   end
 end

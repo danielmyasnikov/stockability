@@ -19,6 +19,7 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'twitter-bootstrap-rails'
 gem 'rails_config'
 gem 'jquery-rails'
 gem 'devise'

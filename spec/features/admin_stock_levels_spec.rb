@@ -89,8 +89,6 @@ feature 'Authentication' do
     scenario 'filter stock levels and assign them to a new tour', js: true do
       first("input[type=checkbox]").set(true)
       select('! - Create New Tour', :from => 'tour_id')
-      last_tour_id    = Tour.last.try(:id) || 0
-      current_tour_id = last_tour_id + 1
       click_link 'Assign'
       expect(current_path).to eq("/users/tours/new")
       fill_in :tour_name, :with => "NEW TOUR HEY"

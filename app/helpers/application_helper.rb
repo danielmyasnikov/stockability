@@ -23,9 +23,9 @@ module ApplicationHelper
 
   def home_path_for(resource)
     if resource.super_admin?
-      admin_companies_path
+      users_companies_path
     else
-      admin_products_path
+      users_products_path
     end
   end
 
@@ -38,7 +38,7 @@ module ApplicationHelper
     errors.map(&:message).join(', ')
   end
 
-  def in_style_comfy_meny title, path, options = {}
+  def in_style_menu title, path, options = {}
     link_options = { :href => path }.merge(options)
     icon         = options[:icon] || 'fa-th-large'
     nav_label    = options[:nav_label] || 'nav-label'

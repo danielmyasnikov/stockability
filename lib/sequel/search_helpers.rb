@@ -2,8 +2,7 @@ module Sequel
   module SearchHelpers
 
     def self.included(base)
-      # base.send(:include, Sequel::SearchHelpers::InstanceMethods)
-      base.send(:extend, Sequel::SearchHelpers::ClassMethods)
+      base.extend(ClassMethods)
     end
 
     module ClassMethods

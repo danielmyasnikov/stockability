@@ -79,6 +79,6 @@ private
   end
 
   def company_params
-    { company_id: current_admin.company_id }
+    { company_id: current_user.company_id }
   end
 end

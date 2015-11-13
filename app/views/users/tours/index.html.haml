@@ -1,0 +1,28 @@
+.page-header
+  .btn-group.pull-right
+    = link_to 'Download CSV', download_users_tours_path(:format => :csv), :class => 'btn btn-primary'
+    = link_to 'New Tour', new_users_tour_path, :class => 'btn btn-default'
+  %h2= 'Tours'
+
+%table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+  %thead
+    %tr
+      %th.col-sm-1 Name
+      %th.col-sm-1 Users
+      %th.col-sm-1 Active
+      %th.col-sm-1 Started
+      %th.col-sm-1 Completed
+      %th.col-sm-1
+  %tbody
+    - @tours.each do |tour|
+      %tr
+        %td= tour.name
+        %td= tour.user.try(:login)
+        %td= tour.active? ? 'Yes' : 'No'
+        %td= tour.started.try(:strftime, "%H:%M - %d/%m/%Y")
+        %td= tour.completed.try(:strftime, "%H:%M - %d/%m/%Y")
+        %td
+          .btn-group.btn-group-sm
+            = link_to 'Edit', edit_users_tour_path(tour), :class => 'btn btn-default'
+            -# = link_to 'Download CSV', users_tour_path(tour, :format => :csv), :class => 'btn btn-success'
+            = link_to 'Delete', users_tour_path(tour), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

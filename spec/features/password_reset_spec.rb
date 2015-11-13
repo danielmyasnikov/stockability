@@ -30,7 +30,7 @@ feature 'Password Reset' do
       fill_in :admin_email, :with => company_admin.email
       reset_password_for(company_admin)
       # see ApplicationController#redirect_path_for for more info
-      expect(current_path).to eq(admin_products_path)
+      expect(current_path).to eq(users_products_path)
     end
   end
 
@@ -39,7 +39,7 @@ feature 'Password Reset' do
       fill_in :admin_email, :with => manager.email
       reset_password_for(manager)
       # see ApplicationController#redirect_path_for for more info
-      expect(current_path).to eq(admin_products_path)
+      expect(current_path).to eq(users_products_path)
     end
   end
 

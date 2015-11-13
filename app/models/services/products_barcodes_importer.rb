@@ -1,5 +1,5 @@
 class Services::ProductsBarcodesImporter
-  attr_reader :errors, :admin, :services, :file, :product, :successfully_imported, :warnings, :products, :barcode
+  attr_reader :errors, :user, :services, :file, :product, :successfully_imported, :warnings, :products, :barcode
 
   STATUS = {
     0 => 'Ok',
@@ -7,9 +7,9 @@ class Services::ProductsBarcodesImporter
     2 => 'ERROR: MISSING SKU!'
   }
 
-  def initialize(file, admin)
+  def initialize(file, user)
     @file  = file
-    @admin = admin
+    @user = user
   end
 
   def import
@@ -119,7 +119,7 @@ private
     Services::ProductBarcodesService.new({
       :product          => product_params,
       :product_barcodes => product[:product_barcodes],
-      :admin            => admin
+      :user            => user
     })
   end
 

@@ -83,7 +83,7 @@ private
     hash = params.require(:stock_level).permit(:location_code)
     hash[:code] = hash.delete :location_code
     # company id should be always. or throw catch an exception, super admin creates the record
-    hash[:company_id] = current_admin.company_id
+    hash[:company_id] = current_user.company_id
     hash
   end
 
@@ -92,7 +92,7 @@ private
   end
 
   def company_params
-    { :company_id => current_admin.company_id }
+    { :company_id => current_user.company_id }
   end
 
   def find_location

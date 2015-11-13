@@ -26,8 +26,8 @@ private
   end
 
   def token_authorize!
-    @current_admin = Admin.find_by_token(token_params[:token])
-    render json: { text: 'Forbidden access. Admin / Manager / Operator were not found' }, status: 403 if current_admin.nil?
+    @current_user = User.find_by_token(token_params[:token])
+    render json: { text: 'Forbidden access. Admin / Manager / Operator were not found' }, status: 403 if current_user.nil?
     return
   end
 
@@ -36,7 +36,7 @@ private
   end
 
   def company_params
-    { company_id: current_admin.company_id }
+    { company_id: current_user.company_id }
   end
 
   def since_params

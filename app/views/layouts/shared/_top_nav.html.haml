@@ -1,0 +1,8 @@
+.row.border-bottom
+  %nav.navbar.navbar-static-top.white-bg{:role => "navigation", :style => "margin-bottom: 0"}
+    .navbar-header
+      %a.navbar-minimalize.minimalize-styl-2.btn.btn-primary{:href => "#"}
+        %i.fa.fa-bars
+      -# = render 'layouts/comfy/admin/cms/search'
+    %ul.nav.navbar-top-links.navbar-right
+      = in_style_menu 'Log Out', destroy_user_session_path, data: { method: :delete, confirm: 'Are you sure?' }, :icon => 'fa-sign-out', :nav_label => 'sa-log-out'

@@ -1,21 +1,20 @@
 class ApplicationController < ActionController::Base
-  alias_method :current_user, :current_admin
   protect_from_forgery
 
   def index
-    redirect_to home_path_for(current_admin)
+    redirect_to home_path_for(current_user)
   end
 
 protected
   def after_sign_in_path_for(resource)
-    home_path_for(current_admin)
+    home_path_for(current_user)
   end
 
   def home_path_for(resource)
     if resource.super_admin?
-      admin_companies_path
+      users_companies_path
     else
-      admin_products_path
+      users_products_path
     end
   end
 

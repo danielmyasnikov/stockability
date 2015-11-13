@@ -1,8 +1,7 @@
 WarehouseCms::Application.routes.draw do
 
   apipie
-
-  namespace :admin do
+  namespace :users do
     resources :locations
     resources :product_barcodes
     resources :tour_entries do
@@ -15,7 +14,7 @@ WarehouseCms::Application.routes.draw do
       collection { post :process_import }
       collection { post :process_stock_levels }
     end
-    resources :admins, :except => :show
+    resources :users, :except => :show
     resources :bins
     resources :companies
     resources :products do
@@ -29,16 +28,13 @@ WarehouseCms::Application.routes.draw do
     end
   end
 
-  # think to change to member
-  comfy_route :cms_admin, :path => '/admin'
-
-  devise_for :admins, :controllers => {
+  devise_for :users, :controllers => {
     :registrations => 'stockability_auth/registrations',
     :sessions => 'stockability_auth/sessions',
     :passwords => 'stockability_auth/passwords'
   }
 
-  authenticated :admin do
+  authenticated :user do
     root :to => "application#index"
   end
 
@@ -50,8 +46,6 @@ WarehouseCms::Application.routes.draw do
     resources :tours
     resources :tokens, :only => :create
   end
-
-  comfy_route :cms, :path => '/*', :sitemap => false
 
   get '/' => 'landings#splash'
 end

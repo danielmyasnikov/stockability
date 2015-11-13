@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  has_many :admins
+  has_many :users
   has_many :bins
   has_many :products
   has_many :stock_levels

@@ -1,6 +1,6 @@
 Apipie.configure do |config|
   config.reload_controllers      = Rails.env.development?
-  config.app_name                = "WarehouseCms"
+  config.app_name                = "StockAbility"
   config.api_base_url            = "/api"
   config.doc_base_url            = "/apipie"
   config.authenticate = Proc.new do

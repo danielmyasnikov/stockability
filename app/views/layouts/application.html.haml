@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    = render 'layouts/shared/head'
+  %body{ class: collapse! }
+    #settings.hidden{ :data => { :host => Settings.host } }
+    #wrapper
+      = render 'layouts/shared/left_nav'
+      #page-wrapper.gray-bg
+        = render 'layouts/shared/top_nav'
+        .row
+          = render 'layouts/shared/flash'
+        = render 'layouts/shared/body'
+        = render 'layouts/shared/footer'
+
+    = javascript_include_tag "application"

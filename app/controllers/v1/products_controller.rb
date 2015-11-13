@@ -95,7 +95,7 @@ private
     @product_service = Services::ProductBarcodesService.new(
       :product          => product_params,
       :product_barcodes => barcode_params.fetch(:product_barcodes, []),
-      :admin            => current_admin
+      :admin            => current_user
     )
   end
 

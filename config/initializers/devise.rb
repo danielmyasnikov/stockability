@@ -1,6 +1,6 @@
 Devise.setup do |config|
   
-  config.mailer_sender = 'warehouse-cms@heroku.com'
+  config.mailer_sender = 'support@stockability.com.au'
 
   require 'devise/orm/active_record'
 

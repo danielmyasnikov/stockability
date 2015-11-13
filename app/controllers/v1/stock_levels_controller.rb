@@ -10,7 +10,7 @@ class V1::StockLevelsController < V1::BaseController
   param :since, String, desc: 'Displays stock levels since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @stock_levels = StockLevel.accessible_by(current_ability).since(since_params[:since])
-    render json: @stock_levels
+    render json: { stock_levels: @stock_levels }
   end
 
   api!

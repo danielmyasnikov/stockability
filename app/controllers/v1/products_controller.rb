@@ -11,7 +11,7 @@ class V1::ProductsController < V1::BaseController
   param :since, String, desc: 'Displays products since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
-    render json: @products
+    render json: { products: @products }
   end
 
   api!

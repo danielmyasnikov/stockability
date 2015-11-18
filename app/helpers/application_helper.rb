@@ -57,6 +57,6 @@ module ApplicationHelper
   end
 
   def active(path)
-    'active' if request.fullpath == path
+    'active' if request.fullpath.match(path)
   end
 end

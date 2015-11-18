@@ -1,5 +1,5 @@
 .page-header
   %h2 New Stock Level
 
-= form_for [:users, @stock_level] do |form|
+= bootstrap_form_for [:users, @stock_level], layout: :horizontal do |form|
   = render form

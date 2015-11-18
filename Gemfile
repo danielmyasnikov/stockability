@@ -6,15 +6,17 @@ gem 'haml'
 gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'
 gem 'formatted_form'
+gem 'bootstrap_form'
 
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier'
+  gem 'bootstrap-sass'
 end
 
-gem 'twitter-bootstrap-rails'
+
 gem 'rails_config'
 gem 'jquery-rails'
 gem 'devise'

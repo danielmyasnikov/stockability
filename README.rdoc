@@ -1,7 +1,4 @@
 TADA list:
-=> secure API => !YES
-=> login fails => done
-=> put / patch for update a single product
 => change WarehoseCMS to stockability
 => change admins to users (think through the naming)
 => insert query for index action
@@ -49,3 +46,9 @@ TADA LIST (08/10/2015)
 TADA LIST (10/11/2015) Refactoring admins
 => Rename model, and helpers, 1 controller, views, api, apipie
 => Remove Admin namespacing
+
+TADA LIST (18/11/2015) refactoring continue
+=> Create form builders
+=> Apply active menu links when non-index action is triggered
+=> Fix tests
+=> Run manual healthcheck

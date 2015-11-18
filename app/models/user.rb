@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
 
   validates_presence_of :login, :company, :if => :requires_login?
+  validates_presence_of :role
+  
   validates_uniqueness_of :login
 
   after_create :save_with_token

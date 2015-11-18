@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111220444) do
+ActiveRecord::Schema.define(version: 20151117083133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20151111220444) do
     t.string   "abn"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "admin_id"
+    t.integer  "user_id"
     t.string   "email"
     t.string   "web"
     t.string   "address2"
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20151111220444) do
 
   create_table "tours", force: :cascade do |t|
     t.string   "name"
-    t.integer  "admin_id"
+    t.integer  "user_id"
     t.boolean  "active"
     t.datetime "started"
     t.datetime "completed"

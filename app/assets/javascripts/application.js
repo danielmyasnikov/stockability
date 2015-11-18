@@ -10,6 +10,4 @@
 //= require plugins/dataTables/dataTables.tableTools.min.js
 //= require inspinia.js
 //= require plugins/pace/pace.min.js
-//= require comfy/admin/cms/custom
-//= require comfy/admin/cms/products
-//= require comfy/admin/cms/stock_levels
+//= require custom

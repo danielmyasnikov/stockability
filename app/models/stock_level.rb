@@ -28,6 +28,7 @@ class StockLevel < ActiveRecord::Base
 
   # -- Class Methods --------------------------------------------------------
   def self.sample
+    require 'csv'
     CSV.generate do |csv|
       csv << ['sku', 'batch_code', 'quantity', 'bin_code', 'location_code']
       csv << %w(ALARM05  1 120 A01 SYD)

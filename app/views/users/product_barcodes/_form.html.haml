@@ -1,7 +1,8 @@
 = form.text_field :barcode
 = form.text_field :sku
 = form.text_field :description
-= form.text_field :quantity
+= form.text_field :quantity, class: 'form-control'
 
-= form.form_group :class => 'form-actions' do
-  = form.submit :class => 'btn btn-primary'
+.form-group.form-actions
+  .col-sm-10.col-sm-offset-2
+    = form.submit :class => 'btn btn-primary'

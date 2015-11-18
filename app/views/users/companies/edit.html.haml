@@ -1,5 +1,5 @@
 .page-header
   %h2 Edit Company
 
-= form_for [:users, @company] do |form|
+= bootstrap_form_for [:users, @company], layout: :horizontal do |form|
   = render form

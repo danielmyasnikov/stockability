@@ -3,7 +3,7 @@
 
 %dl.dl-horizontal
   %dt Product Bin
-  %dd= @stock_level.bin.presence || 'N/A'
+  %dd= @stock_level.bin_code.presence || 'N/A'
   %dt Sku
   %dd= @stock_level.sku.presence || 'N/A'
   %dt Batch

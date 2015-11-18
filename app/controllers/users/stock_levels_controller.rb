@@ -103,7 +103,7 @@ protected
   end
 
   def stock_level_params
-    params.fetch(:stock_level, {}).permit(:bin_code, :sku, :batch_code, :quantity)
+    params.fetch(:stock_level, {}).permit(:bin_code, :sku, :batch_code, :quantity, :location_code)
   end
 
   def stock_levels_params

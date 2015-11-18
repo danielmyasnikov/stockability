@@ -1,5 +1,5 @@
 .page-header
   %h2 New Tour Entry
 
-= form_for [:users, @tour_entry] do |form|
+= bootstrap_form_for [:users, @tour_entry], layout: :horizontal do |form|
   = render form

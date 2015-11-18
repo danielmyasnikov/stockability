@@ -8,6 +8,6 @@ class Users::AdminController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message
 
-    redirect_to admin_company_path(current_user.company_id)
+    redirect_to users_company_path(current_user.company_id)
   end
 end

@@ -1,0 +1,21 @@
+.page-header
+  = link_to 'New Location', new_users_location_path, :class => 'btn btn-default pull-right'
+  %h2= 'Locations'
+
+%table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+  %thead
+    %tr
+      %th.col-sm-1.main Code
+      %th.col-sm-1 Name
+      %th.col-sm-1 Description
+      %th.col-sm-1
+  %tbody
+    - @locations.each do |location|
+      %tr
+        %td.main= location.code
+        %td= location.name
+        %td= location.description
+        %td
+          .btn-group.btn-group-sm
+            = link_to 'Edit', edit_users_location_path(location), :class => 'btn btn-default'
+            = link_to 'Delete', users_location_path(location), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

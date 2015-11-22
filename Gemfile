@@ -3,23 +3,22 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2'
 gem 'pg'
 gem 'haml'
-gem 'comfortable_mexican_sofa'
 gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'
+gem 'formatted_form'
+gem 'bootstrap_form'
+gem 'country_select'
 
-gem 'capistrano', '~> 3.4.0'
-gem 'capistrano-rails'
-gem 'capistrano-rvm'
-
+gem 'comfortable_mexican_sofa'
 
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier'
+  gem 'bootstrap-sass'
 end
 
-gem 'twitter-bootstrap-rails'
+
 gem 'rails_config'
 gem 'jquery-rails'
 gem 'devise'
@@ -27,15 +26,18 @@ gem 'cancancan'
 gem 'kaminari'
 gem 'versionist'
 
-gem 'spring-commands-rspec'
 gem 'apipie-rails'
 
 gem 'jquery-datatables-rails'
 gem 'select2-rails'
 gem 'js_cookie_rails'
+gem 'activeadmin', github: 'activeadmin'
 
 group :development do
   gem 'byebug'
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
 end
 
 group :test do
@@ -48,4 +50,5 @@ group :test do
   gem 'launchy'
   gem 'ffaker'
   gem 'database_cleaner'
+  gem 'spring-commands-rspec'
 end

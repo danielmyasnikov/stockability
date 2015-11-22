@@ -1,0 +1,15 @@
+= form.select :tour_id, options_for_select(@tours, @tour_entry.tour_id), {}, class: 'form-control select2-users'
+= form.select :location_code, options_for_select(@locations, @tour_entry.location_code), {}, class: 'form-control select2-users'
+= form.select :bin_code, options_for_select(@bin_codes, @tour_entry.bin_code), {}, class: 'form-control select2-users'
+= form.select :sku, options_for_select(@sku, @tour_entry.sku), {}, class: 'form-control select2-users'
+= form.select :barcode, options_for_select(@barcodes, @tour_entry.barcode), {}, class: 'form-control select2-users'
+= form.select :batch_code, options_for_select(@batch_codes, @tour_entry.batch_code), {}, class: 'form-control select2-users'
+= form.text_field :quantity
+
+.form-group
+  %label.control-label.col-sm-2 Active
+  .col-sm-10= check_box_tag :tour_entry, nil, nil, { :checked => @tour_entry.active?, :name => 'tour_entry[active]'}
+
+.form-group.form-actions
+  .col-sm-10.col-sm-offset-2
+    = form.submit :class => 'btn btn-primary'

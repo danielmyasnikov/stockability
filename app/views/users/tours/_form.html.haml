@@ -1,0 +1,12 @@
+= form.text_field :name
+.form-group
+  %label.control-label.col-sm-2 Active
+  .col-sm-10= check_box_tag :tour, nil, nil, { :checked => @tour.active?, :name => 'tour[active]'}
+
+= form.text_field :started,   data: { user_datetimepicker: true }
+= form.text_field :completed, data: { user_datetimepicker: true }
+= form.select :user_id, @users, include_blank: true
+
+.form-group.form-actions
+  .col-sm-10.col-sm-offset-2
+    = form.submit :class => 'btn btn-primary'

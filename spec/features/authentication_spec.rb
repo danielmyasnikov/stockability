@@ -2,34 +2,22 @@ require 'rails_helper'
 
 feature 'Authentication' do
 
-  given!(:site) { FactoryGirl.create(:site) }
-  given!(:layout) { FactoryGirl.create(:layout) }
-
-  given!(:super_admin) { FactoryGirl.create(:admin, :super_admin) }
-  given!(:member)      { FactoryGirl.create(:admin, :company_admin,
+  given!(:member)      { FactoryGirl.create(:user, :company_admin,
     :email => 'daniel.myasnikov@hotmail.com') }
 
   background do
-    visit '/admins/sign_in'
+    visit '/users/sign_in'
   end
 
   context 'login' do
-    scenario 'as a super admin, after successful login I see companies index' do
-      fill_in :admin_email, :with => super_admin.email
-      fill_in :admin_password, :with => 'password'
+
+    scenario 'as a company admin, after successful login I see products index' do
+      fill_in :user_email, :with => member.email
+      fill_in :user_password, :with => 'password'
 
       find('#login-button').click
 
-      expect(current_path).to eq('/admin/companies')
-    end
-
-    scenario 'as a super admin, after successful login I see products index' do
-      fill_in :admin_email, :with => member.email
-      fill_in :admin_password, :with => 'password'
-
-      find('#login-button').click
-
-      expect(current_path).to eq('/admin/products')
+      expect(current_path).to eq('/users/products')
     end
   end
 
@@ -37,7 +25,7 @@ feature 'Authentication' do
 
     background do
       find('a', :text => 'Forgot your password?').click
-      fill_in :admin_email, :with => member.email
+      fill_in :user_email, :with => member.email
       first('input[type="submit"]').click
 
       open_email(member.email)
@@ -45,7 +33,7 @@ feature 'Authentication' do
 
     scenario 'as a user, I want to reset password' do
       current_email.click_link 'Change my password'
-      expect(page).to have_content 'Change your password'
+      expect(page).to have_content 'Change Password'
     end
 
     scenario 'display the correct text' do
@@ -55,7 +43,7 @@ feature 'Authentication' do
 
   context 'unauthorized access' do
     scenario 'redirect to sign in page, when not logged in' do
-      visit '/admin/companies'
+      visit '/users/companies'
       expect(page.body).to have_content 'You need to sign in or sign up before continuing'
     end
   end

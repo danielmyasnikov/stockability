@@ -1,6 +1,6 @@
 class Services::StockLevelsImporter
   cattr_reader :results
-  attr_reader :errors, :admin, :file, :imported_row, :stock_level, :custom_errors,
+  attr_reader :errors, :user, :file, :imported_row, :stock_level, :custom_errors,
               :successfully_imported, :warnings, :location, :product
 
   STATUS = {
@@ -17,9 +17,9 @@ class Services::StockLevelsImporter
     @@results ||= []
   end
 
-  def initialize(file, admin)
+  def initialize(file, user)
     @file  = file
-    @admin = admin
+    @user = user
   end
 
   def import
@@ -66,21 +66,21 @@ private
       quantity:      imported_row[:quantity],
       bin_code:      imported_row[:bin_code],
       location_code: imported_row[:location_code],
-      company_id:    admin.company_id
+      company_id:    user.company_id
     }
   end
 
   def product_params
     {
       sku:        imported_row[:sku],
-      company_id: admin.company_id
+      company_id: user.company_id
     }
   end
 
   def location_params
     {
       code:       imported_row[:location_code],
-      company_id: admin.company_id
+      company_id: user.company_id
     }
   end
 

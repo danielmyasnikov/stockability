@@ -1,0 +1,21 @@
+.page-header
+  = link_to 'New User', new_users_user_path, :class => 'btn btn-default pull-right'
+  %h2= 'Users'
+
+%table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+  %thead
+    %tr
+      %th.col-sm-1.main Email
+      %th.col-sm-1 Login
+      %th.col-sm-1 Role
+      %th.col-sm-1
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td.main= user.email
+        %td= user.login
+        %td= user.role
+        %td
+          .btn-group.btn-group-sm
+            = link_to 'Edit', edit_users_user_path(user), :class => 'btn btn-default'
+            = link_to 'Delete', users_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

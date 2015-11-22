@@ -1,13 +1,14 @@
 FactoryGirl.define do
 
-  factory :admin do
-    trait :super_admin do
-      sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
-      role :super_admin
-    end
+  factory :super_admin do
+    sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
+    role :super_admin
+  end
 
+  factory :user do
     trait :company_admin do
       sequence(:login) { |i| FFaker::Internet.user_name }
+      sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
       role :admin
       company
     end
@@ -15,6 +16,7 @@ FactoryGirl.define do
     trait :warehouse_manager do
       role :warehouse_manager
       sequence(:login) { |i| FFaker::Internet.user_name }
+      sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
       company
     end
 
@@ -55,12 +57,6 @@ FactoryGirl.define do
     product
   end
 
-  factory :site, :class => 'Comfy::Cms::Site' do
-    identifier { FFaker::Name.first_name.downcase }
-    label { FFaker::Name.first_name.downcase }
-    hostname { 'localhost' }
-  end
-
   factory :tour do
     name { FFaker::Name.first_name.downcase }
   end
@@ -77,9 +73,4 @@ FactoryGirl.define do
     company
   end
 
-  factory :layout, :class => 'Comfy::Cms::Layout' do
-    label { FFaker::Name.first_name.downcase }
-    site
-    identifier { FFaker::Name.first_name.downcase }
-  end
 end

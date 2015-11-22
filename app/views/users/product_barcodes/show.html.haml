@@ -1,0 +1,12 @@
+.page-header
+  %h2 Product Barcodes
+
+%dl.dl-horizontal
+  %dt Product Barcode
+  %dd= @product_barcode.barcode.presence || 'N/A'
+  %dt Sku
+  %dd= @product_barcode.sku.presence || 'N/A'
+  %dt Batch Tracked
+  %dd= @product_barcode.description.presence || 'N/A'
+  %dt Quantity
+  %dd= @product_barcode.quantity.presence || 'N/A'

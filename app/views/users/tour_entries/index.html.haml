@@ -1,0 +1,29 @@
+.page-header
+  = link_to 'New Tour Entry', new_users_tour_entry_path, :class => 'btn btn-default pull-right'
+  %h2= 'Tour Entries'
+
+%table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+  %thead
+    %tr
+      %th.col-sm-1 Tour
+      %th.col-sm-1 Location
+      %th.col-sm-1 Bin
+      %th.col-sm-1 SKU
+      %th.col-sm-1 Barcode
+      %th.col-sm-1 Batch
+      %th.col-sm-1 Quantity
+      %th.col-sm-1
+  %tbody
+    - @tour_entries.each do |tour_entry|
+      %tr
+        %td.main= link_to tour_entry.tour, users_tour_path(tour_entry.tour) if tour_entry.tour
+        %td= tour_entry.location_code
+        %td= tour_entry.bin_code
+        %td= tour_entry.sku
+        %td= tour_entry.barcode
+        %td= tour_entry.batch_code
+        %td= tour_entry.quantity
+        %td
+          .btn-group.btn-group-sm
+            = link_to 'Edit', edit_users_tour_entry_path(tour_entry), :class => 'btn btn-default'
+            = link_to 'Delete', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

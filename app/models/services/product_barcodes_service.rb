@@ -2,12 +2,12 @@ class Services::ProductBarcodesService
   class NotFound < StandardError; end
 
   attr_accessor :product_errors, :barcode_errors, :product, :product_barcodes,
-    :obj_product, :admin, :barcode, :product_failed, :failed_barcodes,
+    :obj_product, :user, :barcode, :product_failed, :failed_barcodes,
     :product_failed_on_create
 
 
   def initialize(params)
-    @admin            = params[:admin]
+    @user             = params[:user]
     @product          = params.fetch(:product)
     @product_barcodes = params.fetch(:product_barcodes, [])
 
@@ -102,7 +102,7 @@ private
       sku:           product[:sku],
       description:   product[:description],
       batch_tracked: product[:batch_tracked],
-      company_id:    admin.company_id
+      company_id:    user.company_id
     }
   end
 
@@ -111,7 +111,7 @@ private
       barcode:     barcode[:barcode],
       description: barcode[:description],
       quantity:    barcode[:quantity],
-      company_id:  admin.company_id
+      company_id:  user.company_id
     }
   end
 

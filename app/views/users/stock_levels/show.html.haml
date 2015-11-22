@@ -1,0 +1,15 @@
+.page-header
+  %h2 Stock Level
+
+%dl.dl-horizontal
+  %dt Product Bin
+  %dd= @stock_level.bin_code.presence || 'N/A'
+  %dt Sku
+  %dd= @stock_level.sku.presence || 'N/A'
+  %dt Batch
+  %dd= @stock_level.batch_code.presence || 'N/A'
+  %dt Quantity
+  %dd= @stock_level.quantity.presence || 'N/A'
+  %dt Location Code
+  %dd= @stock_level.location_code.presence || 'N/A'
+  

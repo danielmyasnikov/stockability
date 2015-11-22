@@ -2,10 +2,7 @@ require 'rails_helper'
 
 feature 'Authentication' do
 
-  given!(:site)   { FactoryGirl.create(:site) }
-  given!(:layout) { FactoryGirl.create(:layout) }
-
-  given!(:client) { FactoryGirl.create(:admin, :company_admin,
+  given!(:client) { FactoryGirl.create(:user, :company_admin,
     :email => 'daniel.myasnikov@hotmail.com') }
 
   given!(:location_1) { FactoryGirl.create(:location, :code => 'LOC001', :company_id => client.company_id) }
@@ -42,8 +39,8 @@ feature 'Authentication' do
   }
 
   background do
-    login_as(client, scope: :admin)
-    visit '/admin/products'
+    login_as(client, scope: :user)
+    visit '/users/products'
     click_link('Stock Levels')
   end
 
@@ -94,8 +91,8 @@ feature 'Authentication' do
       select('! - Create New Tour', :from => 'tour_id')
       last_tour_id    = Tour.last.try(:id) || 0
       current_tour_id = last_tour_id + 1
-      click_link 'Assign!'
-      expect(current_path).to eq("/admin/tours/new")
+      click_link 'Assign'
+      expect(current_path).to eq("/users/tours/new")
       fill_in :tour_name, :with => "NEW TOUR HEY"
       find('input[type="submit"]').click
       tour = Tour.last

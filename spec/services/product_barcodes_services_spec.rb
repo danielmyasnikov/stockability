@@ -1,17 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Services::ProductBarcodesService, :type => :services do
-  before :each do
-    @admin = FactoryGirl.create(:admin, :company_admin)
-  end
 
   let(:product_params) { { sku: 'ABC123', batch_tracked: 1, description: 'test product #1' } }
   let(:barcode_params) { [{barcode: 'ZYX987', quantity: 3}, {barcode: 'SDF555', quantity: 4}] }
   let(:service) { Services::ProductBarcodesService.new(params) }
-
+  let(:admin) { FactoryGirl.create(:user, :company_admin) }
   context 'successfully servicing the only product' do
 
-    let(:params) { {product: product_params, product_barcodes: [], admin: @admin} }
+    let(:params) { {product: product_params, product_barcodes: [], user: admin} }
     subject { service.create }
 
     it 'creates a product' do
@@ -34,7 +31,7 @@ RSpec.describe Services::ProductBarcodesService, :type => :services do
   end
 
   context 'successfully servicing a product with barcodes' do
-    let(:params) { {product: product_params, product_barcodes: barcode_params, admin: @admin} }
+    let(:params) { {product: product_params, product_barcodes: barcode_params, user: admin} }
     subject { service.create }
 
     it 'creates a product with product barcodes' do
@@ -61,11 +58,11 @@ RSpec.describe Services::ProductBarcodesService, :type => :services do
   end
 
   context 'successfully updating a product service with barcodes' do
-    let(:params) { {product: product_params, product_barcodes: barcode_params, admin: @admin} }
+    let(:params) { {product: product_params, product_barcodes: barcode_params, user: admin} }
     subject { service.update }
 
     before :each do
-      product = FactoryGirl.create(:product, :company => @admin.company)
+      product = FactoryGirl.create(:product, :company => admin.company)
       product.product_barcodes << FactoryGirl.create(:product_barcode)
     end
 
@@ -92,7 +89,7 @@ RSpec.describe Services::ProductBarcodesService, :type => :services do
   end
 
   context 'initial product service creation fails' do
-    let(:params) { {product: product_params, product_barcodes: barcode_params, admin: @admin} }
+    let(:params) { {product: product_params, product_barcodes: barcode_params, user: admin} }
     subject { service.create }
 
     before :each do
@@ -126,7 +123,7 @@ RSpec.describe Services::ProductBarcodesService, :type => :services do
 
   context 'successfull product creation, but product barcodes failure' do
     let(:barcode_params) { [{ barcode: 'JYZ789' }] }
-    let(:params) { {product: product_params, product_barcodes: barcode_params, admin: @admin} }
+    let(:params) { {product: product_params, product_barcodes: barcode_params, user: admin} }
     subject { service.create }
 
     it 'creates a product' do

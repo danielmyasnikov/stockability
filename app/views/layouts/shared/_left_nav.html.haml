@@ -1,0 +1,26 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav.metismenu
+      %li.nav-header
+        .dropdown.profile-element
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold= current_user.username.truncate(25)
+              %span.text-muted.text-xs.block
+                = current_user.role
+                -# %b.caret
+          -# %ul.dropdown-menu.animated.fadeInRight.m-t-xs
+          -#   %li
+          -#     %a{:href => "#"} Logout
+        .logo-element
+          = link_to home_path_for(current_user) do
+            %i.fa.fa-check-square-o
+      = in_style_menu 'Stock Levels', users_stock_levels_path, :icon => 'fa-th-large', :tooltip => true
+      = in_style_menu 'Tours', users_tours_path, :icon => 'fa-exchange', :tooltip => true
+      = in_style_menu 'Tour Entries', users_tour_entries_path, :icon => 'fa-check-square', :tooltip => true
+      = in_style_menu 'Products', users_products_path, :icon => 'fa-cubes', :tooltip => true
+      = in_style_menu 'Product Barcodes', users_product_barcodes_path, :icon => 'fa-bars', :tooltip => true
+      = in_style_menu 'Locations', users_locations_path, :icon => 'fa-globe', :tooltip => true
+      = in_style_menu 'Users', users_users_path, :icon => 'fa-users', :tooltip => true
+      = in_style_menu 'Company', users_companies_path, :icon => 'fa-building', :tooltip => true

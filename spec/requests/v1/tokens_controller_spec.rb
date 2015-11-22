@@ -4,7 +4,7 @@ RSpec.describe 'Token management', type: :request do
 
   describe '.create' do
     it 'creates a token when the user successfully authenticated' do
-      client = FactoryGirl.create(:admin, :company_admin)
+      client = FactoryGirl.create(:user, :company_admin)
       post '/api/v1/tokens', client: { login: client.login, password: client.password }
       expect(json['client']['token']).to eq(client.token)
     end
@@ -26,7 +26,7 @@ RSpec.describe 'Token management', type: :request do
 
       context 'wrong password provided' do
         it 'fails with the correct message' do
-          company_admin = FactoryGirl.create(:admin, :company_admin)
+          company_admin = FactoryGirl.create(:user, :company_admin)
           post '/api/v1/tokens', client: { login: company_admin.login, password: 'mySuperWrongPassword' }
           expect(json['text']).to eq('Wrong Password')
         end

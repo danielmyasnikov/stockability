@@ -2,7 +2,7 @@ class Users::TourEntriesController < Users::AdminController
 
   before_action :build_tour_entry,  :only => [:new, :create]
   before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
-  before_action :load_locations, :only => [:new, :create, :edit, :update]
+  before_action :load_tour_relationships, :only => [:new, :create, :edit, :update]
 
   def index
     @tour_entries = TourEntry.accessible_by(current_ability) #.page(params[:page])
@@ -63,7 +63,12 @@ protected
       :barcode, :batch_code, :quantity, :active, :location_code, :bin_code)
   end
 
-  def load_locations
+  def load_tour_relationships
     @locations = Location.accessible_by(current_ability).pluck(:code)
+    @sku = Product.accessible_by(current_ability).pluck(:sku)
+    @bin_codes = StockLevel.accessible_by(current_ability).pluck(:bin_code)
+    @barcodes = ProductBarcode.accessible_by(current_ability).pluck(:barcode)
+    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code)
+    @tours = Tour.options_for_select(current_ability)    
   end
 end

@@ -25,14 +25,14 @@ class User < ActiveRecord::Base
     case
     when self.to_s.present?
       self.to_s
-    when login.present?
-      login
+    when self.login.present?
+      self.login
     when email.present?
       email
     end
   end
 
-  def self.options_for_select(user)
+  def self.role_options_for_select(user)
     roles = []
     if user.super_admin?
       ROLES.select do |role|

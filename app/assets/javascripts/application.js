@@ -8,6 +8,7 @@
 //= require plugins/dataTables/dataTables.bootstrap.js
 //= require plugins/dataTables/dataTables.responsive.js
 //= require plugins/dataTables/dataTables.tableTools.min.js
+//= require bootstrap-datetimepicker
 //= require inspinia.js
 //= require plugins/pace/pace.min.js
 //= require custom

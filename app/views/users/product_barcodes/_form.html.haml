@@ -1,5 +1,5 @@
 = form.text_field :barcode
-= form.text_field :sku
+= form.select :sku, options_for_select(@sku, @product_barcode.sku), {}, class: 'form-control select2-users'
 = form.text_field :description
 = form.text_field :quantity, class: 'form-control'
 

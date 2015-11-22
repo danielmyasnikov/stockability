@@ -9,8 +9,9 @@ gem 'formatted_form'
 gem 'bootstrap_form'
 gem 'country_select'
 
+gem 'comfortable_mexican_sofa'
+
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier'

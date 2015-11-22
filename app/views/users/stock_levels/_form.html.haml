@@ -1,8 +1,8 @@
 = form.text_field :bin_code
-= form.text_field :sku
+= form.select :sku, options_for_select(@products_sku, @stock_level.sku), {}, class: 'form-control select2-users'
 = form.text_field :batch_code
 = form.text_field :quantity
-= form.text_field :location_code
+= form.select :location_code, options_for_select(@location_codes, @stock_level.location_code), {}, class: 'form-control select2-users'
 
 .form-group.form-actions
   .col-sm-10.col-sm-offset-2

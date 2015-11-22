@@ -11,4 +11,4 @@
     %dt Started
     %dd= @tour.started.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'
     %dt Completed
-    %dd= @tour.completed.try(:strftime, "%Y/%m/%d - %H:%M") || 'N/A'
+    %dd= @tour.completed.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'

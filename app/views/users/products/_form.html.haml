@@ -1,6 +1,8 @@
-= form.text_field :name
 = form.text_field :sku
-= form.text_field :batch_tracked
+.form-group
+  %label.control-label.col-sm-2 Batch Tracked
+  .col-sm-10= check_box_tag :batch_tracked, nil, nil, { :checked => @product.batch_tracked?, :name => 'product[batch_tracked]'}
+
 = form.text_area :description
 
 .form-group.form-actions

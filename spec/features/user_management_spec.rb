@@ -6,7 +6,7 @@ feature 'Authentication' do
     :email => 'daniel.myasnikov@hotmail.com') }
 
   background do
-    login_as(admin_user) #, scope: :admin)
+    login_as(admin_user, scope: :user)
     visit '/users/products'
     click_link('Users')
   end

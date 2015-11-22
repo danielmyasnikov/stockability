@@ -2,6 +2,7 @@ class Users::StockLevelsController < Users::AdminController
 
   before_action :build_stock_level,  :only => [:new, :create]
   before_action :load_stock_level,   :only => [:show, :edit, :update, :destroy]
+  before_action :load_stock_levels_relationships, :only => [:new, :edit, :update, :edit]
   before_action :select_options, :only => [:index]
   before_action :compact_select_options, :only => [:index]
   before_action :load_tours, :only => [:index]
@@ -171,5 +172,10 @@ protected
     [:sku, :location_code, :bin_code].each do |param|
       eval("@params_#{param} = #{params[param].try(:split, ',')}") if params[param].present?
     end
+  end
+
+  def load_stock_levels_relationships
+    @products_sku = Product.accessible_by(current_ability).pluck(:sku)
+    @location_codes = Location.accessible_by(current_ability).pluck(:code)
   end
 end

@@ -4,7 +4,6 @@
 #= require products
 #= require stock_levels
 
-
 $ ->
   $('.navbar-minimalize').click ->
     collapsed = Cookies.get('sa.collapsed')
@@ -21,5 +20,13 @@ $ ->
     searching: false
     ordering: true
     processing: true
+
+  dateTimePicker = $('input[data-user-datetimepicker=true]').datetimepicker
+    format:     'yyyy-mm-dd hh:ii:ss'
+    minView:    0
+    autoclose:  true
+
+  $('.select2-users').select2
+    theme: 'bootstrap'
 
   $('.mini-navbar [data-toggle="tooltip"]').tooltip()

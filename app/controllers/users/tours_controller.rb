@@ -76,8 +76,8 @@ protected
   end
 
   def load_users
-    @users = User.accessible_by(current_ability).select(:id, :first_name, :last_name)
-    @users = @users.map { |a| [a.to_s, a.id] }
+    @users = User.accessible_by(current_ability)
+    @users = @users.map { |a| [a.username, a.id] }
   end
 
   def load_tour

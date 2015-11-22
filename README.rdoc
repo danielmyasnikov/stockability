@@ -50,5 +50,9 @@ TADA LIST (10/11/2015) Refactoring admins
 TADA LIST (18/11/2015) refactoring continue
 => Create form builders (used bootstrap form builder) (DONE)
 => Apply active menu links when non-index action is triggered (DONE)
-=> Fix tests
-=> Run manual healthcheck
+=> Fix tests (DONE)
+=> Run manual healthcheck (in progress, issues are recorded in TADA LIST 22/11)
+
+TADA LIST (22/11/2015)
+=> datetimepicker
+=> UTC time vs Sydney time

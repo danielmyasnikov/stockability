@@ -42,7 +42,7 @@ private
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:manage], User, :company_id => user.can_manage_admins?
+    can [:manage], User, :role => 'warehouse_operator'
     can [:manage], Company, :id => user.company_id
   end
 

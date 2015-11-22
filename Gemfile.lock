@@ -351,6 +351,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-rails (2.2.0)
+      rack
+      unicorn
     versionist (1.4.1)
       activesupport (>= 3)
       railties (>= 3)
@@ -393,6 +396,7 @@ DEPENDENCIES
   kaminari
   launchy
   pg
+  rack (= 1.6.0)
   rails (~> 4.2)
   rails_config
   rspec
@@ -403,4 +407,5 @@ DEPENDENCIES
   therubyracer
   uglifier
   unicorn (~> 4.8.0)
+  unicorn-rails
   versionist

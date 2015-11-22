@@ -46,7 +46,7 @@ Stockability.StockLevel = ($) ->
     $('#bin_code_filter').val([])
     $('#location_code_filter').val([])
     $('#sku_filter').val([])
-    window.location.replace '/admin/stock_levels'
+    window.location.replace '/users/stock_levels'
 
   $('#filter-results').click (e) ->
     e.preventDefault()
@@ -60,7 +60,7 @@ Stockability.StockLevel = ($) ->
     loc_code_params = loc_code_params?.join(',')
     filter_params   = "sku=#{sku_params}&bin_code=#{bin_code_params}&location_code=#{loc_code_params}"
 
-    url = encodeURI('/admin/stock_levels?' + filter_params)
+    url = encodeURI('/users/stock_levels?' + filter_params)
     window.location.replace url
 
   $('#check_all').on 'change', (e) ->
@@ -88,14 +88,14 @@ Stockability.StockLevel = ($) ->
       return false
 
     $.ajax
-      url: '/admin/stock_levels/process_stock_levels'
+      url: '/users/stock_levels/process_stock_levels'
       type: 'POST'
       data:
         tour: tour
         stock_levels: stock_levels
       success: (response) ->
         if response.redirect_required == true
-          window.location.replace '/admin/tours/new'
+          window.location.replace '/users/tours/new'
         else
           alert('Successfully Associated')
       fail: (response) ->

@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
 
 protected
   def after_sign_in_path_for(resource)
-    home_path_for(current_user)
+    home_path_for(current_user || current_admin_user)
   end
 
   def home_path_for(resource)
     if resource.super_admin?
-      users_companies_path
+      admin_users_path
     else
       users_products_path
     end

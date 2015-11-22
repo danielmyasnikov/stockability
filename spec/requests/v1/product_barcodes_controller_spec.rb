@@ -20,7 +20,7 @@ RSpec.describe 'Product Barcoes Management API', type: :request do
 
   # why instance variables?
   before :each do
-    @client       ||= FactoryGirl.create(:admin, :company_admin)
+    @client       ||= FactoryGirl.create(:user, :company_admin)
     @auth_details = { auth: { token: @client.token } }
   end
 

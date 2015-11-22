@@ -119,7 +119,7 @@ private
     Services::ProductBarcodesService.new({
       :product          => product_params,
       :product_barcodes => product[:product_barcodes],
-      :user            => user
+      :user             => user
     })
   end
 

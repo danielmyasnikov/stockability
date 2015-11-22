@@ -1,6 +1,5 @@
 class Company < ActiveRecord::Base
   has_many :users
-  has_many :bins
   has_many :products
   has_many :stock_levels
   has_many :tour_entries

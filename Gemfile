@@ -7,6 +7,7 @@ gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'
 gem 'formatted_form'
 gem 'bootstrap_form'
+gem 'country_select'
 
 group :assets do
   gem 'sass-rails'
@@ -29,6 +30,7 @@ gem 'apipie-rails'
 gem 'jquery-datatables-rails'
 gem 'select2-rails'
 gem 'js_cookie_rails'
+gem 'activeadmin', github: 'activeadmin'
 
 group :development do
   gem 'byebug'

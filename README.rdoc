@@ -48,7 +48,7 @@ TADA LIST (10/11/2015) Refactoring admins
 => Remove Admin namespacing
 
 TADA LIST (18/11/2015) refactoring continue
-=> Create form builders (used bootstrap form builder)
-=> Apply active menu links when non-index action is triggered
+=> Create form builders (used bootstrap form builder) (DONE)
+=> Apply active menu links when non-index action is triggered (DONE)
 => Fix tests
 => Run manual healthcheck

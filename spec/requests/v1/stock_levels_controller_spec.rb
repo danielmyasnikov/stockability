@@ -9,7 +9,7 @@ RSpec.describe 'StockLevels API', type: :request do
   before :all do; STOCKLEVELAPI = '/api/v1/stock_levels'; end
 
   before :each do
-    @client             = FactoryGirl.create(:admin, :company_admin)
+    @client             = FactoryGirl.create(:user, :company_admin)
     @auth_details       = { auth: { token: @client.token } }
   end
 

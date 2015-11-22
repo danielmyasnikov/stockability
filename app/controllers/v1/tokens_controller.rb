@@ -13,10 +13,10 @@ class V1::TokensController < V1::BaseController
   end
   def create
     email = authetication_params[:email].presence
-    admin = Admin.find_by_email(email) if email
+    admin = User.find_by_email(email) if email
 
     login = authetication_params[:login].presence
-    admin ||= Admin.find_by_login(login) if login
+    admin ||= User.find_by_login(login) if login
 
     if admin.nil?
       failed

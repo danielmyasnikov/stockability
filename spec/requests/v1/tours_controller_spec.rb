@@ -15,7 +15,7 @@ RSpec.describe 'Tours Management API', type: :request do
   before :all do; TOURSAPI = '/api/v1/tours'; end
 
   before :each do
-    @client       ||= FactoryGirl.create(:admin, :company_admin)
+    @client       ||= FactoryGirl.create(:user, :company_admin)
     @auth_details = { auth: { token: @client.token } }
   end
 

@@ -6,12 +6,9 @@ gem 'pg'
 gem 'haml'
 gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'
-gem 'unicorn-rails'
 gem 'formatted_form'
 gem 'bootstrap_form'
 gem 'country_select'
-
-gem 'comfortable_mexican_sofa'
 
 group :assets do
   gem 'coffee-rails'

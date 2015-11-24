@@ -1,6 +1,5 @@
 class V1::ProductsController < V1::BaseController
 
-  load_and_authorize_resource :except => [:create]
   before_filter :find_product, only: [:destroy, :show]
   before_action :initialize_product_service, :only => [:create, :update]
 

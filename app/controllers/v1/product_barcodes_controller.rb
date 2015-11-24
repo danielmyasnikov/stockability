@@ -1,5 +1,4 @@
 class V1::ProductBarcodesController < V1::BaseController
-  load_and_authorize_resource :except => [:create]
 
   api!
   desc "Returns ALL accessible by a user product_barcodes

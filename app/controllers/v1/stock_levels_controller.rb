@@ -1,5 +1,4 @@
 class V1::StockLevelsController < V1::BaseController
-  load_and_authorize_resource except: [:create]
   before_filter :find_location, only: [:create]
   before_filter :find_or_create_product, only: [:create]
 

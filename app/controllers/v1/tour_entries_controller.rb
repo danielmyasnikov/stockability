@@ -1,6 +1,4 @@
 class V1::TourEntriesController < V1::BaseController
-  load_and_authorize_resource except: :create
-
   api!
   desc "Returns ALL accessible by a admin/manager/operator tour entires
     GET /api/v1/tour_entries.json?auth[token]=c4c7-7e32&since=2015-08-04T10:24:35.729Z

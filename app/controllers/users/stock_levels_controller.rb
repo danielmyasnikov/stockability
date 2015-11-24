@@ -7,7 +7,7 @@ class Users::StockLevelsController < Users::AdminController
   before_action :compact_select_options, :only => [:index]
   before_action :load_tours, :only => [:index]
   before_action :define_search_params, :only => [:index, :download]
-  after_action :save_processed_records, only: :process_stock_levels
+  after_action :save_processed_records, only: :assign_stock_levels
 
   after_action :save_import, only: :process_import
   before_action :read_import, only: :import
@@ -63,16 +63,20 @@ class Users::StockLevelsController < Users::AdminController
     render :action => :new
   end
 
-  def process_stock_levels
+  def assign_stock_levels
     @processor = Services::StockLevelsProcessor.new(stock_levels_params, params[:tour])
-    @processor.process
 
-    if @processor.errors.blank?
+    if is_redirect_required?
       render json: { redirect_required: is_redirect_required? }
     else
-      render json: { redirect_required: is_redirect_required?,
-        errors: @processor.errors }, status: 422
-    end
+      @processor.process
+      if @processor.errors.blank?
+        render json: { redirect_required: is_redirect_required? }
+      else
+        render json: { redirect_required: is_redirect_required?,
+          errors: @processor.errors }, status: 422
+      end
+    end 
   end
 
   def update
@@ -131,12 +135,11 @@ protected
 
   def read_proceesed_records
     @processor = Rails.cache.read(data_key)
-    # Services::StockLevelsProcessor.nullify_results
     Rails.cache.write(data_key, nil)
   end
 
   def data_key
-    "#{current_company.try(:id)}-stock-levels"
+    "#{current_company.try(:id)}-stock-levels-#{current_user.id}"
   end
 
   def select_options

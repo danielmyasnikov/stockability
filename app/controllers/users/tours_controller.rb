@@ -61,14 +61,16 @@ protected
 
   def append_tour_entries
     @processor = Rails.cache.read(stock_levels_data_key)
+
     if @processor.present?
+      @processor.process
       @tour.tour_entries <<  @processor.tour_entries
       Rails.cache.write(stock_levels_data_key, nil)
     end
   end
 
   def stock_levels_data_key
-    "#{current_company.id}-stock-levels"
+    "#{current_company.id}-stock-levels-#{current_user.id}"
   end
 
   def build_tour

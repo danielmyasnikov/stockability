@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def edit_admin_nav_active?(menu_name)
+    if action_name == menu_name
+      'active'
+    end
+  end
+
   def flash_message
     flash.map do |type, messages|
       message = safe_join(Array(messages), '<br>')

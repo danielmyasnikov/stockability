@@ -1,11 +1,11 @@
-# HOST        = 'http://uat.stockability.com.au/'
+# HOST        = 'http://localhost:3000/'
 # LOCATION_CODE = 'NEWLOC123'
 # ### TOKENS ###
 # since = { since: '2015-09-11' }
 # tokens_api = 'api/v1/tokens.json'
 # update_api = "api/v1/products/#{id}.json"
 # login = { client: { email: 'daniel.g.myasnikov+telstra@gmail.com', password: 'rus9uGap' } }
-# token = HTTParty.post(HOST + tokens_api, query: login).parsed_response['token']
+# token = HTTParty.post(HOST + tokens_api, query: login).parsed_response['client']['token']
 # auth = { auth: { token: token } }
 
 # ### PRODUCTS ###

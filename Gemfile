@@ -17,7 +17,6 @@ group :assets do
   gem 'bootstrap-sass'
 end
 
-
 gem 'rails_config'
 gem 'jquery-rails'
 gem 'devise'
@@ -32,7 +31,7 @@ gem 'select2-rails'
 gem 'js_cookie_rails'
 gem 'activeadmin', github: 'activeadmin'
 
-group :development do
+group :development, :test do
   gem 'byebug'
   gem 'capistrano', '~> 3.4.0'
   gem 'capistrano-rails'

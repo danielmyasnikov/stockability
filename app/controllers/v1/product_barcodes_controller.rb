@@ -1,5 +1,4 @@
 class V1::ProductBarcodesController < V1::BaseController
-  load_and_authorize_resource :except => [:create]
 
   api!
   desc "Returns ALL accessible by a user product_barcodes
@@ -8,7 +7,7 @@ class V1::ProductBarcodesController < V1::BaseController
   param :since, String, desc: 'Displays product_barcodes since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @product_barcodes = ProductBarcode.accessible_by(current_ability).since(since_params[:since])
-    render json: { product_barcodes: @product_barcodes }
+    render json: @product_barcodes
   end
 
   api!

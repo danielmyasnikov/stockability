@@ -1,6 +1,5 @@
 class V1::ProductsController < V1::BaseController
 
-  load_and_authorize_resource :except => [:create]
   before_filter :find_product, only: [:destroy, :show]
   before_action :initialize_product_service, :only => [:create, :update]
 
@@ -11,7 +10,7 @@ class V1::ProductsController < V1::BaseController
   param :since, String, desc: 'Displays products since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @products = Product.accessible_by(current_ability).since(since_params[:since])
-    render json: { products: @products }
+    render json: @products
   end
 
   api!

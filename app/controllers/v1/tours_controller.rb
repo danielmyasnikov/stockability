@@ -1,6 +1,4 @@
 class V1::ToursController < V1::BaseController
-  load_and_authorize_resource :except => [:create]
-
   api!
   desc "Returns ALL accessible by a admin/manager/operator tours
     GET /api/v1/tours.json?auth[token]=c4c7-7e32&since=2015-08-04T10:24:35.729Z
@@ -8,7 +6,7 @@ class V1::ToursController < V1::BaseController
   param :since, String, desc: 'Displays tours since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @tours = Tour.accessible_by(current_ability).since(since_params[:since])
-    render json: { tours: @tours }
+    render json: @tours
   end
 
   api!

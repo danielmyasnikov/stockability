@@ -64,5 +64,4 @@ protected
   def load_companies
     @companies = Company.all.select(:id, :title)
   end
-
 end

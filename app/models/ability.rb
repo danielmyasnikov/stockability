@@ -16,7 +16,6 @@ class Ability
     alias_action :index, :show, :edit, :update, to: :touch
 
     cannot :manage, :all
-    can [:view], User, :company_id => user.company_id
 
     case
     when user.super_admin?
@@ -26,7 +25,6 @@ class Ability
     when user.warehouse_manager?
       define_manager_ability(user)
     when user.warehouse_operator?
-      # VIEW ONLY!!!
       define_operator_ability(user)
     end
   end
@@ -51,28 +49,14 @@ private
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:manage], User, :company_id => user.can_manage_admins?
+    can [:manage], User, :id => user.id
     can [:view], Company, :id => user.company_id
   end
 
   # read only access
-  def define_operator_ability(user)
-    viewable_obj = [Location, Product, Tour, TourEntry, StockLevel, ProductBarcode]
-    operatable_obj = [Tour, TourEntry]
-    managable_obj  = [Tour, TourEntry]
-
-    operatable_obj.each do |_obj|
-      can [:manage], _obj, :company_id => user.company_id
-    end
-
-    can [:manage], User, :company_id => user.can_manage_admins?
-
-    managable_obj.each do |_obj|
-      can [:view], _obj, :company_id => user.company_id
-    end
-
-    viewable_obj.each do |_obj|
-      can [:view], _obj, :company_id => user.company_id
+  def define_operator_ability(user) 
+    COMPANY_OBJ.each do |_obj|
+      can :view, _obj
     end
   end
 end

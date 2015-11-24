@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
     redirect_to home_path_for(current_user)
   end
 
+  def current_ability
+    if request.fullpath =~ /\/api\/v1/
+      @current_ability ||= ApiAbility.new(current_user)
+    else 
+      @current_ability ||= Ability.new(current_user)
+    end
+  end
+
 protected
   def after_sign_in_path_for(resource)
     home_path_for(current_user || current_admin_user)

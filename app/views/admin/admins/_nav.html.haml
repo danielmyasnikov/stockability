@@ -1,0 +1,7 @@
+%ul{ class: "nav nav-tabs" }
+  %li{ role: "presentation", class: edit_admin_nav_active?('edit') }
+    = link_to 'Details', edit_admin_admin_path(@admin)
+  %li{ role: "presentation", class: edit_admin_nav_active?('password_update') }
+    = link_to 'Password', admin_password_update_path(@admin)
+
+%br

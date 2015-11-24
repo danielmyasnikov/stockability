@@ -15,9 +15,12 @@ WarehouseCms::Application.routes.draw do
       collection { get :sample }
       collection { get :import }
       collection { post :process_import }
-      collection { post :process_stock_levels }
+      collection { post :assign_stock_levels }
     end
+
     resources :users, :except => :show
+    get 'admins/:id/password_update' => 'admins#password_update', as: :password_update
+
     resources :bins
     resources :companies
     resources :products do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Authentication' do
 
-  given!(:member)      { FactoryGirl.create(:user, :company_admin,
+  given!(:member) { FactoryGirl.create(:user, :company_admin,
     :email => 'daniel.myasnikov@hotmail.com') }
 
   background do

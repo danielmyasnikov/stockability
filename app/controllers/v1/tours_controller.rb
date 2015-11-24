@@ -8,7 +8,7 @@ class V1::ToursController < V1::BaseController
   param :since, String, desc: 'Displays tours since the date, eg "2015-08-04T10:24:35.729Z"'
   def index
     @tours = Tour.accessible_by(current_ability).since(since_params[:since])
-    render json: { tours: @tours }
+    render json: @tours
   end
 
   api!

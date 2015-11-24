@@ -1,11 +1,10 @@
 FactoryGirl.define do
 
-  factory :super_admin do
-    sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
-    role :super_admin
-  end
-
   factory :user do
+
+    password              'password'
+    password_confirmation 'password'
+
     trait :company_admin do
       sequence(:login) { |i| FFaker::Internet.user_name }
       sequence(:email) { |i| FFaker::Internet.email.sub('@', "#{i}@") }
@@ -25,9 +24,6 @@ FactoryGirl.define do
       sequence(:login) { |i| FFaker::Internet.user_name }
       company
     end
-
-    password              'password'
-    password_confirmation 'password'
   end
 
   factory :company do

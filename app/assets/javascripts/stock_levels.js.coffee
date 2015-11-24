@@ -88,7 +88,7 @@ Stockability.StockLevel = ($) ->
       return false
 
     $.ajax
-      url: '/users/stock_levels/process_stock_levels'
+      url: '/users/stock_levels/assign_stock_levels'
       type: 'POST'
       data:
         tour: tour

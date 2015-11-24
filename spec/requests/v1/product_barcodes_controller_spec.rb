@@ -43,7 +43,7 @@ RSpec.describe 'Product Barcoes Management API', type: :request do
       their_product_barcodes
 
       subject
-
+      
       json_ids = parsed_json.map { |x| x['id'] }
       product_barcode_ids = my_product_barcodes.map(&:id)
 

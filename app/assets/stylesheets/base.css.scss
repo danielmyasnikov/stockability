@@ -1,3 +1,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap-datetimepicker';
+
+tr:nth-of-type(2n) {
+  background-color: #fff;
+}

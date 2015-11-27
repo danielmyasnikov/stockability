@@ -1,0 +1,17 @@
+th.checkboxed {
+  width: 15px !important;
+  padding-right: 5px !important;
+  &:after {
+    content: none !important;
+  }
+}
+
+td:last-child {
+  width: 70px
+}
+
+table {
+  .label {
+    line-height: 2.3;
+  }
+}

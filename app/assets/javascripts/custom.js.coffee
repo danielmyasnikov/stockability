@@ -20,6 +20,7 @@ $ ->
     searching: false
     ordering: true
     processing: true
+    paging: false
 
   dateTimePicker = $('input[data-user-datetimepicker=true]').datetimepicker
     format:     'yyyy-mm-dd hh:ii:ss'

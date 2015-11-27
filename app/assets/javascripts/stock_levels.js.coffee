@@ -40,6 +40,7 @@ Stockability.StockLevel = ($) ->
     searching:  false
     ordering:   true
     processing: true
+    paging:     false
 
   $('#reset-all').click (e) ->
     e.preventDefault()

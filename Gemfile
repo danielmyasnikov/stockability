@@ -10,12 +10,10 @@ gem 'formatted_form'
 gem 'bootstrap_form'
 gem 'country_select'
 
-group :assets do
-  gem 'coffee-rails'
-  gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier'
-  gem 'bootstrap-sass'
-end
+gem 'coffee-rails'
+gem 'therubyracer', :platforms => :ruby
+gem 'uglifier'
+gem 'bootstrap-sass'
 
 gem 'rails_config'
 gem 'jquery-rails'

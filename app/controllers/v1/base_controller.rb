@@ -1,7 +1,9 @@
 class V1::BaseController < ApiController
-  load_and_authorize_resource :except => [:create]
+  
   before_action :token_presence
   before_action :token_authorize!
+
+  load_and_authorize_resource :except => [:create]
   respond_to :json
 
   rescue_from Apipie::ParamInvalid, Apipie::ParamMissing,

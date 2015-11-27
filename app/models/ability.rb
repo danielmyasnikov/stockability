@@ -40,7 +40,7 @@ private
       can [:manage], _obj, :company_id => user.company_id
     end
 
-    can [:manage], User, :role => 'warehouse_operator'
+    can [:manage], User, :company_id => user.company_id
     can [:manage], Company, :id => user.company_id
   end
 
@@ -50,13 +50,14 @@ private
     end
 
     can [:manage], User, :id => user.id
+    can [:view], User, :company_id => user.company_id
     can [:view], Company, :id => user.company_id
   end
 
   # read only access
   def define_operator_ability(user) 
     COMPANY_OBJ.each do |_obj|
-      can :view, _obj
+      can :view, _obj, :company_id => user.company_id
     end
   end
 end

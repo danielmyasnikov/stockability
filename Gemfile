@@ -29,6 +29,8 @@ gem 'select2-rails'
 gem 'js_cookie_rails'
 gem 'activeadmin', github: 'activeadmin'
 
+gem 'skylight'
+
 group :development, :test do
   gem 'byebug'
   gem 'capistrano', '~> 3.4.0'

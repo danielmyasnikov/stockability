@@ -23,6 +23,6 @@ module WarehouseCms
     config.assets.precompile += %w( landings.css )
     config.assets.precompile += %w( landings.js )
 
-    config.skylight.environments += ['staging']
+    config.skylight.environments += ['uat']
   end
 end

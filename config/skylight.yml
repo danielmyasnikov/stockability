@@ -1,3 +1,13 @@
 ---
 # The authentication token for the application.
 authentication: l0cgklat3mvQ5qkg2zOPqNgJ41Qln0nLHRoANWNr-Z8
+
+log_file: log/uat.skylight.log
+
+production:
+
+  authentication: <production auth token>
+
+uat:
+
+  authentication: l0cgklat3mvQ5qkg2zOPqNgJ41Qln0nLHRoANWNr-Z8

@@ -56,3 +56,21 @@ TADA LIST (18/11/2015) refactoring continue
 TADA LIST (22/11/2015)
 => datetimepicker
 => UTC time vs Sydney time
+
+TADA LIST (02/12/2015)
+=> UI fix: datetimepicker last column (15 mins)
+=> BUG: delete locations (1h)
+=> double check what happens if the tour entry is verified (old value == new value)???
+==> tour entry comes back with a new value that is equal to old value?
+=> add new column tour entries (stock level) (15min)
+=> calculation (30min)
+=> set stock levels to new QTY (30 mins)
+=> dynamic filters (3h) OR display toggle? (2h)
+=> create a tour out of selected tour entries (keep an eye no associated tours with stock levels) (6h)
+=> ignore the new value (1h)
+=> testing (2h)
+=> contigency (30%)
+=> 18HOURs
+
+UX enhancement:
+=> add a spinner for loading when table is loading

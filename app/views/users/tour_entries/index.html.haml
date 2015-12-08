@@ -1,18 +1,22 @@
 .page-header
-  = link_to 'New Tour Entry', new_users_tour_entry_path, :class => 'btn btn-default pull-right'
+  .pull-right
+    = link_to 'New Tour Entry', new_users_tour_entry_path, :class => 'btn btn-default'
+    = button_tag 'Show Only Variance', data: { toggle: "button" }, class: "btn btn-primary btn-outline", id: 'only-variance'
   %h2= 'Tour Entries'
 
 %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
   %thead
     %tr
-      %th.col-sm-1 Tour
-      %th.col-sm-1 Location
-      %th.col-sm-1 Bin
-      %th.col-sm-1 SKU
-      %th.col-sm-1 Barcode
-      %th.col-sm-1 Batch
-      %th.col-sm-1 Quantity
-      %th.col-sm-1
+      %th Tour
+      %th Location
+      %th Bin
+      %th SKU
+      %th Barcode
+      %th Batch
+      %th Stock Level
+      %th Quantity
+      %th Variance
+      %th
   %tbody
     - @tour_entries.each do |tour_entry|
       %tr
@@ -22,8 +26,11 @@
         %td= tour_entry.sku
         %td= tour_entry.barcode
         %td= tour_entry.batch_code
+        %td= tour_entry.stock_level_qty
         %td= tour_entry.quantity
+        %td{ style: "background-color: #{colour_picker(tour_entry.quantity - tour_entry.stock_level_qty)};" }= tour_entry.quantity - tour_entry.stock_level_qty
         %td
           .btn-group.btn-group-sm
+            = link_to 'Apply', 'nil', :class => 'btn btn-success'
             = link_to 'Edit', edit_users_tour_entry_path(tour_entry), :class => 'btn btn-default'
             = link_to 'Delete', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

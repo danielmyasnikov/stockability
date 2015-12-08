@@ -3,7 +3,7 @@ lock '3.4.0'
 
 set :application, "#{fetch(:stage)}_stockability"
 set :repo_url, 'https://stockability:rus9uGap@bitbucket.org/stockability-group/stockability-web.git'
-set :branch, "master"
+set :branch, "variance"
 
 
 # Default branch is :master

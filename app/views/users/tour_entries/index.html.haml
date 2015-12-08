@@ -2,11 +2,13 @@
   .pull-right
     = link_to 'New Tour Entry', new_users_tour_entry_path, :class => 'btn btn-default'
     = button_tag 'Show Only Variance', data: { toggle: "button" }, class: "btn btn-primary btn-outline", id: 'only-variance'
+    = collection_select(:tour, :id, @tour_options, :id, :name, { :prompt => 'Assign  Tour' }, class: 'form-control assign-tour')
   %h2= 'Tour Entries'
 
 %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
   %thead
     %tr
+      %th.checkboxed= check_box_tag :check_all
       %th Tour
       %th Location
       %th Bin
@@ -20,6 +22,7 @@
   %tbody
     - @tour_entries.each do |tour_entry|
       %tr
+        %td= check_box_tag :check_stock_level, nil, nil, data: { id: tour_entry.id }, class: 'check'
         %td.main= link_to tour_entry.tour, users_tour_path(tour_entry.tour) if tour_entry.tour
         %td= tour_entry.location_code
         %td= tour_entry.bin_code
@@ -34,3 +37,5 @@
             = link_to 'Apply', 'nil', :class => 'btn btn-success'
             = link_to 'Edit', edit_users_tour_entry_path(tour_entry), :class => 'btn btn-default'
             = link_to 'Delete', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+.tour_entries{ id: 'page-id' }

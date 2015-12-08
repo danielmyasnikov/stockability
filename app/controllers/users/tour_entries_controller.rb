@@ -5,6 +5,7 @@ class Users::TourEntriesController < Users::AdminController
   before_action :load_tour_relationships, :only => [:new, :create, :edit, :update]
 
   def index
+    @tour_options = Tour.accessible_by(current_ability)
     @tour_entries = TourEntry.accessible_by(current_ability) #.page(params[:page])
   end
 

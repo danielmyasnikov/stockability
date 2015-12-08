@@ -3,6 +3,7 @@
 
 #= require products
 #= require stock_levels
+#= require tour_entries
 
 $ ->
   $('.navbar-minimalize').click ->

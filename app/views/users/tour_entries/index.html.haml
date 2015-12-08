@@ -4,6 +4,8 @@
     = button_tag 'Show Only Variance', data: { toggle: "button" }, class: "btn btn-primary btn-outline", id: 'only-variance'
     = collection_select(:tour, :id, @tour_options, :id, :name, { :prompt => 'Assign  Tour' }, class: 'form-control assign-tour')
   %h2= 'Tour Entries'
+  = link_to 'Apply ALL', new_users_tour_entry_path, :class => 'btn btn-primary'
+  = link_to 'Reject ALL', new_users_tour_entry_path, :class => 'btn btn-danger'
 
 %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
   %thead

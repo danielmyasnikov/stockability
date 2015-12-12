@@ -29,6 +29,9 @@ gem 'select2-rails'
 gem 'js_cookie_rails'
 gem 'activeadmin', github: 'activeadmin'
 
+# delayed task executions gem
+gem 'sucker_punch', '~> 1.0'
+
 gem 'skylight'
 
 group :development, :test do

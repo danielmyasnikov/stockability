@@ -3,10 +3,10 @@ class Users::TourEntriesController < Users::AdminController
   before_action :build_tour_entry,  :only => [:new, :create]
   before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
   before_action :load_tour_relationships, :only => [:new, :create, :edit, :update]
+  before_action :load_tour_entries, :only => [:index, :apply_variance, :reject_variance]
 
   def index
     @tour_options = Tour.accessible_by(current_ability)
-    @tour_entries = TourEntry.accessible_by(current_ability) #.page(params[:page])
   end
 
   def show
@@ -19,6 +19,37 @@ class Users::TourEntriesController < Users::AdminController
 
   def edit
     render
+  end
+
+  def apply_variance
+    # PERFORMANCE optimized solution
+    # @tour_entries.pluck(:id, :quantity).each do |te|
+    #   # for performance reasons using update_all as it doesn't initialize object
+    #   TourEntry.where(:id => te.first).update_all(stock_level_qty: te.second)
+    # end
+
+    # CALLBACK optimized solution
+    @tour_entries.pluck(:id, :stock_level_qty, :variance).each do |te|
+      qty = te.second + te.third
+      TourEntry.find(te.first).update_attributes(stock_level_qty: qty, quantity: qty)
+    end
+    redirect_to :back
+  end
+
+  def reject_variance
+    # PERFORMANCE optimized solution
+    # @tour_entries.pluck(:id, :stock_level_qty).each! do |te|
+    #   # for performance reasons using update_all as it doesn't initialize object
+    #   TourEntry.where(:id => te.first).update_all(quantity: te.second)
+    # end
+    # redirect_to :index
+
+    # CALLBACK solution
+    @tour_entries.pluck(:id, :stock_level_qty).each do |te|
+      # for performance reasons using update_all as it doesn't initialize object
+      TourEntry.find(te.first).update_attribute(:quantity, te.second)
+    end
+    redirect_to :back
   end
 
   def create
@@ -66,10 +97,38 @@ protected
 
   def load_tour_relationships
     @locations = Location.accessible_by(current_ability).pluck(:code)
-    @sku = Product.accessible_by(current_ability).pluck(:sku)
-    @bin_codes = StockLevel.accessible_by(current_ability).pluck(:bin_code)
-    @barcodes = ProductBarcode.accessible_by(current_ability).pluck(:barcode)
-    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code)
-    @tours = Tour.options_for_select(current_ability)    
+    @sku = Product.accessible_by(current_ability).pluck(:sku)+ []
+    @bin_codes = StockLevel.accessible_by(current_ability).pluck(:bin_code)+ []
+    @barcodes = ProductBarcode.accessible_by(current_ability).pluck(:barcode)+ []
+    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code) + []
+    @tours = Tour.options_for_select(current_ability)
+  end
+
+  def only_variance_to_bool
+    params[:only_variance] == 'true' ? true : false
+  end
+
+  def load_tour_entries
+    if params[:id]
+      @tour_entries = TourEntry.where(:id => params[:id])
+    else
+      @tour_entries = TourEntry.accessible_by(current_ability).only_variance(only_variance_to_bool).joins(:tour).select(select_fields)
+    end
+  end
+
+  def select_fields
+    "
+     tours.name as tour_name,
+     tours.id as tour_id,
+     tour_entries.id,
+     tour_entries.location_code,
+     tour_entries.bin_code,
+     tour_entries.sku,
+     tour_entries.barcode,
+     tour_entries.batch_code,
+     tour_entries.stock_level_qty,
+     tour_entries.quantity,
+     tour_entries.variance
+    "
   end
 end

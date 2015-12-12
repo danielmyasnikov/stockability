@@ -8,13 +8,13 @@ class Services::StockLevelsProcessor
   def process
     stock_levels.each do |stock_level|
       @tour_entry = TourEntry.new do |te|
-        te.bin_code      = stock_level.bin_code
-        te.sku           = stock_level.sku
-        te.batch_code    = stock_level.batch_code
-        te.quantity      = stock_level.quantity
-        te.company_id    = stock_level.company_id
-        te.location_code = stock_level.location_code
-        te.active        = true
+        te.bin_code         = stock_level.bin_code
+        te.sku              = stock_level.sku
+        te.batch_code       = stock_level.batch_code
+        te.stock_level_qty  = stock_level.quantity
+        te.company_id       = stock_level.company_id
+        te.location_code    = stock_level.location_code
+        te.active           = true
       end
 
       if @tour_entry.save

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208073126) do
+ActiveRecord::Schema.define(version: 20151212035316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(version: 20151208073126) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.float    "stock_level_qty", default: 0.0
+    t.float    "variance"
   end
 
   create_table "tours", force: :cascade do |t|

@@ -4,11 +4,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :recoverable, :rememberable,
     :trackable, :validatable
 
-  ROLES = [ :admin, :warehouse_manager, :warehouse_operator ].freeze
+  ROLES = [ :super_admin, :admin, :warehouse_manager, :warehouse_operator ].freeze
 
   validates_presence_of :login, :company, :if => :requires_login?
   validates_presence_of :role
-  
+
   validates_uniqueness_of :login
 
   after_create :save_with_token

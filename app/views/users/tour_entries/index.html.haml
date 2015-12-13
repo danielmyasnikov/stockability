@@ -3,8 +3,8 @@
     = link_to variance_text, users_tour_entries_path(:only_variance => !displays_only_variance?), class: "btn #{toggle_active}"
     = collection_select(:tour, :id, @tour_options, :id, :name, { :prompt => 'Assign  Tour' }, class: 'form-control assign-tour')
   %h2= 'Tour Entries'
-  = link_to 'Apply ALL', apply_variance_users_tour_entries_path(:only_variance => params[:only_variance]), method: :put, :class => 'btn btn-primary'
-  = link_to 'Reject ALL', reject_variance_users_tour_entries_path(:only_variance => params[:only_variance]), method: :put, :class => 'btn btn-danger'
+  = link_to 'Adjust Selected', apply_variance_users_tour_entries_path(:only_variance => params[:only_variance]), method: :put, :class => 'btn btn-primary'
+  = link_to 'Reject Selected', reject_variance_users_tour_entries_path(:only_variance => params[:only_variance]), method: :put, :class => 'btn btn-danger'
 
 %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
   %thead
@@ -38,6 +38,6 @@
           .btn-group.btn-group-sm
             = link_to 'Apply', apply_variance_users_tour_entry_path(tour_entry.id), method: :put, :class => 'btn btn-primary'
             = link_to 'Edit', edit_users_tour_entry_path(tour_entry), :class => 'btn btn-default'
-            = link_to 'Delete', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+            = link_to 'Reject', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 .tour_entries{ id: 'page-id' }

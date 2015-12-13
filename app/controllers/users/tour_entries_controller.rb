@@ -6,6 +6,7 @@ class Users::TourEntriesController < Users::AdminController
   before_action :load_tour_entries, :only => [:index, :apply_variance, :reject_variance]
 
   def index
+    # NEW TOUR OPTION
     @tour_options = Tour.accessible_by(current_ability)
   end
 

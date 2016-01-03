@@ -2,7 +2,7 @@
 %html
   %head
     = render 'layouts/shared/head'
-  %body{ class: collapse! }
+  %body{ class: [collapse!, yield(:body_class)] }
     #settings.hidden{ :data => { :host => Settings.host } }
     #wrapper
       = render 'layouts/shared/left_nav'

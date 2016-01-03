@@ -79,7 +79,7 @@ Stockability.StockLevel = ($) ->
     e.preventDefault()
 
     cells        = datatable.cells().nodes();
-    stock_levels = $(cells).find(':checkbox:checked')
+    stock_levels = $(cells).find('.check:checkbox:checked')
     stock_levels = ($(stock_level).data('id') for stock_level in stock_levels)
 
     tour         = $('#tour_id').val()

@@ -21,7 +21,6 @@ class TourEntry < ActiveRecord::Base
 
   # -- Class Methods --------------------------------------------------------
 
-
   # -- Instance Methods -----------------------------------------------------
   def quantity=(value)
     if value.to_f > 0
@@ -32,7 +31,11 @@ class TourEntry < ActiveRecord::Base
   end
 
   def calculate_variance
-    update_column(:variance, quantity - stock_level_qty)
+    update_column(:variance, quantity - stock_level_qty) if stock_level_changed?
+  end
+
+  def stock_level_changed?
+    (quantity - stock_level_qty) != 0
   end
 
 end

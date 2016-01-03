@@ -1,12 +1,13 @@
 class Users::TourEntriesController < Users::AdminController
+  skip_load_and_authorize_resource only: [:adjust_variance, :reject_variance, :assign_tour]
 
   before_action :build_tour_entry,  :only => [:new, :create]
   before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
   before_action :load_tour_relationships, :only => [:new, :create, :edit, :update]
-  before_action :load_tour_entries, :only => [:index, :apply_variance, :reject_variance]
+  before_action :load_tour_entries, :only => [:index, :adjust_variance, :reject_variance, :assign_tour]
+  before_action :load_tour,         :only => [:assign_tour]
 
   def index
-    # NEW TOUR OPTION
     @tour_options = Tour.accessible_by(current_ability)
   end
 
@@ -22,7 +23,13 @@ class Users::TourEntriesController < Users::AdminController
     render
   end
 
-  def apply_variance
+  def assign_tour
+    @tour_entries.update_all(:tour_id => @tour.id)
+    tentries = @tour_entries.map { |x| [x.id, x.tour_name, x.tour_id] }
+    render json: { ok: true, tour_entries: tentries }
+  end
+
+  def adjust_variance
     # PERFORMANCE optimized solution
     # @tour_entries.pluck(:id, :quantity).each do |te|
     #   # for performance reasons using update_all as it doesn't initialize object
@@ -34,7 +41,7 @@ class Users::TourEntriesController < Users::AdminController
       qty = te.second + te.third
       TourEntry.find(te.first).update_attributes(stock_level_qty: qty, quantity: qty)
     end
-    redirect_to :back
+    render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
   end
 
   def reject_variance
@@ -50,7 +57,7 @@ class Users::TourEntriesController < Users::AdminController
       # for performance reasons using update_all as it doesn't initialize object
       TourEntry.find(te.first).update_attribute(:quantity, te.second)
     end
-    redirect_to :back
+    render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
   end
 
   def create
@@ -111,16 +118,20 @@ protected
 
   def load_tour_entries
     if params[:id]
-      @tour_entries = TourEntry.where(:id => params[:id])
+      @tour_entries = TourEntry.where(:id => params[:id]).joins(:tour).select(select_fields)
     else
       @tour_entries = TourEntry.accessible_by(current_ability).only_variance(only_variance_to_bool).joins(:tour).select(select_fields)
     end
   end
 
+  def load_tour
+    @tour = Tour.find(params[:tour_id])
+  end
+
   def select_fields
     "
      tours.name as tour_name,
-     tours.id as tour_id,
+     tours.id   as tour_id,
      tour_entries.id,
      tour_entries.location_code,
      tour_entries.bin_code,

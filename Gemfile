@@ -30,7 +30,7 @@ gem 'js_cookie_rails'
 gem 'activeadmin', github: 'activeadmin'
 
 # delayed task executions gem
-gem 'sucker_punch', '~> 1.0'
+# gem 'sucker_punch', '~> 1.0'
 
 gem 'skylight'
 

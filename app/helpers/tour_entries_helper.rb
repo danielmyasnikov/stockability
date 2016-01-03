@@ -2,9 +2,9 @@ module TourEntriesHelper
   def colour_picker(sum)
     return if sum.blank? || sum == 0
     if sum < 0
-      return '#FFDBEE'
+      return 'reddy'
     else
-      return '#DEFAD4'
+      return 'greeny'
     end
   end
 

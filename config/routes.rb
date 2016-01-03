@@ -9,9 +9,10 @@ WarehouseCms::Application.routes.draw do
     resources :product_barcodes
     resources :tour_entries do
       collection { get :download }
-      collection { put :apply_variance }
+      collection { put :adjust_variance }
       collection { put :reject_variance }
-      member { put :apply_variance }
+      collection { post :assign_tour }
+      member { put :adjust_variance }
       member { put :reject_variance }
     end
     resources :stock_levels do

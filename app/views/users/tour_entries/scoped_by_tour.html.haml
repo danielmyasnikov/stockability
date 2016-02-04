@@ -13,13 +13,12 @@
 .wrapper.wrapper-content.animated.fadeInRight
   .ibox.float-e-margins
     .ibox-title
-      %h5 Tour Entries
+      %h4= @tour_entries.first.tour.name
     .ibox-content
       %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
         %thead
           %tr
             %th.checkboxed= check_box_tag :check_all
-            %th Tour
             %th Location
             %th Bin
             %th SKU
@@ -32,19 +31,17 @@
           - @tour_entries.each do |tour_entry|
             %tr
               %td= check_box_tag :check_stock_level, nil, nil, data: { id: tour_entry.stock_level_id }, class: 'check'
-              %td.tour= link_to truncate(tour_entry.tour_name, length: 12), users_tour_path(tour_entry.tour_id), class: 'label label-default tour_name'
               %td= tour_entry.location_code
               %td= tour_entry.bin_code
               %td= tour_entry.sku
               %td= tour_entry.barcode
-              %td.stock_level_qty= tour_entry.sum_stock_level_qty
-              %td.quantity= tour_entry.sum_quantity
-              - variance = tour_entry.sum_variance
+              %td.stock_level_qty= tour_entry.stock_level_qty
+              %td.quantity= tour_entry.quantity
+              - variance = tour_entry.variance
               %td.variance{ class: colour_picker(variance) }= variance
               %td
                 .btn-group.btn-group-sm
-                  = link_to 'Adjust', adjust_variance_users_tour_entries_path(stock_level_id: tour_entry.stock_level_id, tour_id: tour_entry.tour_id), method: :put, :class => 'btn btn-primary'
-                  = link_to 'Entries', users_tour_with_entries_path(stock_level_id: tour_entry.stock_level_id, tour_id: tour_entry.tour_id), :class => 'btn btn-default'
-                  = link_to 'Reject', reject_variance_users_tour_entries_path(stock_level_id: tour_entry.stock_level_id, tour_id: tour_entry.tour_id), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+                  = link_to 'Adjust', adjust_variance_users_tour_entry_path(tour_entry), method: :put, :class => 'btn btn-primary'
+                  = link_to 'Reject', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 .tour_entries{ id: 'page-id' }

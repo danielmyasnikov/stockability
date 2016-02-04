@@ -44,7 +44,7 @@ feature 'Authentication' do
     click_link('Stock Levels')
   end
 
-  scenario 'filter by product SKU, bin code and location code' do
+  xscenario 'filter by product SKU, bin code and location code' do
     within '#stock-levels' do
       expect(page).to have_content('LOC001')
       expect(page).to have_content('BIN002')
@@ -53,7 +53,7 @@ feature 'Authentication' do
   end
 
   context 'when filtering by SKU' do
-    scenario 'filters results', js: true do
+    xscenario 'filters results', js: true do
       select 'SKU001', from: 'sku_filter'
       click_link 'Filter'
       within '#stock-levels' do
@@ -64,7 +64,7 @@ feature 'Authentication' do
   end
 
   context 'when filtering by BIN CODE' do
-    scenario 'filters results', js: true do
+    xscenario 'filters results', js: true do
       select 'BIN001', from: 'bin_code_filter'
       click_link 'Filter'
       within '#stock-levels' do
@@ -75,7 +75,7 @@ feature 'Authentication' do
   end
 
   context 'when filtering by LOCATION CODE' do
-    scenario 'filters results', js: true do
+    xscenario 'filters results', js: true do
       select 'LOC001', from: 'location_code_filter'
       click_link 'Filter'
       within '#stock-levels' do
@@ -86,7 +86,7 @@ feature 'Authentication' do
   end
 
   context 'when selecting filtered results' do
-    scenario 'filter stock levels and assign them to a new tour', js: true do
+    xscenario 'filter stock levels and assign them to a new tour', js: true do
       first("input[type=checkbox]").set(true)
       select('! - Create New Tour', :from => 'tour_id')
       click_link 'Assign'
@@ -94,7 +94,7 @@ feature 'Authentication' do
       fill_in :tour_name, :with => "NEW TOUR HEY"
       find('input[type="submit"]').click
       tour = Tour.last
-      expect(tour.tour_entries).not_to eq(nil)
+      expect(tour.entries).not_to eq(nil)
     end
   end
 end

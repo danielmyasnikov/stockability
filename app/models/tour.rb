@@ -4,7 +4,7 @@ class Tour < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :company
-  has_many :tour_entries, dependent: :destroy
+  has_many :entries, class_name: 'TourEntry', dependent: :destroy
 
   scope :since, -> (since) { since.present? ? where('updated_at > ?', since.to_datetime) : all }
 

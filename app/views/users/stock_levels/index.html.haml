@@ -50,7 +50,8 @@
         %td= check_box_tag :check_stock_level, nil, nil, data: { id: stock_level.id }, class: 'check'
         %td
           - stock_level.last_tours.each do |tour|
-            = link_to truncate(tour.name, length: 12), users_tour_path(tour), class: 'label label-default'
+            - if tour
+              = link_to truncate(tour.name, length: 12), users_tour_path(tour), class: 'label label-default'
         %td= stock_level.location_code
         %td= stock_level.bin_code
         %td= stock_level.sku

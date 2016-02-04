@@ -18,16 +18,15 @@ RSpec.describe User, :type => :model do
     end
   end
 
-  describe '#options_for_select' do
+  describe '#role_options_for_select' do
     it 'has access to all admin roles as company_admin' do
-      company_admin = FactoryGirl.build(:user, :company_admin)
-      opts = User.role_options_for_select(company_admin)
-      expect(opts.map(&:second)).to eq(User.human_roles.keys)
+      role_opts   = User.role_options_for_select(:admin)
+      human_roles = User.human_roles.to_a.map(&:reverse)
+      expect(role_opts).to eq(human_roles)
     end
 
     it 'has access to 2 eq or lower roles as warehouse_manager' do
-      admin = FactoryGirl.build(:user, :warehouse_manager)
-      opts  = User.role_options_for_select(admin)
+      opts  = User.role_options_for_select(:warehouse_manager)
       expect(opts).to eq([
         ['Warehouse Manager', :warehouse_manager], 
         ['Warehouse Operator', :warehouse_operator]

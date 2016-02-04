@@ -36,6 +36,10 @@ WarehouseCms::Application.routes.draw do
     end
     resources :tours do
       collection { get :download }
+      resources :entries, controller: 'tour_entries', 
+                          action: 'scoped_by_tour', 
+                          only: [:index], 
+                          as: 'with_entries'
     end
   end
 

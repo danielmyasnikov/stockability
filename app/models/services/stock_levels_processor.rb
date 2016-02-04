@@ -8,9 +8,14 @@ class Services::StockLevelsProcessor
   def process
     stock_levels.each do |stock_level|
       @tour_entry = TourEntry.new do |te|
+        te.stock_level_id   = stock_level.id
         te.bin_code         = stock_level.bin_code
         te.sku              = stock_level.sku
         te.batch_code       = stock_level.batch_code
+
+        puts '>>> QTQ <<<'
+        puts stock_level.quantity
+
         te.stock_level_qty  = stock_level.quantity
         te.company_id       = stock_level.company_id
         te.location_code    = stock_level.location_code
@@ -27,7 +32,7 @@ class Services::StockLevelsProcessor
     unless @tour.nil?
       # TODO: sort out relationship between tour entries and tours
       # if has_many belongs to this will overrided tour entries for the other tour
-      @tour.tour_entries << tour_entries
+      @tour.entries << tour_entries
     end
   end
 

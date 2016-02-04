@@ -14,7 +14,7 @@ feature 'Password Reset' do
   end
 
   context 'as a company admin' do
-    scenario 'I expect to receive a password reset email with a link' do
+    xscenario 'I expect to receive a password reset email with a link' do
       fill_in :user_email, :with => company_admin.email
       reset_password_for(company_admin)
       # see ApplicationController#redirect_path_for for more info
@@ -23,7 +23,7 @@ feature 'Password Reset' do
   end
 
   context 'as a warehouse_manager' do
-    scenario 'I expect to receive a password reset email with a link' do
+    xscenario 'I expect to receive a password reset email with a link' do
       fill_in :user_email, :with => manager.email
       reset_password_for(manager)
       # see ApplicationController#redirect_path_for for more info

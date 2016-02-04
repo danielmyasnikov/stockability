@@ -12,8 +12,7 @@ class StockLevel < ActiveRecord::Base
     where("locations.company_id = :company_id", company_id: stock_level.company_id)
   }, foreign_key: :location_code, primary_key: :code
 
-  has_many :tour_entries, through: :inventories
-  has_many :inventories, dependent: :destroy
+  has_many :tour_entries
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------

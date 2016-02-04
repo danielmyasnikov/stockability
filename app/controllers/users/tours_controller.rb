@@ -64,7 +64,7 @@ protected
 
     if @processor.present?
       @processor.process
-      @tour.tour_entries <<  @processor.tour_entries
+      @tour.entries << @processor.entries
       Rails.cache.write(stock_levels_data_key, nil)
     end
   end

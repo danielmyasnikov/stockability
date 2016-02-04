@@ -2,7 +2,7 @@ Stockability = {}
 
 Stockability.TourEntry = ($) ->
 
-  error_msg = "Something went wrong. We are notified and will try to fix the issue ASAP"
+  ERROR_MSG = "Something went wrong. We are notified and will try to fix the issue ASAP"
 
   $('#assign-tour').click (e) ->
     e.preventDefault()
@@ -25,7 +25,7 @@ Stockability.TourEntry = ($) ->
         id:      tour_entries
         tour_id: tour_id
       success: (data) ->
-        for entry in data.tour_entries
+        for entry in data.entries
           $tour = $("[data-id=#{entry[0]}]").parents('tr').children('.tour').children('.tour_name')
           $tour.html(entry[1])
           $tour.attr('href', "/users/tours/#{entry[2]}")
@@ -67,7 +67,7 @@ Stockability.TourEntry = ($) ->
 
         alert("Stock Level is adjusted")
       fail: (e) ->
-        alert(error_msg)
+        alert(ERROR_MSG)
 
 
   $('#adjust-selected').click (e) ->
@@ -84,7 +84,7 @@ Stockability.TourEntry = ($) ->
         id: tour_entries
       success: (data) ->
         # returns an array of array, where nested array is [tour_entry.id, tour_entry.stock_level_qty]
-        for entry in data.tour_entries
+        for entry in data.entries
           $row = $("[data-id=#{entry[0]}]").parents('tr')
           
           $row.children('.stock_level_qty').html(entry[1])
@@ -97,7 +97,7 @@ Stockability.TourEntry = ($) ->
 
         alert("Stock Level is adjusted")
       fail: (e) ->
-        alert(error_msg)
+        alert(ERROR_MSG)
 
 
 $ ->

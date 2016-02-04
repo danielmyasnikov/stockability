@@ -1,14 +1,43 @@
 class Users::TourEntriesController < Users::AdminController
-  skip_load_and_authorize_resource only: [:adjust_variance, :reject_variance, :assign_tour]
+  skip_load_and_authorize_resource only: [
+                                      :adjust_variance, 
+                                      :reject_variance, 
+                                      :assign_tour]
 
-  before_action :build_tour_entry,  :only => [:new, :create]
-  before_action :load_tour_entry,   :only => [:show, :edit, :update, :destroy]
-  before_action :load_tour_relationships, :only => [:new, :create, :edit, :update]
-  before_action :load_tour_entries, :only => [:index, :adjust_variance, :reject_variance, :assign_tour]
-  before_action :load_tour,         :only => [:assign_tour]
+  # load accissible only and joined with tours tour_entries
+  before_action :load_tour_entries, only: [
+                                      :index,
+                                      :adjust_variance, 
+                                      :reject_variance, 
+                                      :assign_tour]
+
+  before_action :load_tour_entries_for_index, only: :index
+                                      
+  before_action :load_tour_entries_for_actions, only: [
+                                      :adjust_variance, 
+                                      :reject_variance, 
+                                      :assign_tour]
+  
+  before_action :build_tour_entry,  only: [:new, :create]
+  before_action :load_tour_entry,   only: [:show, :edit, :update, :destroy]
+  
+  before_action :load_tour_relationships, only: [
+                                      :new,
+                                      :create,
+                                      :edit,
+                                      :update]
+
+  before_action :load_tour,         only: :assign_tour
 
   def index
     @tour_options = Tour.accessible_by(current_ability)
+  end
+
+  def scoped_by_tour
+    # only_variance flag
+    @tour_options = Tour.accessible_by(current_ability)
+    @tour_entries = TourEntry.accessible_by(current_ability).where(filter_params)
+    # render template: 'users/tour_entries/index'
   end
 
   def show
@@ -37,11 +66,14 @@ class Users::TourEntriesController < Users::AdminController
     # end
 
     # CALLBACK optimized solution
-    @tour_entries.pluck(:id, :stock_level_qty, :variance).each do |te|
-      qty = te.second + te.third
-      TourEntry.find(te.first).update_attributes(stock_level_qty: qty, quantity: qty)
-    end
-    render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
+    # @tour_entries.pluck(:id, :stock_level_qty, :variance).each do |te|
+    #   qty = te.second + te.third
+    #   TourEntry.find(te.first).update_attributes(stock_level_qty: qty, quantity: qty)
+    # end
+
+    @tour_entries.map(&:adjust_variance)
+    # render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
+    redirect_to :back
   end
 
   def reject_variance
@@ -53,11 +85,13 @@ class Users::TourEntriesController < Users::AdminController
     # redirect_to :index
 
     # CALLBACK solution
-    @tour_entries.pluck(:id, :stock_level_qty).each do |te|
-      # for performance reasons using update_all as it doesn't initialize object
-      TourEntry.find(te.first).update_attribute(:quantity, te.second)
-    end
-    render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
+    # @tour_entries.pluck(:id, :stock_level_qty).each do |te|
+    #   # for performance reasons using update_all as it doesn't initialize object
+    #   TourEntry.find(te.first).update_attribute(:quantity, te.second)
+    # end
+    @tour_entries.map(&:reject_variance)
+    # render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
+    redirect_to :back
   end
 
   def create
@@ -104,12 +138,12 @@ protected
   end
 
   def load_tour_relationships
-    @locations = Location.accessible_by(current_ability).pluck(:code)
-    @sku = Product.accessible_by(current_ability).pluck(:sku)+ []
-    @bin_codes = StockLevel.accessible_by(current_ability).pluck(:bin_code)+ []
-    @barcodes = ProductBarcode.accessible_by(current_ability).pluck(:barcode)+ []
+    @locations   = Location.accessible_by(current_ability).pluck(:code)
+    @sku         = Product.accessible_by(current_ability).pluck(:sku)+ []
+    @bin_codes   = StockLevel.accessible_by(current_ability).pluck(:bin_code)+ []
+    @barcodes    = ProductBarcode.accessible_by(current_ability).pluck(:barcode)+ []
     @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code) + []
-    @tours = Tour.options_for_select(current_ability)
+    @tours       = Tour.options_for_select(current_ability)
   end
 
   def only_variance_to_bool
@@ -117,11 +151,24 @@ protected
   end
 
   def load_tour_entries
-    if params[:id]
-      @tour_entries = TourEntry.where(:id => params[:id]).joins(:tour).select(select_fields)
-    else
-      @tour_entries = TourEntry.accessible_by(current_ability).only_variance(only_variance_to_bool).joins(:tour).select(select_fields)
-    end
+    @tour_entries = TourEntry.accessible_by(current_ability).joins(:tour)
+  end
+
+  def load_tour_entries_for_actions
+    @tour_entries = @tour_entries.where(:stock_level_id => params[:stock_level_id],
+                                        :tour_id => params[:tour_id]
+    )
+  end
+
+  def load_tour_entries_for_index
+    @tour_entries = @tour_entries.
+      only_variance(only_variance_to_bool).
+      select(select_fields).
+      group(group_fields)
+  end
+
+  def group_fields
+    "stock_level_id, tours.name, tours.id, location_code, bin_code, sku, barcode, tour_entries.company_id"
   end
 
   def load_tour
@@ -132,15 +179,22 @@ protected
     "
      tours.name as tour_name,
      tours.id   as tour_id,
-     tour_entries.id,
      tour_entries.location_code,
      tour_entries.bin_code,
      tour_entries.sku,
      tour_entries.barcode,
-     tour_entries.batch_code,
-     tour_entries.stock_level_qty,
-     tour_entries.quantity,
-     tour_entries.variance
+     sum(tour_entries.stock_level_qty) as sum_stock_level_qty,
+     sum(tour_entries.quantity) as sum_quantity,
+     sum(tour_entries.variance) as sum_variance,
+     tour_entries.company_id,
+     tour_entries.stock_level_id
     "
+  end
+
+  def filter_params
+    str = {}
+    if params[:tour_id]; str.merge!(tour_id: params[:tour_id]) end
+    if params[:stock_level_id]; str.merge!(stock_level_id: params[:stock_level_id]) end
+    str
   end
 end

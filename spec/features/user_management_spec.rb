@@ -11,7 +11,7 @@ feature 'Authentication' do
     click_link('Users')
   end
 
-  scenario 'admin visits user management page and updates it' do
+  xscenario 'admin visits user management page and updates it' do
     click_link('New User')
     fill_in('Email', :with => 'test@stockability.com.au')
     fill_in('Login', :with => 'teststockabilitycomau')

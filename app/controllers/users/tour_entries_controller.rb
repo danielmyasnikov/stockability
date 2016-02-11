@@ -70,10 +70,18 @@ class Users::TourEntriesController < Users::AdminController
     #   qty = te.second + te.third
     #   TourEntry.find(te.first).update_attributes(stock_level_qty: qty, quantity: qty)
     # end
-
-    @tour_entries.map(&:adjust_variance)
+    failed = false
+    @tour_entries.each do |tour_entry|
+      begin
+        tour_entry.adjust_variance
+      rescue ActiveRecord::RecordInvalid
+        failed = true
+      end
+    end
     # render json: { ok: true, tour_entries: @tour_entries.pluck(:id, :stock_level_qty) }
-    redirect_to :back
+    flash[:danger] = 'Something went wrong' if failed
+    # redirect_to :back
+    render json: { ok: true }
   end
 
   def reject_variance
@@ -183,9 +191,9 @@ protected
      tour_entries.bin_code,
      tour_entries.sku,
      tour_entries.barcode,
-     sum(tour_entries.stock_level_qty) as sum_stock_level_qty,
-     sum(tour_entries.quantity) as sum_quantity,
-     sum(tour_entries.variance) as sum_variance,
+     avg(tour_entries.stock_level_qty) as sum_stock_level_qty,
+     avg(tour_entries.quantity) as sum_quantity,
+     avg(tour_entries.variance) as sum_variance,
      tour_entries.company_id,
      tour_entries.stock_level_id
     "

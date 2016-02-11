@@ -5,6 +5,7 @@ class TourEntry < ActiveRecord::Base
   belongs_to :stock_level
 
   # something is wrong when executing save in console??..
+  after_create :calculate_variance
   after_save :calculate_variance, :if => :variance_change_required?
 
   # -- Callbacks ------------------------------------------------------------

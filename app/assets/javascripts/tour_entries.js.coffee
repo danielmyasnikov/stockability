@@ -52,7 +52,9 @@ Stockability.TourEntry = ($) ->
 
     cells        = datatable.cells().nodes();
     tour_entries = $(cells).find('.check:checkbox:checked')
-    tour_entries = ($(tour_entry).data('id') for tour_entry in tour_entries)
+    tour_entries = ({ stock_level_id: $(tour_entry).data('stock-level-id'), tour_id: $(tour_entry).data('tour-id')} for tour_entry in tour_entries)
+
+    console.log('tour_entries', tour_entries);
 
     $.ajax
       url: '/users/tour_entries/reject_variance'
@@ -61,11 +63,8 @@ Stockability.TourEntry = ($) ->
         id: tour_entries
       success: (data) ->
         # returns an array of array, where nested array is [tour_entry.id, tour_entry.stock_level_qty]
-        for entry in data.tour_entries
-          $("[data-id=#{entry[0]}]").parents('tr').children('.variance').html('0.0')
-          $("[data-id=#{entry[0]}]").parents('tr').children('.quantity').html(entry[1])
-
         alert("Stock Level is adjusted")
+        window.location.href = window.location.href
       fail: (e) ->
         alert(ERROR_MSG)
 
@@ -75,7 +74,9 @@ Stockability.TourEntry = ($) ->
 
     cells        = datatable.cells().nodes();
     tour_entries = $(cells).find('.check:checkbox:checked')
-    tour_entries = ($(tour_entry).data('id') for tour_entry in tour_entries)
+    tour_entries = ({ stock_level_id: $(tour_entry).data('stock-level-id'), tour_id: $(tour_entry).data('tour-id')} for tour_entry in tour_entries)
+
+    console.log('tour_entries', tour_entries);
 
     $.ajax
       url:    '/users/tour_entries/adjust_variance'
@@ -84,18 +85,8 @@ Stockability.TourEntry = ($) ->
         id: tour_entries
       success: (data) ->
         # returns an array of array, where nested array is [tour_entry.id, tour_entry.stock_level_qty]
-        for entry in data.entries
-          $row = $("[data-id=#{entry[0]}]").parents('tr')
-          
-          $row.children('.stock_level_qty').html(entry[1])
-          $row.children('.quantity').html(entry[1])
-          
-          $variance = $row.children('.variance')
-          $variance.html('0.0')
-          $variance.removeClass('greeny')
-          $variance.removeClass('reddy')
-
         alert("Stock Level is adjusted")
+        window.location.href = window.location.href
       fail: (e) ->
         alert(ERROR_MSG)
 

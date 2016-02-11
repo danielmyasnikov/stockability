@@ -31,7 +31,7 @@
         %tbody
           - @tour_entries.each do |tour_entry|
             %tr
-              %td= check_box_tag :check_stock_level, nil, nil, data: { id: tour_entry.stock_level_id }, class: 'check'
+              %td= check_box_tag :check_stock_level, nil, nil, data: { stock_level_id: tour_entry.stock_level_id, tour_id: tour_entry.tour_id }, class: 'check'
               %td.tour= link_to truncate(tour_entry.tour_name, length: 12), users_tour_path(tour_entry.tour_id), class: 'label label-default tour_name'
               %td= tour_entry.location_code
               %td= tour_entry.bin_code

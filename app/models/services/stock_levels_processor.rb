@@ -12,10 +12,6 @@ class Services::StockLevelsProcessor
         te.bin_code         = stock_level.bin_code
         te.sku              = stock_level.sku
         te.batch_code       = stock_level.batch_code
-
-        puts '>>> QTQ <<<'
-        puts stock_level.quantity
-
         te.stock_level_qty  = stock_level.quantity
         te.company_id       = stock_level.company_id
         te.location_code    = stock_level.location_code

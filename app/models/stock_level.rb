@@ -16,16 +16,15 @@ class StockLevel < ActiveRecord::Base
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------
-
-
-  # -- Validations ----------------------------------------------------------
-  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code, :batch_code], message: 'Record is not unique' }
-  validates_presence_of :sku, :location_code
-
+  
   # -- Scopes ---------------------------------------------------------------
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
 
   # -- Class Methods --------------------------------------------------------
+  def self.composite_key
+    [:sku, :location_code, :bin_code, :batch_code]
+  end
+  
   def self.sample
     require 'csv'
     CSV.generate do |csv|
@@ -45,6 +44,11 @@ class StockLevel < ActiveRecord::Base
       end
     end
   end
+
+  # -- Validations ----------------------------------------------------------
+  validates :company_id, uniqueness: { scope: composite_key, message: 'Record is not unique' }
+  validates_presence_of :sku, :location_code
+
 
   # -- Instance Methods -----------------------------------------------------
   def quantity=(value)

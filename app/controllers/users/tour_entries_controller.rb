@@ -176,7 +176,15 @@ protected
   end
 
   def group_fields
-    "stock_level_id, tours.name, tours.id, location_code, bin_code, sku, barcode, tour_entries.company_id"
+    "
+    tours.name,
+    tours.id,
+    location_code,
+    bin_code,
+    sku,
+    tour_entries.company_id,
+    batch_code
+    "
   end
 
   def load_tour
@@ -190,12 +198,8 @@ protected
      tour_entries.location_code,
      tour_entries.bin_code,
      tour_entries.sku,
-     tour_entries.barcode,
-     avg(tour_entries.stock_level_qty) as sum_stock_level_qty,
-     avg(tour_entries.quantity) as sum_quantity,
-     avg(tour_entries.variance) as sum_variance,
-     tour_entries.company_id,
-     tour_entries.stock_level_id
+     tour_entries.batch_code,
+     SUM(tour_entries.quantity) as sum_quantity
     "
   end
 

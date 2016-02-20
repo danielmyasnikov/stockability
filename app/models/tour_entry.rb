@@ -4,7 +4,6 @@ class TourEntry < ActiveRecord::Base
   belongs_to :tour
   belongs_to :stock_level
 
-  # something is wrong when executing save in console??..
   after_create :calculate_variance
   after_save :calculate_variance, :if => :variance_change_required?
 
@@ -43,8 +42,6 @@ class TourEntry < ActiveRecord::Base
   end
 
   def calculate_variance
-    puts quantity
-    puts stock_level_qty
     update_column(:variance, quantity - stock_level_qty)
   end
 

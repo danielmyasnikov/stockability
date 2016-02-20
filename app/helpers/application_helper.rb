@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def datetime
+    "%M:%H %d-%m-%Y"
+  end
+  
   def edit_admin_nav_active?(menu_name)
     if action_name == menu_name
       'active'

@@ -1,4 +1,4 @@
-class Services::StockLevelsProcessor
+class StockLevelsProcessor
   attr_reader :stock_levels, :tour_entries
   def initialize(stock_levels, tour)
     @stock_levels = StockLevel.where(id: stock_levels)

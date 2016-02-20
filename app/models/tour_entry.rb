@@ -1,4 +1,6 @@
 class TourEntry < ActiveRecord::Base
+  include StockAbility::QueryMethods::TourEntries
+
   # -- Relationships --------------------------------------------------------
   belongs_to :company
   belongs_to :tour
@@ -14,16 +16,24 @@ class TourEntry < ActiveRecord::Base
 
 
   # -- Scopes ---------------------------------------------------------------
+  scope :visible, -> { where(:visible => true) }
+  scope :hidden, -> { where(:visible => false) }
+
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
   scope :only_variance, -> (only_variance) { only_variance ? where('variance <> 0') : all }
-  scope :aggregated, -> { select(
-    'sum(variance) as sum_variance, sum(quantity) as sum_quantity, sum(stock_level_qty) as sum_stock_level_qty').
-     group('tour_id, location_code, bin_code, sku, barcode, tours.company_id, tour_name, tours.id, tour_entries.id')
-  }
-
   # -- Class Methods --------------------------------------------------------
+  def self.composite_key
+    StockLevel.composite_key.push(:tour_id)
+  end
 
   # -- Instance Methods -----------------------------------------------------
+  def composite_key_attributes
+    attributes.slice(*self.composite_key.map!(&:to_s))
+  end
+
+  def variance
+    entry.sum_quantity - stock_level_qty
+  end
 
   def blind_stock_count?
     stock_level_id.nil?
@@ -39,23 +49,6 @@ class TourEntry < ActiveRecord::Base
     else
       write_attribute(:quantity, 1)
     end
-  end
-
-  def calculate_variance
-    update_column(:variance, quantity - stock_level_qty)
-  end
-
-  def adjust_variance
-    stock_level.update_attributes(quantity: stock_level.quantity + variance)
-    update_column(:stock_level_qty, stock_level_qty + variance)
-    update_column(:variance, 0)
-    update_column(:visible, false)
-  end
-
-  def reject_variance
-    update_column(:quantity, stock_level_qty)
-    update_column(:variance, 0)
-    update_column(:visible, false)
   end
 
   private

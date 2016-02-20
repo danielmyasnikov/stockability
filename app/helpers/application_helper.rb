@@ -41,7 +41,7 @@ module ApplicationHelper
   end
 
   def interpret_status(status)
-    Services::ProductsBarcodesImporter::STATUS[status]
+    ProductsBarcodesImporter::STATUS[status]
   end
 
   def interpret_message(errors)

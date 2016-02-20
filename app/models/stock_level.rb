@@ -24,6 +24,11 @@ class StockLevel < ActiveRecord::Base
   def self.composite_key
     [:sku, :location_code, :bin_code, :batch_code]
   end
+
+  def self.find_by_entry(tour_entry)
+    attrs = entry.attributes.slice(*StockLevel.composite_key.map!(&:to_s))
+    where(attrs).first
+  end
   
   def self.sample
     require 'csv'

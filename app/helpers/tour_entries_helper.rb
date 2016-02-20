@@ -1,4 +1,15 @@
 module TourEntriesHelper
+  
+  def scoped_params(scoped_entry)
+    {
+      location_code: scoped_entry.location_code,
+      bin_code:      scoped_entry.bin_code,
+      sku:           scoped_entry.sku,
+      batch_code:    scoped_entry.batch_code,
+      tour_id:       scoped_entry.tour_id
+    }
+  end
+
   def colour_picker(sum)
     return if sum.blank? || sum == 0
     if sum < 0

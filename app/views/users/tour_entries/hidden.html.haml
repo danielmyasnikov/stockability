@@ -1,0 +1,37 @@
+- content_for :body_class do
+  = 'tour-entries'
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .ibox.float-e-margins
+    .ibox-title
+      %h5 Processed Tour Entries
+    .ibox-content
+      %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+        %thead
+          %tr
+            %th Tour
+            %th Location
+            %th Bin
+            %th SKU
+            %th Batch Code
+            %th Stock Level QTY
+            %th Quantity
+            %th Variance
+        %tbody
+          - @tour_entries.each do |tour_entry|
+            - begin
+              %tr
+                %td.tour= link_to truncate(tour_entry.tour_name, length: 12), users_tour_path(tour_entry.tour_id), class: 'label label-default tour_name'
+                %td= tour_entry.location_code
+                %td= tour_entry.bin_code
+                %td= tour_entry.sku
+                %td= tour_entry.batch_code
+                %td.quantity= tour_entry.stock_level_qty
+                %td.quantity= tour_entry.sum_quantity
+                - variance = tour_entry.stock_level_qty - tour_entry.sum_quantity
+                %td.variance{ class: colour_picker(variance) }= variance.round(2)
+            - rescue
+              %tr
+                %td{ :colspan => 7 } Sorry, but something went wrong in here...
+
+.tour_entries{ id: 'page-id' }

@@ -39,7 +39,7 @@ WarehouseCms::Application.routes.draw do
       resources :entries, controller: 'tour_entries', 
                           action: 'scoped_by_tour', 
                           only: [:index], 
-                          as: 'with_entries'
+                          as: 'scoped_by_tour'
     end
   end
 

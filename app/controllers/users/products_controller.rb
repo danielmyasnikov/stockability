@@ -31,7 +31,7 @@ class Users::ProductsController < Users::AdminController
 
   def process_import
     file      = params[:file]
-    @importer = Services::ProductsBarcodesImporter.new(file.tempfile, current_user)
+    @importer = ProductsBarcodesImporter.new(file.tempfile, current_user)
     @importer.import
 
     redirect_to action: :import

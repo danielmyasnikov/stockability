@@ -1,4 +1,4 @@
-class Services::ProductsBarcodesImporter
+class ProductsBarcodesImporter
   attr_reader :errors, :user, :services, :file, :product, :successfully_imported, :warnings, :products, :barcode
 
   STATUS = {
@@ -116,7 +116,7 @@ class Services::ProductsBarcodesImporter
 private
 
   def service
-    Services::ProductBarcodesService.new({
+    ProductBarcodesService.new({
       :product          => product_params,
       :product_barcodes => product[:product_barcodes],
       :user             => user

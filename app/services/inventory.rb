@@ -1,4 +1,4 @@
-module StockAbility
+module Services
   class Inventory
     def initialize(tour_entry)
       @tour_entry  = tour_entry

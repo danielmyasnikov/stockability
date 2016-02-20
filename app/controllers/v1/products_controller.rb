@@ -65,7 +65,7 @@ class V1::ProductsController < V1::BaseController
   def update
     @product_service.update
     render json: { status: 'Ok', product: @product_service.product }
-  rescue Services::ProductBarcodesService::NotFound
+  rescue ProductBarcodesService::NotFound
     render json: { status: "Product was not found", sku: product_params[:sku] }, status: 404
   rescue ActiveRecord::RecordInvalid
     render json:
@@ -91,7 +91,7 @@ private
   end
 
   def initialize_product_service
-    @product_service = Services::ProductBarcodesService.new(
+    @product_service = ProductBarcodesService.new(
       :product          => product_params,
       :product_barcodes => barcode_params.fetch(:product_barcodes, []),
       :user             => current_user

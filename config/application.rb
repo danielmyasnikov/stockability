@@ -15,7 +15,7 @@ module WarehouseCms
 
     config.assets.version = '1.0'
 
-    # FIXME: convert to standard ISO?
+    config.autoload_paths += Dir["#{config.root}/app/services/**/*.rb"]
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
 

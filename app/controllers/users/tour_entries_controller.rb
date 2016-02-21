@@ -40,7 +40,7 @@ class Users::TourEntriesController < Users::AdminController
 
   def scoped_by_tour
     @tour = Tour.find(params[:tour_id])
-    @tour_entries = TourEntry.accessible_by(current_ability).where(filter_params)
+    @tour_entries = TourEntry.accessible_by(current_ability).where(stock_level_params)
   end
 
   def show
@@ -185,13 +185,6 @@ protected
       only_variance(only_variance_to_bool).
       hidden.
       group_by_tour
-  end
-
-  def filter_params
-    str = {}
-    if params[:tour_id]; str.merge!(tour_id: params[:tour_id]) end
-    if params[:stock_level_id]; str.merge!(stock_level_id: params[:stock_level_id]) end
-    str
   end
 
   def stock_level_params

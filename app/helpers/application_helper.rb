@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def datetime
-    "%M:%H %d-%m-%Y"
+    "%H:%M %d-%m-%Y"
   end
   
   def edit_admin_nav_active?(menu_name)

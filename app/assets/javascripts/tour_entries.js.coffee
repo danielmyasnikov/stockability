@@ -94,5 +94,19 @@ Stockability.TourEntry = ($) ->
       success: (data) ->
         alert('yay')
 
+  $('.reject-tour-entries').click (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+
+    $this  = $(this)
+    url    = $this.attr('href')
+    method = $this.data('method')
+
+    $.ajax
+      url:    url
+      method: method
+      success: (data) ->
+        alert('yay')
+
 $ ->
   Stockability.TourEntry($) if $("#page-id").hasClass('tour_entries')

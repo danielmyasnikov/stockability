@@ -45,6 +45,6 @@
                 .btn-group.btn-group-sm
                   = link_to 'Adjust', adjust_variance_users_tour_entries_path(scoped_params(tour_entry)), method: :put, :class => 'btn btn-primary adjust-tour-entries'
                   = link_to 'Entries', users_tour_scoped_by_tour_index_path(scoped_params(tour_entry)), :class => 'btn btn-default'
-                  = link_to 'Reject', reject_variance_users_tour_entries_path(scoped_params(tour_entry)), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger reject-tour-entries'
+                  = link_to 'Reject', reject_variance_users_tour_entries_path(scoped_params(tour_entry)), :method => :put, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger reject-tour-entries'
 
 .tour_entries{ id: 'page-id' }

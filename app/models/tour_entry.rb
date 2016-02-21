@@ -29,7 +29,7 @@ class TourEntry < ActiveRecord::Base
   end
 
   def variance
-    entry.sum_quantity - stock_level_qty
+    sum_quantity - stock_level_qty
   end
 
   def blind_stock_count?

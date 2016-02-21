@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217222216) do
+ActiveRecord::Schema.define(version: 20160221054713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -242,7 +242,7 @@ ActiveRecord::Schema.define(version: 20160217222216) do
     t.string   "bin_code"
     t.string   "sku"
     t.string   "batch_code"
-    t.float    "quantity",      default: 1.0
+    t.float    "quantity",      default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -256,7 +256,7 @@ ActiveRecord::Schema.define(version: 20160217222216) do
     t.string   "sku"
     t.string   "barcode"
     t.string   "batch_code"
-    t.float    "quantity",        default: 1.0
+    t.float    "quantity",        default: 0.0
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 20160217222216) do
     t.float    "variance"
     t.integer  "stock_level_id"
     t.boolean  "visible",         default: true
+    t.datetime "changed_at"
   end
 
   create_table "tours", force: :cascade do |t|

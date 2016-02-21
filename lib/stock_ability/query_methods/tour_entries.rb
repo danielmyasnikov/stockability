@@ -5,7 +5,7 @@ module StockAbility
       def adjust
         each do |entry|
           slevel = StockLevel.find_by_entry(entry)
-          slevel.update_attribute(:quantity, slevel.quantity - entry.variance)
+          slevel.update_attribute(:quantity, slevel.quantity + entry.variance)
           hide_tour_entries_by_keys(entry)
         end
       end
@@ -32,13 +32,14 @@ module StockAbility
           location_code,
           bin_code,
           sku,
-          tour_entries.company_id,
+          tours.company_id,
           batch_code
         "
       end
 
       def select_fields
         "
+          tours.company_id,
           tours.name as tour_name,
           tours.id   as tour_id,
           tour_entries.location_code,

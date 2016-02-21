@@ -26,8 +26,9 @@ class StockLevel < ActiveRecord::Base
   end
 
   def self.find_by_entry(tour_entry)
-    attrs = entry.attributes.slice(*StockLevel.composite_key.map!(&:to_s))
-    where(attrs).first
+    attrs = tour_entry.attributes.slice(*StockLevel.composite_key.map!(&:to_s))
+    # exception handling if validation
+    find_or_create_by(attrs.merge(company_id: tour_entry.company_id))
   end
   
   def self.sample

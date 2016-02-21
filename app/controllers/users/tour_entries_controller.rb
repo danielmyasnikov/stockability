@@ -149,11 +149,11 @@ protected
   end
 
   def load_tour_relationships
-    @locations   = Location.accessible_by(current_ability).pluck(:code)
-    @sku         = Product.accessible_by(current_ability).pluck(:sku)            + []
-    @bin_codes   = StockLevel.accessible_by(current_ability).pluck(:bin_code)    + []
-    @barcodes    = ProductBarcode.accessible_by(current_ability).pluck(:barcode) + []
-    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code)  + []
+    @locations   = Location.accessible_by(current_ability).pluck(:code).compact.uniq.reject(&:empty?)
+    @sku         = Product.accessible_by(current_ability).pluck(:sku).compact.uniq.reject(&:empty?)
+    @bin_codes   = StockLevel.accessible_by(current_ability).pluck(:bin_code).compact.uniq.reject(&:empty?)
+    @barcodes    = ProductBarcode.accessible_by(current_ability).pluck(:barcode).compact.uniq.reject(&:empty?)
+    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code).compact.uniq.reject(&:empty?)
     @tours       = Tour.options_for_select(current_ability)
   end
 

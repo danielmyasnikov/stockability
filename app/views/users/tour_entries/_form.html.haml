@@ -1,9 +1,9 @@
 = form.select :tour_id, options_for_select(@tours, @tour_entry.tour_id), {}, class: 'form-control select2-users'
-= form.select :location_code, options_for_select(@locations, @tour_entry.location_code), {:include_blank => true}, class: 'form-control select2-users'
-= form.select :bin_code, options_for_select(@bin_codes, @tour_entry.bin_code), {:include_blank => true}, class: 'form-control select2-users'
-= form.select :sku, options_for_select(@sku, @tour_entry.sku), {:include_blank => true}, class: 'form-control select2-users'
-= form.select :barcode, options_for_select(@barcodes, @tour_entry.barcode), {:include_blank => true}, class: 'form-control select2-users'
-= form.select :batch_code, options_for_select(@batch_codes, @tour_entry.batch_code), {:include_blank => true}, class: 'form-control select2-users'
+= form.select :location_code, options_for_select(@locations, @tour_entry.location_code), {}, class: 'form-control select2-users'
+= form.select :bin_code, options_for_select(@bin_codes, @tour_entry.bin_code), { :include_blank => 'NONE' }, class: 'form-control select2-users'
+= form.select :sku, options_for_select(@sku, @tour_entry.sku), {}, class: 'form-control select2-users'
+= form.select :barcode, options_for_select(@barcodes, @tour_entry.barcode), { :include_blank => 'NONE' }, class: 'form-control select2-users'
+= form.select :batch_code, options_for_select(@batch_codes, @tour_entry.batch_code), { :include_blank => 'NONE' }, class: 'form-control select2-users'
 = form.text_field :quantity
 
 .form-group

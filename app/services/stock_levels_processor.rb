@@ -1,5 +1,5 @@
 class StockLevelsProcessor
-  attr_reader :stock_levels, :tour_entries
+  attr_reader :stock_levels, :entries
   def initialize(stock_levels, tour)
     @stock_levels = StockLevel.where(id: stock_levels)
     @tour = Tour.find(tour) rescue nil
@@ -19,7 +19,7 @@ class StockLevelsProcessor
       end
 
       if @tour_entry.save
-        tour_entries << @tour_entry
+        entries << @tour_entry
         stock_level.tour_entries << @tour_entry
       else
         errors << @tour_entry.errors
@@ -28,7 +28,7 @@ class StockLevelsProcessor
     unless @tour.nil?
       # TODO: sort out relationship between tour entries and tours
       # if has_many belongs to this will overrided tour entries for the other tour
-      @tour.entries << tour_entries
+      @tour.entries << entries
     end
   end
 
@@ -40,7 +40,7 @@ class StockLevelsProcessor
     @tour_entry ||= TourEntry.new
   end
 
-  def tour_entries
-    @tour_entries ||= []
+  def entries
+    @entries ||= []
   end
 end

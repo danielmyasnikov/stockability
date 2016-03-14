@@ -1,2 +1,6 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+# 10_000 records process
+Completed 302 Found in 6950ms (ActiveRecord: 3569.6ms)
+Completed 302 Found in 21492ms (ActiveRecord: 8886.6ms)

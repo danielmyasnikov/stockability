@@ -1,0 +1,29 @@
+- content_for :body_class do
+  = 'tour-entries'
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .ibox.float-e-margins
+    .ibox-title
+      %h4= @tour.name
+    .ibox-content
+      %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+        %thead
+          %tr
+            %th Barcode
+            %th Stock Level
+            %th Quantity
+            %th Changed at
+            %th
+        %tbody
+          - @tour_entries.each do |tour_entry|
+            %tr
+              %td= tour_entry.barcode
+              %td.stock_level_qty= tour_entry.stock_level_qty
+              %td.quantity= tour_entry.quantity
+              %td= tour_entry.changed_at || 'to be implemented...'
+              %td
+                .btn-group.btn-group-sm
+                  = link_to 'Edit', edit_users_tour_entry_path(tour_entry), :class => 'btn btn-primary'
+                  = link_to 'Delete', users_tour_entry_path(tour_entry), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+.tour_entries{ id: 'page-id' }

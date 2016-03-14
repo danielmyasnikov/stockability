@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :login, :company, :if => :requires_login?
   validates_presence_of :role
-  
+
   validates_uniqueness_of :login
 
   after_create :save_with_token
@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def can_manage_admins?; admin?; end
+  def can_manage_admins?; company_admin?; end
+  def company_admin?; admin?; end
 
   def self.human_roles
     h = Hash.new({})
@@ -41,10 +42,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.role_options_for_select(user)
+  def self.role_options_for_select(user_role)
     roles = []
     ROLES.each_with_index do |_role, index|
-      next if index < ROLES.index(user.role.to_sym)
+      next if index < ROLES.index(user_role.to_sym)
       roles.push([_role.to_s.titleize, _role])
     end
     roles
@@ -63,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def save_with_token; update_column(:token, generate_token); end
-  def email_required?; admin?; end
+  def email_required?; company_admin?; end
   def super_admin?; false; end
 
 private

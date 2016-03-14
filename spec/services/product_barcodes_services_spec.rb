@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Services::ProductBarcodesService, :type => :services do
+RSpec.describe ProductBarcodesService, :type => :services do
 
   let(:product_params) { { sku: 'ABC123', batch_tracked: 1, description: 'test product #1' } }
   let(:barcode_params) { [{barcode: 'ZYX987', quantity: 3}, {barcode: 'SDF555', quantity: 4}] }
-  let(:service) { Services::ProductBarcodesService.new(params) }
+  let(:service) { ProductBarcodesService.new(params) }
   let(:admin) { FactoryGirl.create(:user, :company_admin) }
   context 'successfully servicing the only product' do
 

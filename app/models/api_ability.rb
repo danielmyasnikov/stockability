@@ -10,7 +10,7 @@ class ApiAbility
     can [:view], Admin, :company_id => user.company_id
 
     case
-    when user.admin? || user.warehouse_manager? || user.warehouse_operator?
+    when user.company_admin? || user.warehouse_manager? || user.warehouse_operator?
       define_ability(user)
     end
   end

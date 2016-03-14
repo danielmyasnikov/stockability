@@ -2,13 +2,18 @@ WarehouseCms::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  
+
   apipie
   namespace :users do
     resources :locations
     resources :product_barcodes
     resources :tour_entries do
       collection { get :download }
+      collection { put :adjust_variance }
+      collection { put :reject_variance }
+      collection { post :assign_tour }
+      member { put :adjust_variance }
+      member { put :reject_variance }
     end
     resources :stock_levels do
       collection { get :download }
@@ -31,6 +36,10 @@ WarehouseCms::Application.routes.draw do
     end
     resources :tours do
       collection { get :download }
+      resources :entries, controller: 'tour_entries', 
+                          action: 'scoped_by_tour', 
+                          only: [:index], 
+                          as: 'scoped_by_tour'
     end
   end
 

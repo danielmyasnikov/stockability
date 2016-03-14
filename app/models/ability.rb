@@ -20,7 +20,7 @@ class Ability
     case
     when user.super_admin?
       define_sa_ability
-    when user.admin?
+    when user.company_admin?
       define_admin_ability(user)
     when user.warehouse_manager?
       define_manager_ability(user)

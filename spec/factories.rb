@@ -59,12 +59,14 @@ FactoryGirl.define do
 
   factory :tour_entry do
     tour
+    stock_level
     location_code 'BATCH001'
     bin_code 'A08'
     sku 'BLA333'
     barcode 'BAR555'
     batch_code 'ZYX444'
     quantity 1
+    stock_level_qty 1
     active true
     company
   end

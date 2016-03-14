@@ -11,16 +11,19 @@
     = select_tag(:sku_filter, options_for_select(@sku_options, params[:sku]), class: 'form-control filter-select', multiple: true,
       "data-option-selected" => @params_sku,
       "data-placeholder" => "Select SKU")
+    %small.small You can use * or ? masks to work with the query
 
   .col-sm-4
     = select_tag(:location_code_filter, options_for_select(@location_options, params[:location_code]), class: 'form-control filter-select', multiple: true,
       "data-option-selected" => @params_location_code,
       "data-placeholder" => "Select location code")
+    %small.small You can use * or ? masks to work with the query
 
   .col-sm-4
     = select_tag(:bin_code_filter, options_for_select(@bin_options, params[:bin_code]), class: 'form-control filter-select', multiple: true,
       "data-option-selected" => @params_bin_code,
       "data-placeholder" => "Select bin code")
+    %small.small You can use * or ? masks to work with the query
     %hr
     = link_to 'Filter', nil, { id: 'filter-results', class: 'btn btn-primary' }
     = link_to 'Reset All', nil, { id: 'reset-all' }
@@ -47,7 +50,8 @@
         %td= check_box_tag :check_stock_level, nil, nil, data: { id: stock_level.id }, class: 'check'
         %td
           - stock_level.last_tours.each do |tour|
-            = link_to truncate(tour.name, length: 12), users_tour_path(tour), class: 'label label-default'
+            - if tour
+              = link_to truncate(tour.name, length: 12), users_tour_path(tour), class: 'label label-default'
         %td= stock_level.location_code
         %td= stock_level.bin_code
         %td= stock_level.sku

@@ -5,12 +5,17 @@
 
   %h2= 'Importing Products'
 
-  = form_tag process_import_users_products_path, multipart: true, :class => 'form-upload' do
-    = file_field_tag :file, :style => 'display: inline;'
-    = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
+  .row
+    .col-sm-6
+      = form_tag process_import_users_products_path, multipart: true, :class => 'form-upload' do
+        = file_field_tag :file, :style => 'display: inline;'
+        = submit_tag 'Import', class: 'btn btn-primary', id: 'import'
 
-  %small Download a sample CSV template to see an example of the format required.
-  = link_to "Download Sample", sample_users_products_path(format: :csv), :class => 'btn btn-default'
+    .col-sm-6
+      %small Download a sample CSV template to see an example of the format required.
+      = link_to "Download Sample", sample_users_products_path(format: :csv), :class => 'btn btn-default'
+      %br
+      %small The if the product has the same SKU that is already in the system, the file upload updates the product
 
 
 %table.table

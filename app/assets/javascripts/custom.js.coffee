@@ -3,6 +3,7 @@
 
 #= require products
 #= require stock_levels
+#= require tour_entries
 
 $ ->
   $('.navbar-minimalize').click ->
@@ -15,12 +16,6 @@ $ ->
     else
       $('.mini-navbar [data-toggle="tooltip"]').tooltip()
       Cookies.set('sa.collapsed', true, { domain: '', expires: 7 })
-
-  datatable = $('#datatable-simple').DataTable
-    searching: false
-    ordering: true
-    processing: true
-    paging: false
 
   dateTimePicker = $('input[data-user-datetimepicker=true]').datetimepicker
     format:     'yyyy-mm-dd hh:ii:ss'

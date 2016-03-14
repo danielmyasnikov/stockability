@@ -1,4 +1,4 @@
-class Services::StockLevelsImporter
+class StockLevelsImporter
   cattr_reader :results
   attr_reader :errors, :user, :file, :imported_row, :stock_level, :custom_errors,
               :successfully_imported, :warnings, :location, :product
@@ -56,7 +56,7 @@ private
     else
       @custom_errors = 'Location or Product have issues'
     end
-    Services::StockLevelsImporter.results.push(import_params)
+    StockLevelsImporter.results.push(import_params)
   end
 
   def stock_level_params

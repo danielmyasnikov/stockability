@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def datetime
+    "%H:%M %d-%m-%Y"
+  end
+  
   def edit_admin_nav_active?(menu_name)
     if action_name == menu_name
       'active'
@@ -36,7 +41,7 @@ module ApplicationHelper
   end
 
   def interpret_status(status)
-    Services::ProductsBarcodesImporter::STATUS[status]
+    ProductsBarcodesImporter::STATUS[status]
   end
 
   def interpret_message(errors)

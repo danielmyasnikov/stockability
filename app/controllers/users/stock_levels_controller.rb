@@ -34,7 +34,7 @@ class Users::StockLevelsController < Users::AdminController
   def process_import
     file      = params[:file]
     # this is weak solution
-    @importer = Services::StockLevelsImporter.new(file.tempfile, current_user)
+    @importer = StockLevelsImporter.new(file.tempfile, current_user)
     @importer.import
 
     redirect_to action: :import
@@ -64,7 +64,7 @@ class Users::StockLevelsController < Users::AdminController
   end
 
   def assign_stock_levels
-    @processor = Services::StockLevelsProcessor.new(stock_levels_params, params[:tour])
+    @processor = StockLevelsProcessor.new(stock_levels_params, params[:tour])
 
     if is_redirect_required?
       render json: { redirect_required: is_redirect_required? }
@@ -121,12 +121,12 @@ protected
 
   def read_import
     @importer = Rails.cache.read(data_key)
-    @results = Services::StockLevelsImporter.results
+    @results = StockLevelsImporter.results
   end
 
   def forget_import
     Rails.cache.write(data_key, nil)
-    Services::StockLevelsImporter.nullify_results
+    StockLevelsImporter.nullify_results
   end
 
   def save_processed_records

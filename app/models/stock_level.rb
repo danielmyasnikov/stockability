@@ -12,21 +12,25 @@ class StockLevel < ActiveRecord::Base
     where("locations.company_id = :company_id", company_id: stock_level.company_id)
   }, foreign_key: :location_code, primary_key: :code
 
-  has_many :tour_entries, through: :inventories
-  has_many :inventories, dependent: :destroy
+  has_many :tour_entries
   # => do we need association between product barcodes and stocklevels
 
   # -- Callbacks ------------------------------------------------------------
-
-
-  # -- Validations ----------------------------------------------------------
-  validates :company_id, uniqueness: { scope: [:sku, :location_code, :bin_code, :batch_code], message: 'Record is not unique' }
-  validates_presence_of :sku, :location_code
-
+  
   # -- Scopes ---------------------------------------------------------------
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
 
   # -- Class Methods --------------------------------------------------------
+  def self.composite_key
+    [:sku, :location_code, :bin_code, :batch_code]
+  end
+
+  def self.find_by_entry(tour_entry)
+    attrs = tour_entry.attributes.slice(*StockLevel.composite_key.map!(&:to_s))
+    # exception handling if validation
+    find_or_create_by(attrs.merge(company_id: tour_entry.company_id))
+  end
+  
   def self.sample
     require 'csv'
     CSV.generate do |csv|
@@ -46,6 +50,11 @@ class StockLevel < ActiveRecord::Base
       end
     end
   end
+
+  # -- Validations ----------------------------------------------------------
+  validates :company_id, uniqueness: { scope: composite_key, message: 'Record is not unique' }
+  validates_presence_of :sku, :location_code
+
 
   # -- Instance Methods -----------------------------------------------------
   def quantity=(value)

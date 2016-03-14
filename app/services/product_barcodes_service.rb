@@ -1,4 +1,4 @@
-class Services::ProductBarcodesService
+class ProductBarcodesService
   class NotFound < StandardError; end
 
   attr_accessor :product_errors, :barcode_errors, :product, :product_barcodes,

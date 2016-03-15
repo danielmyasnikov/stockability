@@ -1,5 +1,8 @@
 /*
- *= require 'base'
+ *= require animate
+ *= require font-awesome
+ *= require style
+ *= require base
  */
 
 $mrk-color: #205081;

@@ -88,6 +88,9 @@
 # HTTParty.get(HOST + tour_entries_api, query: auth.merge(since))
 
 # create_tour_entry = { tour_entry: { tour_id: id, sku: FIRSTPRODUCTSKU, batch_code: 'BATCH06', quantity: 55, location_code: LOCATION_CODE, bin_code: 'BIN002', barcode: 'BAR001' } }
+
+# create_tour_entry = { tour_entry: { tour_id: 45, sku: '00111-EC', batch_code: '111BATCH', quantity: 55, location_code: 'TEST', bin_code: 'BIN111', barcode: '111BATCH' } }
+
 # resp = HTTParty.post(HOST + tour_entries_api, query: create_tour_entry.merge(auth))
 # id = resp.parsed_response['id']
 

@@ -25,7 +25,13 @@ class TourEntry < ActiveRecord::Base
 
   # -- Instance Methods -----------------------------------------------------
   def composite_key_attributes
-    attributes.slice(*self.composite_key.map!(&:to_s))
+    {
+      tour_id:       tour_id,
+      sku:           sku,
+      location_code: location_code,
+      bin_code:      bin_code,
+      batch_code:    batch_code
+    }
   end
 
   def variance

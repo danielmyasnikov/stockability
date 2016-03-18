@@ -3,10 +3,10 @@
 - if @user.new_record?
   = form.text_field :password
 - if current_user.super_admin?
-  = form.select :role, User.role_options_for_select(current_user)
+  = form.select :role, User.role_options_for_select(current_user.role)
   = form.select :company_id, options_from_collection_for_select(@companies, 'id', 'title', @user.company_id), prompt: 'Select company'
 - else
-  = form.select :role, User.role_options_for_select(current_user)
+  = form.select :role, User.role_options_for_select(current_user.role)
 
 .form-group.form-actions
   .col-sm-10.col-sm-offset-2

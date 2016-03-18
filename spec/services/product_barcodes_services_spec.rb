@@ -132,12 +132,12 @@ RSpec.describe ProductBarcodesService, :type => :services do
       expect(service.obj_product).to eq(product)
     end
 
-    xit 'failes to create a product barcode' do
+    it 'failes to create a product barcode' do
       subject
       expect(service.obj_product.product_barcodes.size).to eq(0)
     end
 
-    xit 'records barcode failure' do
+    it 'records barcode failure' do
       subject
       barcode = ProductBarcode.create(barcode_params.first)
       missing_quantity_error_message = ActiveRecord::RecordInvalid.new(barcode).message
@@ -147,7 +147,7 @@ RSpec.describe ProductBarcodesService, :type => :services do
     end
   end
 
-  xcontext 'updating a service' do
+  context 'updating a service' do
     context 'when product fails but barcode updates successfully'
     context 'when product successfull updates but barcode fails'
     context 'product and barcodes update fails'

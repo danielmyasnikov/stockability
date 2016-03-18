@@ -34,7 +34,7 @@ ActiveAdmin.register User do
         f.input :password_confirmation
       end
       f.input :company_id, :as => :select, :collection => Company.pluck(:title, :id)
-      f.input :role, :as => :select, :collection => User.role_options_for_select(current_admin_user)
+      f.input :role, :as => :select, :collection => User.role_options_for_select(current_admin_user.role)
       actions
     end
   end

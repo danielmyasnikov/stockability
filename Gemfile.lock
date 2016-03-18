@@ -16,6 +16,13 @@ GIT
       ransack (~> 1.3)
       sass-rails
 
+PATH
+  remote: ../_lab/capybara-select2
+  specs:
+    capybara-select2 (1.0.1)
+      capybara
+      rspec
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -331,6 +338,7 @@ DEPENDENCIES
   capistrano-rvm
   capybara
   capybara-email
+  capybara-select2!
   coffee-rails
   country_select
   database_cleaner

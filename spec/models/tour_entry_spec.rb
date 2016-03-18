@@ -2,40 +2,26 @@ require 'rails_helper'
 
 RSpec.describe TourEntry, :type => :model do
 
-  let(:tour_entry) { FactoryGirl.create(:tour_entry,
-                                    :quantity => 10) }
+  let(:user) { FactoryGirl.create(:user, :company_admin) }
 
-  describe '#calculate_variance' do
-    
-    subject { tour_entry.calculate_variance }
-    
-    it 'calculates variance' do
-      subject
-      expect(tour_entry.variance).to eq(9)
-    end
-  end
+  let(:tour) { FactoryGirl.create(:tour) }
 
-  describe '#adjust_variance' do
-    subject { tour_entry.adjust_variance }
+  let!(:tour_entry) { FactoryGirl.create(:tour_entry, :tour_id => tour.id,
+                                                     :location_code => 'LOC0X0',
+                                                     :bin_code => 'BIN0X0',
+                                                     :sku => 'SKU0X0',
+                                                     :barcode => 'BAR0X0',
+                                                     :batch_code => 'BAR0X0',
+                                                     :company_id => user.company_id,
+                                                     :stock_level_qty => 1,
+                                                     :quantity => 10) }
 
-    it 'adjusts variance' do
-      subject
-      expect(tour_entry.variance).to eq(0)
-    end
-
-    it 'calculates stock_level_qty' do
-      subject
-      expect(tour_entry.stock_level_qty).to eq(10)
-    end
-
-    it 'sums stock_level quantity with tour entry variance' do
-      subject
-      expect(tour_entry.stock_level.quantity).to eq(10)
-    end
-
-    it 'hides a processed tour_entry' do
-      subject
-      expect(tour_entry.visible).to eq(false)
+  describe '#variance' do
+    it 'rocks' do
+      grouped_el = TourEntry.all.group_by_tour
+      grouped_el.each do |el|
+        expect(el.variance).to eq(9)
+      end
     end
   end
 end

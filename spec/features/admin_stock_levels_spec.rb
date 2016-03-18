@@ -44,7 +44,7 @@ feature 'Authentication' do
     click_link('Stock Levels')
   end
 
-  xscenario 'filter by product SKU, bin code and location code' do
+  scenario 'filter by product SKU, bin code and location code' do
     within '#stock-levels' do
       expect(page).to have_content('LOC001')
       expect(page).to have_content('BIN002')
@@ -54,7 +54,7 @@ feature 'Authentication' do
 
   context 'when filtering by SKU' do
     xscenario 'filters results', js: true do
-      select 'SKU001', from: 'sku_filter'
+      select2 'SKU001', css: '.filter-sku', search: true
       click_link 'Filter'
       within '#stock-levels' do
         expect(page).to     have_content('SKU001')
@@ -65,7 +65,7 @@ feature 'Authentication' do
 
   context 'when filtering by BIN CODE' do
     xscenario 'filters results', js: true do
-      select 'BIN001', from: 'bin_code_filter'
+      select2 'BIN001', from: 'bin_code_filter'
       click_link 'Filter'
       within '#stock-levels' do
         expect(page).to     have_content('BIN001')
@@ -76,7 +76,7 @@ feature 'Authentication' do
 
   context 'when filtering by LOCATION CODE' do
     xscenario 'filters results', js: true do
-      select 'LOC001', from: 'location_code_filter'
+      select2 'LOC001', from: 'location_code_filter'
       click_link 'Filter'
       within '#stock-levels' do
         expect(page).to     have_content('LOC001')

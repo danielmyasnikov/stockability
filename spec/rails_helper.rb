@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include Warden::Test::Helpers
   config.include Devise::TestHelpers, :type => :controller
+  # config.include Capybara::Select2, type: :features included by default, see gem
   # config.extend  ControllerMacros,    :type => :controller
   config.after(:each) { Warden.test_reset! }
 end

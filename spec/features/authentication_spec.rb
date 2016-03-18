@@ -11,7 +11,7 @@ feature 'Authentication' do
 
   context 'login' do
 
-    xscenario 'as a company admin, after successful login I see products index' do
+    scenario 'as a company admin, after successful login I see products index' do
       fill_in :user_email, :with => member.email
       fill_in :user_password, :with => 'password'
 
@@ -31,7 +31,7 @@ feature 'Authentication' do
       open_email(member.email)
     end
 
-    xscenario 'as a user, I want to reset password' do
+    scenario 'as a user, I want to reset password' do
       current_email.click_link 'Change my password'
       expect(page).to have_content 'Change Password'
     end
@@ -42,7 +42,7 @@ feature 'Authentication' do
   end
 
   context 'unauthorized access' do
-    xscenario 'redirect to sign in page, when not logged in' do
+    scenario 'redirect to sign in page, when not logged in' do
       visit '/users/companies'
       expect(page.body).to have_content 'You need to sign in or sign up before continuing'
     end

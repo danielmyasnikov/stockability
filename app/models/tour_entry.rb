@@ -38,19 +38,11 @@ class TourEntry < ActiveRecord::Base
     sum_quantity - stock_level_qty
   end
 
-  def blind_stock_count?
-    stock_level_id.nil?
-  end
-
-  def non_blind_stock_count?
-    !blind_stock_count?   
-  end
-
   def quantity=(value)
-    if value.to_f > 0
-      write_attribute(:quantity, value)
-    else
+    if value.nil?
       write_attribute(:quantity, 1)
+    else
+      write_attribute(:quantity, value)
     end
   end
 

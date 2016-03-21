@@ -39,7 +39,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara-select2', path: '../_lab/capybara-select2'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'capybara'

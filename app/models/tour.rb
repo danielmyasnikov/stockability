@@ -6,6 +6,8 @@ class Tour < ActiveRecord::Base
   belongs_to :company
   has_many :entries, class_name: 'TourEntry', dependent: :destroy
 
+  accepts_nested_attributes_for :entries
+
   scope :since, -> (since) { since.present? ? where('updated_at > ?', since.to_datetime) : all }
 
   def self.options_for_select(current_ability)

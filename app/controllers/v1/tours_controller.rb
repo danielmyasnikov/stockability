@@ -25,6 +25,7 @@ class V1::ToursController < V1::BaseController
     param :name,    String, required: true
     param :active,  String
     param :started, String
+    param :entries_attributes, Array, desc: 'An array of tour entries'
   end
   def create
     @tour = Tour.create!(tour_params.merge(company_params))
@@ -40,6 +41,7 @@ class V1::ToursController < V1::BaseController
     param :active,    String, desc: 'Boolean, pass "true" or "false"'
     param :started,   String, desc: 'DateTime, eg "2015-08-04T10:24:35.729Z"'
     param :completed, String, desc: 'DateTime, eg "2015-08-04T10:24:35.729Z"'
+    param :entries_attributes, Array, desc: 'An array of tour entries'
   end
   def update
     @tour.update_attributes!(tour_params)
@@ -57,6 +59,16 @@ class V1::ToursController < V1::BaseController
 protected
 
   def tour_params
-    params.require(:tour).permit(:name, :active, :started, :completed)
+    params.require(:tour).permit(:name, :active, :started, :completed, :entries_attributes => [
+      :location_code,
+      :bin_code,
+      :sku,
+      :barcode,
+      :batch_code,
+      :quantity,
+      :active,
+      :visible,
+      :changed_at,
+    ])
   end
 end

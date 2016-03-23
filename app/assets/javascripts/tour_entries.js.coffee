@@ -4,6 +4,15 @@ Stockability.TourEntry = ($) ->
 
   ERROR_MSG = "Something went wrong. We are notified and will try to fix the issue ASAP"
 
+  $('#show-only-variance').click (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    if ($(this).data('only-variance'))
+      window.location.href = window.location.href.split('?')[0]
+    else
+      window.location.href = window.location.href.split('?')[0] + '?only_variance=true'
+
   $('.assign-tour').select2
     theme: 'bootstrap'
 

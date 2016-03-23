@@ -3,12 +3,9 @@
 
 .page-header
   .pull-right
-    = link_to variance_text, users_tour_entries_path(:only_variance => !displays_only_variance?), class: "btn #{toggle_active}"
-    = link_to 'Assign', '#', class: "btn btn-primary", id: 'assign-tour'
-    = collection_select(:tour, :id, @tour_options, :id, :name, { :prompt => 'Assign  Tour' }, class: 'form-control', id: 'select-tour')
+    
   %h2= 'Tour Entries'
-  = link_to 'Adjust Selected', '#', :class => 'btn btn-primary', :id => 'adjust-selected'
-  = link_to 'Reject Selected', '#', :class => 'btn btn-danger', :id => 'reject-selected'
+  
 
 .wrapper.wrapper-content.animated.fadeInRight
   .ibox.float-e-margins

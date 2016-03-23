@@ -2,6 +2,16 @@ class Users::ToursController < Users::AdminController
 
   before_action :build_tour,  :only => [:new, :create]
   before_action :load_tour,   :only => [:show, :edit, :update, :destroy]
+  before_action :load_tour_entries,   :only => [:show]
+
+  before_action :load_tour_entries, only: [
+                                      :show,
+                                      :adjust_variance, 
+                                      :reject_variance, 
+                                      :assign_tour]
+
+  before_action :load_tour_entries_for_index, only: :show
+
   before_action :load_users, :only => [:new, :edit]
   before_action :append_tour_entries, only: :create
 
@@ -82,6 +92,17 @@ protected
     @users = @users.map { |a| [a.username, a.id] }
   end
 
+  def load_tour_entries_for_index
+    @tour_entries = @tour_entries.
+      visible.
+      only_variance(only_variance_to_bool).
+      group_by_tour
+  end
+
+  def load_tour_entries
+    @tour_entries = @tour.entries.accessible_by(current_ability)
+  end
+
   def load_tour
     @tour = Tour.find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -92,5 +113,9 @@ protected
   def tour_params
     params.fetch(:tour, {}).permit(:name,
       :user_id, :active, :started, :completed)
+  end
+
+  def only_variance_to_bool
+    params[:only_variance] == 'true' ? true : false
   end
 end

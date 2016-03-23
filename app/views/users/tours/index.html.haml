@@ -16,13 +16,14 @@
   %tbody
     - @tours.each do |tour|
       %tr
-        %td= tour.name
+        %td= link_to tour.name, users_tour_path(tour)
         %td= tour.user.try(:login)
         %td= tour.active? ? 'Yes' : 'No'
         %td= tour.started.try(:strftime, "%H:%M - %d/%m/%Y")
         %td= tour.completed.try(:strftime, "%H:%M - %d/%m/%Y")
         %td
           .btn-group.btn-group-sm
+            = link_to 'View', users_tour_path(tour), :class => 'btn btn-primary'
             = link_to 'Edit', edit_users_tour_path(tour), :class => 'btn btn-default'
             -# = link_to 'Download CSV', users_tour_path(tour, :format => :csv), :class => 'btn btn-success'
             = link_to 'Delete', users_tour_path(tour), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'

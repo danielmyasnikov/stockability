@@ -47,8 +47,17 @@ module StockAbility
           tour_entries.sku,
           tour_entries.batch_code,
           SUM(tour_entries.quantity) as sum_quantity,
-          MAX(tour_entries.stock_level_qty) as stock_level_qty
+          MAX(tour_entries.stock_level_qty) as stock_level_qty,
+          SUM(tour_entries.quantity) - MAX(tour_entries.stock_level_qty) as variance
         "
+      end
+
+      def only_variance(only_variance_to_bool)
+        if only_variance_to_bool
+          having('SUM(tour_entries.quantity) - MAX(tour_entries.stock_level_qty) <> 0')
+        else
+          all
+        end
       end
 
       def composite_key
@@ -59,3 +68,4 @@ module StockAbility
 end
 
 TourEntry::ActiveRecord_Relation.include(StockAbility::QueryMethods::TourEntries)
+TourEntry::ActiveRecord_AssociationRelation.include(StockAbility::QueryMethods::TourEntries)

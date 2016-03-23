@@ -17,7 +17,6 @@ class TourEntry < ActiveRecord::Base
   scope :hidden, -> { where(:visible => false) }
 
   scope :since, -> (since) { since.present? ? where("updated_at > ?", since.to_datetime) : all }
-  scope :only_variance, -> (only_variance) { only_variance ? where('variance <> 0') : all }
   # -- Class Methods --------------------------------------------------------
   def self.composite_key
     StockLevel.composite_key.push(:tour_id)

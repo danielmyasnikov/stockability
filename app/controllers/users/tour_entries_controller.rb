@@ -11,9 +11,9 @@ class Users::TourEntriesController < Users::AdminController
                                       :reject_variance, 
                                       :assign_tour]
 
-  before_action :load_tour_entries_for_index, only: :index
   before_action :load_tour_entries_for_hidden, only: :hidden
-                                      
+  
+  before_action :load_tour_entries_for_index, only: :index
   before_action :load_tour_entries_for_actions, only: [
                                       :adjust_variance, 
                                       :reject_variance]
@@ -149,20 +149,12 @@ protected
   end
 
   def load_tour_relationships
-    @locations   = Location.accessible_by(current_ability).pluck(:code).compact.uniq.reject(&:empty?)
-    @sku         = Product.accessible_by(current_ability).pluck(:sku).compact.uniq.reject(&:empty?)
-    @bin_codes   = StockLevel.accessible_by(current_ability).pluck(:bin_code).compact.uniq.reject(&:empty?)
-    @barcodes    = ProductBarcode.accessible_by(current_ability).pluck(:barcode).compact.uniq.reject(&:empty?)
-    @batch_codes = StockLevel.accessible_by(current_ability).pluck(:batch_code).compact.uniq.reject(&:empty?)
+    @locations   = TourEntry.accessible_by(current_ability).pluck(:location_code).compact.uniq.reject(&:empty?)
+    @sku         = TourEntry.accessible_by(current_ability).pluck(:sku).compact.uniq.reject(&:empty?)
+    @bin_codes   = TourEntry.accessible_by(current_ability).pluck(:bin_code).compact.uniq.reject(&:empty?)
+    @barcodes    = TourEntry.accessible_by(current_ability).pluck(:barcode).compact.uniq.reject(&:empty?)
+    @batch_codes = TourEntry.accessible_by(current_ability).pluck(:batch_code).compact.uniq.reject(&:empty?)
     @tours       = Tour.options_for_select(current_ability)
-  end
-
-  def only_variance_to_bool
-    params[:only_variance] == 'true' ? true : false
-  end
-
-  def load_tour_entries
-    @tour_entries = TourEntry.accessible_by(current_ability)
   end
 
   def load_tour_entries_for_tour_assign
@@ -171,13 +163,6 @@ protected
 
   def load_tour_entries_for_actions
     @tour_entries = @tour_entries.where(stock_level_params).group_by_tour
-  end
-
-  def load_tour_entries_for_index
-    @tour_entries = @tour_entries.
-      visible.
-      only_variance(only_variance_to_bool).
-      group_by_tour
   end
 
   def load_tour_entries_for_hidden
@@ -210,6 +195,19 @@ protected
   def params_tours_entries
     params[:tour_entries].values
   end
+
+  def load_tour_entries
+    @tour_entries = TourEntry.accessible_by(current_ability)
+  end
+
+  def load_tour_entries_for_index
+    @tour_entries = @tour_entries.
+      visible.
+      only_variance(only_variance_to_bool).
+      group_by_tour
+  end
+
+  def only_variance_to_bool
+    params[:only_variance] == 'true' ? true : false
+  end
 end
-
-

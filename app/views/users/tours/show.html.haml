@@ -1,14 +1,66 @@
-.page-header
-  %h2 Tour
+- content_for :body_class do
+  = 'tour-entries'
 
-  %dl.dl-horizontal
-    %dt Tour name
-    %dd= @tour.name.presence || 'N/A'
-    %dt User
-    %dd= @tour.user.presence.try(:login) || 'N/A'
-    %dt Active?
-    %dd= @tour.active? ? 'Yes' : 'No'
-    %dt Started
-    %dd= @tour.started.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'
-    %dt Completed
-    %dd= @tour.completed.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'
+.row
+  .wrapper.wrapper-content.animated.fadeInRight.col-sm-4
+    .ibox.float-e-margins
+      .ibox-title
+        %h4= @tour.name
+      .ibox-content
+        %dl.dl-horizontal
+          %dt Tour name
+          %dd= @tour.name.presence || 'N/A'
+          %dt User
+          %dd= @tour.user.presence.try(:login) || 'N/A'
+          %dt Active?
+          %dd= @tour.active? ? 'Yes' : 'No'
+          %dt Started
+          %dd= @tour.started.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'
+          %dt Completed
+          %dd= @tour.completed.try(:strftime, "%H:%M - %d/%m/%Y") || 'N/A'
+          %dt Location(s)
+          %dd= @tour.entries.pluck(:location_code).uniq.join(', ')
+
+      %hr
+        .btn-group.col-sm-6.col-sm-offset-6
+          = link_to 'Edit', edit_users_tour_path(@tour), class: 'btn btn-primary'
+          = link_to 'Delete', users_tour_path(@tour), class: 'btn btn-danger', method: :delete
+
+  .wrapper.wrapper-content.animated.fadeInRight.col-sm-8
+    .ibox.float-e-margins
+      .ibox-content
+        = link_to variance_text, nil, class: "btn #{toggle_active}", id: 'show-only-variance', data: { only_variance: displays_only_variance? }
+        
+        .pull-right
+          .btn-group
+            = link_to 'Adjust Selected', '#', :class => 'btn btn-primary', :id => 'adjust-selected'
+            = link_to 'Reject Selected', '#', :class => 'btn btn-danger', :id => 'reject-selected'
+          = collection_select(:tour, :id, [], :id, :name, { :prompt => 'Re assign  Tour' }, class: 'form-control', id: 'select-tour')
+        %table.table.table-hover.table-bordered{ id: 'datatable-simple' }
+          %thead
+            %tr
+              %th.checkboxed= check_box_tag :check_all
+              %th Bin
+              %th SKU
+              %th Batch Code
+              %th SL QTY
+              %th QTY
+              %th Variance
+              %th
+          %tbody
+            - @tour_entries.each do |tour_entry|
+              %tr
+                %td= check_box_tag :check_stock_level, nil, nil, data: scoped_params(tour_entry), class: 'check'
+                %td{ :title => tour_entry.bin_code }= truncate(tour_entry.bin_code, length: 12)
+                %td{ :title => tour_entry.sku }= truncate(tour_entry.sku, length: 12)
+                %td{ :title => tour_entry.batch_code}= truncate(tour_entry.batch_code, length: 12)
+                %td.quantity= tour_entry.stock_level_qty
+                %td.quantity= tour_entry.sum_quantity
+                %td.variance{ class: colour_picker(tour_entry.variance) }= tour_entry.variance.round(2)
+                %td
+                  .btn-group.btn-group-sm
+                    = link_to 'Adjust', adjust_variance_users_tour_entries_path(scoped_params(tour_entry)), method: :put, :class => 'btn btn-primary adjust-tour-entries'
+                    = link_to 'Entries', users_tour_scoped_by_tour_index_path(scoped_params(tour_entry)), :class => 'btn btn-default'
+                    = link_to 'Reject', reject_variance_users_tour_entries_path(scoped_params(tour_entry)), :method => :put, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger reject-tour-entries'
+
+.tour_entries.tour{ id: 'page-id' }

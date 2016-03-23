@@ -24,5 +24,7 @@ $ ->
 
   $('.select2-users').select2
     theme: 'bootstrap'
+  $('.select2').select2
+    theme: 'bootstrap'
 
   $('.mini-navbar [data-toggle="tooltip"]').tooltip()

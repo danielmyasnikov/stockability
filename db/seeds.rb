@@ -5,17 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-SuperAdmin.create!(email: 'daniel.g.myasnikov@gmail.com', password: 'test1234', password_confirmation: 'test1234')
-SuperAdmin.create!(email: 'a.myasnikov@gmail.com', password: 'test1234', password_confirmation: 'test1234')AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-
-tid = Tour.last.id
-cid = 7
-lid = Location.last.id
-sku = Product.last.sku
-
-TourEntry.create!(tour_id: tid, location_code: lid, bin_code: '001', sku: sku, barcode: 'BAR001', batch_code: 'BATCH01', quantity: 3, company_id: cid, stock_level_qty: 10)
-TourEntry.create!(tour_id: tid, location_code: lid, bin_code: '001', sku: sku, barcode: 'BAR001', batch_code: 'BATCH01', quantity: 3, company_id: cid, stock_level_qty: 10)
-TourEntry.create!(tour_id: tid, location_code: lid, bin_code: '001', sku: sku, barcode: 'BAR001', batch_code: 'BATCH01', quantity: 2, company_id: cid, stock_level_qty: 10)
-TourEntry.create!(tour_id: tid, location_code: lid, bin_code: '001', sku: sku, barcode: 'BAR001', batch_code: 'BATCH01', quantity: 1, company_id: cid, stock_level_qty: 10)
-TourEntry.create!(tour_id: tid, location_code: lid, bin_code: '001', sku: sku, barcode: 'BAR004', batch_code: 'BATCH01', quantity: 2, company_id: cid, stock_level_qty: 10)
+c = Company.create!(title: 'AWS')
+Location.create(code: 'SYD', company: c)
+Location.create(code: 'MEL', company: c)
+u = User.create!(login: 'dan', email: 'test@mail.com', password: 'test1235',
+  password_confirmation: 'test1235', role: :admin, company: c)
 

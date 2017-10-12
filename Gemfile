@@ -2,7 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rack', '1.6.0'
 gem 'rails', '~> 4.2'
-gem 'pg'
+
+group :development do
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'sqlite3'
+end
 gem 'haml'
 gem 'font-awesome-rails'
 gem 'unicorn', '~> 4.8.0'

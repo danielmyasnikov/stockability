@@ -22,6 +22,4 @@ config/unicorn_init.sh
 
 config/database.yml
 
-public/assets
-
 README.rdoc

@@ -8,7 +8,7 @@ group :development do
 end
 
 group :production do
-  gem 'sqlite3'
+  gem 'pg'
 end
 gem 'haml'
 gem 'font-awesome-rails'

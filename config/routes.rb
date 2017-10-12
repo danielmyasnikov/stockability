@@ -1,5 +1,7 @@
 WarehouseCms::Application.routes.draw do
 
+  get '/', to: redirect('/users/sign_in')
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -36,9 +38,9 @@ WarehouseCms::Application.routes.draw do
     end
     resources :tours do
       collection { get :download }
-      resources :entries, controller: 'tour_entries', 
-                          action: 'scoped_by_tour', 
-                          only: [:index], 
+      resources :entries, controller: 'tour_entries',
+                          action: 'scoped_by_tour',
+                          only: [:index],
                           as: 'scoped_by_tour'
     end
   end
@@ -61,6 +63,4 @@ WarehouseCms::Application.routes.draw do
     resources :tours
     resources :tokens, :only => :create
   end
-
-  get '/' => 'landings#splash'
 end

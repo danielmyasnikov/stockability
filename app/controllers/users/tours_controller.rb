@@ -6,13 +6,13 @@ class Users::ToursController < Users::AdminController
 
   before_action :load_tour_entries, only: [
                                       :show,
-                                      :adjust_variance, 
-                                      :reject_variance, 
+                                      :adjust_variance,
+                                      :reject_variance,
                                       :assign_tour]
 
   before_action :load_tour_entries_for_index, only: :show
 
-  before_action :load_users, :only => [:new, :edit]
+  before_action :load_users, :only => [:new, :edit, :update, :create]
   before_action :append_tour_entries, only: :create
 
   respond_to :csv, :html

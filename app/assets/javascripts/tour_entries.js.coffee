@@ -44,7 +44,7 @@ Stockability.TourEntry = ($) ->
     $.ajax
       url: '/users/tour_entries/assign_tour'
       method: 'POST'
-      data: 
+      data:
         tour_id:      tour_id
         tour_entries: tour_entries_params
       success: (data) ->
@@ -101,7 +101,7 @@ Stockability.TourEntry = ($) ->
       url:    url
       method: method
       success: (data) ->
-        alert('yay')
+        alert('Adjusted correctly')
 
   $('.reject-tour-entries').click (e) ->
     e.stopPropagation()
@@ -115,7 +115,7 @@ Stockability.TourEntry = ($) ->
       url:    url
       method: method
       success: (data) ->
-        alert('yay')
+        alert('Rejected correctly')
 
 $ ->
   Stockability.TourEntry($) if $("#page-id").hasClass('tour_entries')
